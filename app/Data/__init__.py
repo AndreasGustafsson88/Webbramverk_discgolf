@@ -1,8 +1,9 @@
+from app.Data.DB_SETTINGS import LOCALHOST, USER, PASSWORD
 from pymongo import MongoClient
 from abc import ABC
 
 
-client = MongoClient(f'mongodb://root:password@localhost:27027')
+client = MongoClient(f'mongodb://{USER}:{PASSWORD}@localhost:{LOCALHOST}')
 db = client.discgolf
 
 
