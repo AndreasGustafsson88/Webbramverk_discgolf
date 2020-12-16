@@ -1,0 +1,12 @@
+#page-footer {
+    background-color: #b98f63;
+    margin-top: 10px;
+    padding-top: 5px;
+    padding-bottom: 5px;
+    text-align: center;
+}
+
+.footer-text {
+    font-family: "Franklin Gothic Book", sans-serif;
+    color: white;
+}
