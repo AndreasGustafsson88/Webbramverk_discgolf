@@ -17,5 +17,10 @@ def signup():
     return render_template("signup.html")
 
 
+@app.route('/profile_page')
+def profile_page():
+
+    return render_template("profile_page.html")
+
 if __name__ == '__main__':
     app.run(debug=True)
