@@ -11,20 +11,13 @@
     color: white;
 }
 
-
-
-
-
 .welcome-page {
-     background: url("../assets/img/pexels-skitterphoto-240040.jpg") no-repeat center center;
+    background: url("../assets/img/testing.jpg") no-repeat center center;
     height: 600px;
     width: 100%;
 }
 
 section {
-    height: 600px;;
+    height: 100%;;
     width: 100%;
-}
-
-
 }
