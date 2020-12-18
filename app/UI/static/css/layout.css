@@ -10,3 +10,21 @@
     font-family: "Franklin Gothic Book", sans-serif;
     color: white;
 }
+
+
+
+
+
+.welcome-page {
+     background: url("../assets/img/pexels-skitterphoto-240040.jpg") no-repeat center center;
+    height: 600px;
+    width: 100%;
+}
+
+section {
+    height: 600px;;
+    width: 100%;
+}
+
+
+}

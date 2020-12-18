@@ -1,6 +1,35 @@
 {% extends "base_logged_out.html" %}
 
+{% block title %}
+    Welcome page
+{% endblock %}
 {% block content %}
-    <h1>Hello</h1>
+    <section class="welcome-page">
+        <div class="container-fluid">
+            <div class="row justify-content-center">
+                <div class="col-4" align="center" style="padding-top: 200px">
+                    <a class="btn btn-primary btn-lg" style="margin: 10px" href="#" role="button">Login</a>
+                    <a class="btn btn-primary btn-lg" style="margin: 10px" href="#" role="button">Sign-up</a>
+                </div>
+            </div>
+        </div>
+    </section>
+
+   <div class="jumbotron jumbotron-fluid">
+  <div class="container">
+    <div class="row justify-content-center">
+      <h1 class="display-4">About</h1>
+      <p class="lead">Lägg in text om hemsidan här
+
+      </p>
+
+      </h1>
+
+    </div>
+
+
+  </div>
+</div>
+
 {% endblock %}
 
