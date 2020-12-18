@@ -1,0 +1,12 @@
+Datum:2020-12-18
+    Närvarande: Måns Ewards Öberg, William Åslund, Andreas Gustafsson, Christoffer Jakonen
+
+Protokollförare: Måns Ewards Öberg
+    Gjort sen senaste möte: Vi har bestämt oss för att göra en discgolf hemsida för att kunna registrera sin HCP/ranking.
+    Vi börjar med parprogrammering.
+    Måns och Christoffer - Satte upp sidan för Signup, bara estetiskt.
+    Andreas och William - Satte upp den utloggade startsidan, bara estetiskt.
+
+Att göra till nästkommande möte:
+    Båda teamen skall försöka få till logik på sidorna vi satte upp.
+Övriga kommentarer:
