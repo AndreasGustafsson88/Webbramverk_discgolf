@@ -17,6 +17,12 @@ def signup():
     return render_template("signup.html")
 
 
+@app.route('/courses')
+def courses():
+
+    return render_template("courses.html")
+
+
 @app.route('/profile_page')
 def profile_page():
 

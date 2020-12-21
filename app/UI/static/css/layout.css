@@ -12,12 +12,70 @@
 }
 
 .welcome-page {
-    background: url("../assets/img/testing.jpg") no-repeat center center;
+    background-image: url("../assets/img/testing.jpg");
     height: 600px;
     width: 100%;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: cover;
 }
 
 section {
     height: 100%;;
     width: 100%;
+}
+
+.map-container{
+overflow:hidden;
+height: 100%;
+width: 100%;
+}
+.map-container iframe{
+left:0;
+top:0;
+height:100%;
+width:100%;
+}
+
+.courses-section {
+    background-color: #eeeeee;
+    height: 90vh;
+    width: 100%;
+}
+
+.search-form {
+    height: 30vh;
+    background-color: #eeeeee;
+    display: flex ;
+    justify-content: center;
+}
+
+.col-search-form {
+    width: 80vw;
+    height: 100%;
+    display: flex ;
+    flex-flow: column;
+
+    align-items: center;
+    justify-content: center;
+}
+
+#content {
+    height: 500px;
+    width: auto;
+}
+
+.heading-text { font-size: 1rem; }
+
+@media (min-width: 576px) {
+    .heading-text { font-size: 1.25rem; }
+}
+@media (min-width: 768px) {
+    .heading-text { font-size: 1.5rem; }
+}
+@media (min-width: 992px) {
+    .heading-text { font-size: 1.75rem; }
+}
+@media (min-width: 1200px) {
+    .heading-text { font-size: 2rem; }
 }
