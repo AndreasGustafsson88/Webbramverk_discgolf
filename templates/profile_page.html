@@ -1,6 +1,13 @@
+{% extends "base_logged_out.html" %}
+
+{%block content %}
+
 <head>
-    <link rel="stylesgeet" href="style.css">
+   <link rel="stylesheet" type="text/css" href="../app/UI/static/css/profile_page.css"/>
 </head>
+
+
+
 <body class="profile-page">
         <div class="container">
             <div class="collapse navbar-collapse">
@@ -10,11 +17,11 @@
             </div>
         </div>
     </nav>
-    <!--Background picture/ same as index picture?-->
-    <div class="page-header header-filter" data-parallax="true" style="background-image:url('http://wallpapere.org/wp-content/uploads/2012/02/black-and-white-city-night.png');"></div>
-    <div class="main main-raised">
-		<div class="profile-content">
-            <div class="container">
+
+
+
+
+            <div class="container profile">
                 <div class="row">
 	                <div class="col-md-6 ml-auto mr-auto">
         	           <div class="profile">
@@ -63,13 +70,44 @@
             <!--Put content when pressed settings-->
           <div class="tab-content tab-space">
             <div class="tab-pane active text-center gallery" id="settings">
-  				<div class="row">
-  					<div class="col-md-3 ml-auto">
-  					</div>
-  					<div class="col-md-3 mr-auto">
-  					</div>
-  				</div>
-              </div>
+                <form role="form">
+			    			<div class="row row_names ">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			                <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="New First Name">
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="New Last Name">
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<div class="form-group mail_bar">
+			    				<input type="email" name="email" id="email" class="form-control input-sm" placeholder="New Email Address">
+			    			</div>
+
+			    			<div class="row row_password">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="password" name="password" id="password" class="form-control input-sm" placeholder="New Password">
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm New Password">
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<input type="submit" value="Save changes" class="btn btn-info">
+			    		</form>
+
+
+
+
+            </div>
             <!--Put content when pressed friends-->
             <div class="tab-pane text-center gallery" id="friends">
       			<div class="row">
@@ -92,3 +130,4 @@
         </div>
 	</div>
 </body>
+{% endblock %}
