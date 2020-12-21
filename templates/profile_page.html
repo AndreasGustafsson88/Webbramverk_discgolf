@@ -6,8 +6,6 @@
    <link rel="stylesheet" type="text/css" href="../app/UI/static/css/profile_page.css"/>
 </head>
 
-
-
 <body class="profile-page">
         <div class="container">
             <div class="collapse navbar-collapse">
@@ -72,15 +70,28 @@
 
           <div class="tab-content tab-space">
 			  <!--Put content when pressed my_stats-->
-			  <div class="tab-pane active text-center gallery" id="my_stats">
-      			<div class="row">
-      				<div class="col-md-3 ml-auto">
-      				<div class="col-md-3 mr-auto">
+			  <div class="tab-pane active text-center gallery" id="my_stats" style="padding-top: 20px;">
+      			<!--* Card init *-->
+					<div class="card">
+					   <!-- Card header -->
+					   <div class="card-header">
+						  <!-- Title -->
+						  <h5 class="h3 mb-0">My Ranking</h5>
+					   </div>
+					   <!-- Card body -->
+					   		<div class="card-body">
+								<canvas id="my_chart"></canvas>
+						  <div class="chart">
+							 <!-- Chart wrapper -->
+							 <canvas id="chart-line" class="chart-canvas"></canvas>
+						  </div>
+					   </div>
+					</div>
       				</div>
       			</div>
               </div>
 				  <!--Put content when pressed settings-->
-            <div class="tab-pane text-center gallery" id="settings">
+            <div class="tab-pane text-center gallery" id="settings" style="display: none">
                 <form role="form">
 			    			<div class="row row_names ">
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
