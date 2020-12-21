@@ -10,3 +10,22 @@ Protokollförare: Måns Ewards Öberg
 Att göra till nästkommande möte:
     Båda teamen skall försöka få till logik på sidorna vi satte upp.
 Övriga kommentarer:
+
+
+Datum:2020-12-21
+    Närvarande: Måns Ewards Öberg, William Åslund, Andreas Gustafsson, Christoffer Jakonen
+
+Protokollförare: Måns Ewards Öberg
+
+Gjort sen senaste möte:
+    Vi bestämmde oss för att göra klart så mycket av layouten vi kan innan vi
+    börjar med backend.
+    Måns och William gjorde sidan för profile_page.
+    Andreas och Christoffer gjorde sidan för courses.
+
+Att göra till nästkommande möte:
+    William och Måns forsätter att göra klart profile_page.
+    Andreas och Christoffer börjar med sidan för att skapa scorekort.
+
+Övriga kommentarer:
+
