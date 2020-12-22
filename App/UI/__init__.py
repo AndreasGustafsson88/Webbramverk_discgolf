@@ -33,3 +33,4 @@ def profile_page():
 def scorecard():
 
     return render_template("scorecard.html")
+

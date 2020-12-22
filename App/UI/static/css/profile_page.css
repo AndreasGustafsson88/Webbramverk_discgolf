@@ -15,11 +15,13 @@
 .container {
   background-color: #eeeeee;
   width: 80%;
-  height: 100%;
   position: absolute;top: 20%;left: 10%;
   border-collapse: collapse;
   border-radius: 20px;
   border: #434242 1px solid;
+  margin: auto;
+  display: inline-block;
+  vertical-align: bottom;
 
 }
 
@@ -75,7 +77,6 @@
 .btn {
   padding: 6px 12px;
 }
-
 
 .card {
   width: 50%;
