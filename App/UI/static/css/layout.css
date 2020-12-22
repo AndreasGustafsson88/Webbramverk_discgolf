@@ -65,17 +65,76 @@ width:100%;
     width: auto;
 }
 
-.heading-text { font-size: 1rem; }
+.heading-text { font-size: 2rem; }
 
 @media (min-width: 576px) {
-    .heading-text { font-size: 1.25rem; }
+    .heading-text { font-size: 2.25rem; }
 }
 @media (min-width: 768px) {
-    .heading-text { font-size: 1.5rem; }
+    .heading-text { font-size: 2.5rem; }
 }
 @media (min-width: 992px) {
-    .heading-text { font-size: 1.75rem; }
+    .heading-text { font-size: 2.75rem; }
 }
 @media (min-width: 1200px) {
-    .heading-text { font-size: 2rem; }
+    .heading-text { font-size: 3rem; }
+}
+
+.scorecard {
+    background-color: #eeeeee;
+    height: 95vh;
+    width: 100vw;
+}
+
+.center-content-h {
+   display: flex;
+   justify-content: center;
+}
+
+.center-content-v {
+   display: flex;
+   justify-content: center;
+   flex-flow: column;
+}
+
+.center-content {
+    display: flex;
+    justify-content: center;
+    flex-flow: column;
+    align-items: center;
+}
+.h20 {
+    height: 20%;
+}
+
+.h60 {
+   height: 60%;
+}
+
+.w100 {
+    width: 100%;
+}
+
+.medium-text { font-size: 2rem; }
+
+@media (min-width: 576px) {
+    .medium-text { font-size: 2.25rem; }
+}
+@media (min-width: 768px) {
+    .medium-text { font-size: 2.5rem; }
+}
+@media (min-width: 992px) {
+    .medium-text { font-size: 2.75rem; }
+}
+@media (min-width: 1200px) {
+    .medium-text { font-size: 3rem; }
+}
+
+.player-text {
+    margin-top: 25px;
+    margin-bottom: 25px;
+}
+
+.button-text {
+    white-space: nowrap;
 }
