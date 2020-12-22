@@ -4,8 +4,6 @@ app = Flask(__name__,
             static_url_path="",
             static_folder="")
 
-names = ["Andreas", "Christoffer", "Måns", "William"]
-
 
 @app.route('/')
 def index():
@@ -35,9 +33,3 @@ def profile_page():
 def scorecard():
 
     return render_template("scorecard.html")
-
-
-@app.route('/autocomplete')
-def autocomplete():
-
-    return render_template("autocomplete.html", names=names)
