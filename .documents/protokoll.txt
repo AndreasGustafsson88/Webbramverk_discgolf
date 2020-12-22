@@ -10,3 +10,37 @@ Protokollförare: Måns Ewards Öberg
 Att göra till nästkommande möte:
     Båda teamen skall försöka få till logik på sidorna vi satte upp.
 Övriga kommentarer:
+
+
+Datum:2020-12-21
+    Närvarande: Måns Ewards Öberg, William Åslund, Andreas Gustafsson, Christoffer Jakonen
+
+Protokollförare: Måns Ewards Öberg
+
+Gjort sen senaste möte:
+    Vi bestämmde oss för att göra klart så mycket av layouten vi kan innan vi
+    börjar med backend.
+    Måns och William gjorde sidan för profile_page.
+    Andreas och Christoffer gjorde sidan för courses.
+
+Att göra till nästkommande möte:
+    William och Måns forsätter att göra klart profile_page.
+    Andreas och Christoffer börjar med sidan för att skapa scorekort.
+
+Övriga kommentarer:
+
+
+Datum:2020-12-22
+    Närvarande: Måns Ewards Öberg, William Åslund, Andreas Gustafsson, Christoffer Jakonen
+
+Protokollförare: Andreas Gustafsson
+
+Gjort sen senaste möte:
+    Christoffer jobbar med att hämta information om olika discgolfbanor som ska in i databasen
+    William och Måns har jobbat mer med profile_page
+    Andreas och Christoffer har jobbat mer med score_card och även kollat på en autocomplete search bar
+
+Att göra till nästkommande möte:
+    Gruppen ska individuellt jobba med att läsa upp på Javascript och jobba med att bekanta sig mer med projektets olika delar
+
+Övriga kommentarer:
