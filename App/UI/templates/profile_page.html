@@ -71,18 +71,7 @@
           <div class="tab-content tab-space">
 			  <!--Put content when pressed my_stats-->
 			  <div class="tab-pane active text-center gallery" id="my_stats" style="padding-top: 20px;">
-      			<!--* Card init *-->
-					<div class="card">
-					   <!-- Card header -->
-					   <div class="card-header">
-						  <!-- Title -->
-						  <h5 class="h3 mb-0">My Ranking</h5>
-					   </div>
-					   <!-- Card body -->
-					   		<div class="card-body" id="my_chart">
-					   </div>
-					</div>
-      				</div>
+                  <div id="my_chart" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
       			</div>
               </div>
 				  <!--Put content when pressed settings-->
@@ -138,9 +127,11 @@
       			    </div>
       			</div>
       		</div>
-          </div>
-<script src="../static/js/profile_page.js"></script>
-<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
-</body>
-<script src="../static/js/profile_page.js"></script>
+            </div>
+            </div>
+    </body>
+
+    <script src="../static/js/profile_page.js"></script>
+    <script src="../static/js/mystats_chart.js"></script>
+
 {% endblock %}
