@@ -1,0 +1,137 @@
+{% extends "base_logged_in.html" %}
+
+{%block content %}
+
+<head>
+   <link rel="stylesheet" type="text/css" href="../static/css/profile_page.css"/>
+</head>
+
+<body class="profile-page">
+        <div class="container">
+            <div class="collapse navbar-collapse">
+                <!--Keeps the icon bar in place-->
+                <div class="dropdown-menu dropdown-with-icons">
+                </div>
+            </div>
+        </div>
+    </nav>
+            <div class="container profile">
+                <div class="row">
+	                <div class="col-md-6 ml-auto mr-auto">
+        	           <div class="profile">
+                           <!--Profile picture-->
+	                        <div class="avatar">
+	                            <img src="../static/assets/img/dog.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                            </div>
+                            <!--Name on player-->
+	                        <div class="name">
+	                            <h3 class="title">Doris the Dog</h3>
+	                        </div>
+	                    </div>
+    	            </div>
+                </div>
+                <!--Descprition player-->
+                <div class="description text-center">
+                    <p> Disc golf playing dog. </p>
+                </div>
+                <!--Row for tablink (settings, friends, fav course)-->
+				<div class="row" style="display: -ms-flexbox;">
+					<div class="col-sm-12 ml-auto mr-auto">
+                        <div class="profile-tabs">
+                          <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+							  <li class="nav-item">
+                                <a class="nav-link active" href="#my_stats" role="tab" data-toggle="tab">
+                                  <i class="material-icons"><img src="../static/assets/img/baseline_insights_black_24dp.png"></i>
+                                    My Stats
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#settings" role="tab" data-toggle="tab">
+                                  <i class="material-icons"><img src="../static/assets/img/baseline_settings_black_24dp.png"> </i>
+                                  Settings
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#friend" role="tab" data-toggle="tab">
+                                  <i class="material-icons"><img src="../static/assets/img/baseline_people_alt_black_24dp.png"></i>
+                                    Friends
+                                </a>
+                            </li>
+                            <li class="nav-item">
+                                <a class="nav-link" href="#favorite_coruse" role="tab" data-toggle="tab">
+                                  <i class="material-icons"><img src="../static/assets/img/baseline_favorite_black_24dp.png"></i>
+                                    Favorite Courses
+                                </a>
+                            </li>
+                          </ul>
+                        </div>
+    	    	</div>
+            </div>
+
+          <div class="tab-content tab-space">
+			  <!--Put content when pressed my_stats-->
+			  <div class="tab-pane active text-center gallery" id="my_stats" style="padding-top: 20px;">
+                  <div id="my_chart" style="height: 370px; max-width: 920px; margin: 0px auto;"></div>
+      			</div>
+              </div>
+				  <!--Put content when pressed settings-->
+            <div class="tab-pane text-center gallery" id="settings" style="display: none">
+                <form role="form">
+			    			<div class="row row_names ">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			                <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="New First Name">
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="New Last Name">
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<div class="form-group mail_bar">
+			    				<input type="email" name="email" id="email" class="form-control input-sm" placeholder="New Email Address">
+			    			</div>
+
+			    			<div class="row row_password">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="password" name="password" id="password" class="form-control input-sm" placeholder="New Password">
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm New Password">
+			    					</div>
+			    				</div>
+			    			</div>
+
+			    			<input type="submit" value="Save changes" class="btn btn-info">
+			    		</form>
+            </div>
+            <!--Put content when pressed friends-->
+            <div class="tab-pane text-center gallery" id="friends">
+      			<div class="row">
+      				<div class="col-md-3 ml-auto">
+      				<div class="col-md-3 mr-auto">
+      				</div>
+      			</div>
+              </div>
+            <!--Put content when pressed favorite course-->
+            <div class="tab-pane text-center gallery" id="favorite_course">
+      			<div class="row">
+      				<div class="col-md-3 ml-auto">
+      				</div>
+      				<div class="col-md-3 mr-auto">
+      			    </div>
+      			</div>
+      		</div>
+            </div>
+            </div>
+    </body>
+
+    <script src="../static/js/profile_page.js"></script>
+    <script src="../static/js/mystats_chart.js"></script>
+
+{% endblock %}

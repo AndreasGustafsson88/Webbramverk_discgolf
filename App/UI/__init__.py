@@ -39,3 +39,4 @@ def scorecard():
 def scorecard_play():
 
     return render_template("scorecard.html")
+
