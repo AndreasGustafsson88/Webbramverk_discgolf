@@ -27,3 +27,9 @@ def courses():
 def profile_page():
 
     return render_template("profile_page.html")
+
+
+@app.route('/scorecard')
+def scorecard():
+
+    return render_template("scorecard.html")
