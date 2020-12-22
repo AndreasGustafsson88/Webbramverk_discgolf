@@ -28,5 +28,9 @@ def profile_page():
 
     return render_template("profile_page.html")
 
-if __name__ == '__main__':
-    app.run(debug=True)
+
+@app.route('/scorecard')
+def scorecard():
+
+    return render_template("scorecard.html")
+
