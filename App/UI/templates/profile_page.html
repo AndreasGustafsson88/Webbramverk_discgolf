@@ -1,9 +1,9 @@
-{% extends "base_logged_out.html" %}
+{% extends "base_logged_in.html" %}
 
 {%block content %}
 
 <head>
-   <link rel="stylesheet" type="text/css" href="../app/UI/static/css/profile_page.css"/>
+   <link rel="stylesheet" type="text/css" href="../static/css/profile_page.css"/>
 </head>
 
 <body class="profile-page">
@@ -21,7 +21,7 @@
         	           <div class="profile">
                            <!--Profile picture-->
 	                        <div class="avatar">
-	                            <img src="../app/UI/static/assets/img/dog.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+	                            <img src="../static/assets/img/dog.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                             </div>
                             <!--Name on player-->
 	                        <div class="name">
@@ -41,25 +41,25 @@
                           <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
 							  <li class="nav-item">
                                 <a class="nav-link active" href="#my_stats" role="tab" data-toggle="tab">
-                                  <i class="material-icons"><img src="../app/UI/static/assets/img/baseline_insights_black_24dp.png"></i>
+                                  <i class="material-icons"><img src="../static/assets/img/baseline_insights_black_24dp.png"></i>
                                     My Stats
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#settings" role="tab" data-toggle="tab">
-                                  <i class="material-icons"><img src="../app/UI/static/assets/img/baseline_settings_black_24dp.png"> </i>
+                                  <i class="material-icons"><img src="../static/assets/img/baseline_settings_black_24dp.png"> </i>
                                   Settings
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#friend" role="tab" data-toggle="tab">
-                                  <i class="material-icons"><img src="../app/UI/static/assets/img/baseline_people_alt_black_24dp.png"></i>
+                                  <i class="material-icons"><img src="../static/assets/img/baseline_people_alt_black_24dp.png"></i>
                                     Friends
                                 </a>
                             </li>
                             <li class="nav-item">
                                 <a class="nav-link" href="#favorite_coruse" role="tab" data-toggle="tab">
-                                  <i class="material-icons"><img src="../app/UI/static/assets/img/baseline_favorite_black_24dp.png"></i>
+                                  <i class="material-icons"><img src="../static/assets/img/baseline_favorite_black_24dp.png"></i>
                                     Favorite Courses
                                 </a>
                             </li>
@@ -79,12 +79,7 @@
 						  <h5 class="h3 mb-0">My Ranking</h5>
 					   </div>
 					   <!-- Card body -->
-					   		<div class="card-body">
-								<canvas id="my_chart"></canvas>
-						  <div class="chart">
-							 <!-- Chart wrapper -->
-							 <canvas id="chart-line" class="chart-canvas"></canvas>
-						  </div>
+					   		<div class="card-body" id="my_chart">
 					   </div>
 					</div>
       				</div>
@@ -144,8 +139,7 @@
       			</div>
       		</div>
           </div>
-            </div>
-        </div>
-	</div>
+<script src="../static/js/profile_page.js"></script>
+<script src="https://canvasjs.com/assets/script/canvasjs.min.js"></script>
 </body>
 {% endblock %}
