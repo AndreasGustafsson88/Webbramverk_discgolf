@@ -32,4 +32,10 @@ def profile_page():
 @app.route('/scorecard')
 def scorecard():
 
+    return render_template("create_scorecard.html")
+
+
+@app.route("/scorecard/play")
+def scorecard_play():
+
     return render_template("scorecard.html")
