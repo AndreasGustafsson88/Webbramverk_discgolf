@@ -1,4 +1,4 @@
-from flask import Flask, render_template, make_response
+from flask import Flask, render_template, make_response, request
 from time import time
 import json
 from App.Controller.my_chart_controller import return_random
@@ -34,8 +34,25 @@ def scorecard():
 
 @app.route("/scorecard/play")
 def scorecard_play():
+    course = {
+        "Gässlösa Discgolfcenter": {
+            1: ["Par 3", 156],
+            2: ["Par 3", 76],
+            3: ["Par 4", 145],
+            4: ["Par 3", 96],
+            5: ["Par 3", 75],
+            6: ["Par 3", 89],
+            7: ["Par 4", 201],
+            8: ["Par 3", 79],
+            9: ["Par 3", 114],
+        }
+    }
+    # course = request.args.get("course")
+    players = request.args.get("players").replace("[", "").replace("]", "").split(",")
 
-    return render_template("scorecard.html")
+    course = course["Gässlösa Discgolfcenter"]
+
+    return render_template("scorecard.html", course=course, players=players)
 
 
 @app.route('/profile_page', methods=["GET", "POST"])
