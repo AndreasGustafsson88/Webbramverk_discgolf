@@ -1,4 +1,7 @@
-from flask import Flask, render_template
+from flask import Flask, render_template, make_response
+from time import time
+import json
+from App.Controller.my_chart_controller import return_random
 
 app = Flask(__name__,
             static_url_path="",
@@ -23,12 +26,6 @@ def courses():
     return render_template("courses.html")
 
 
-@app.route('/profile_page')
-def profile_page():
-
-    return render_template("profile_page.html")
-
-
 @app.route('/scorecard')
 def scorecard():
 
@@ -40,3 +37,15 @@ def scorecard_play():
 
     return render_template("scorecard.html")
 
+
+@app.route('/profile_page', methods=["GET", "POST"])
+def main():
+    return render_template('profile_page.html')
+
+
+@app.route('/data', methods=["GET", "POST"])
+def data():
+    data = [time() * 1000, return_random()]
+    response = make_response(json.dumps(data))
+    response.content_type = 'application/json'
+    return response
