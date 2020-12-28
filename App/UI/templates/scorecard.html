@@ -1,56 +1,82 @@
+<link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
+
 {% extends "base_logged_in.html" %}
 
 {% block content %}
     <section class="scorecard">
-        <!--Hole Info-->
-        <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
-            <div class="container h100 center-content" style="background-color: #23c2ff">
-                <div class="small-text font-weight-bold"> Hole 1</div>
+            <!-- Slider main container -->
+        <div class="swiper-container">
+            <!-- Additional required wrapper -->
+            <div class="swiper-wrapper">
+                <!-- Slides -->
+
+                {% for hole in course.keys() %}
+                    <div class="swiper-slide">
+                        <section class="scorecard">
+                            <!--Hole Info-->
+                            <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
+                                <div class="container h100 center-content" style="background-color: #23c2ff">
+                                    <div class="small-text font-weight-bold"> Hole {{ hole }}</div>
+                                </div>
+                                <div class="container h100 center-content" style="background-color: #eeeeee">
+                                    <div class="small-text font-weight-bold"> {{ course[hole][0] }}</div>
+                                </div>
+                                <div class="container h100 center-content" style="background-color: purple">
+                                    <div class="small-text font-weight-bold"> {{ course[hole][1] }}</div>
+                                </div>
+                            </div>
+
+                            <!--Net & Throws-->
+                            <div class="col-12 h05 center-content" style="margin-top: 5px">
+                                <div class="col-12 center-content-left">
+                                    <div class="col-4 center-content">
+                                        <div class="small-text center-content">
+                                            Net
+                                        </div>
+                                    </div>
+                                    <div class="col-4 center-content">
+                                        <div class="small-text w-33 center-content">
+                                            Throws
+                                        </div>
+                                    </div>
+                                </div>
+                            </div>
+
+                            <!--Player information-->
+                            <div class="container h85 top-align" style="background-color: aquamarine">
+                                {% for player in players %}
+                                    <div class="col-12 h20 center-content-h">
+                                        <div class="col-4 center-content">
+                                            <div class="small-text center-content">
+                                                {{ player }}
+                                            </div>
+                                        </div>
+                                        <div class="col-4 center-content">
+                                            <div class="small-text center-content">
+                                                3
+                                            </div>
+                                        </div>
+                                        <div class="col-4 center-content">
+                                            <label>
+                                                <input class="form-control form-control-sm" type="text" placeholder="">
+                                            </label>
+                                        </div>
+                                    </div>
+                                {% endfor %}
+                            </div>
+                        </section>
+                    </div>
+                {% endfor %}
+
             </div>
-            <div class="container h100 center-content" style="background-color: #eeeeee">
-                <div class="small-text font-weight-bold"> Par 3</div>
-            </div>
-            <div class="container h100 center-content" style="background-color: purple">
-                <div class="small-text font-weight-bold"> 101m</div>
-            </div>
+            <!-- If we need pagination -->
+            <div class="swiper-pagination"></div>
+
         </div>
 
-        <!--Net & Throws-->
-        <div class="col-12 h05 center-content" style="margin-top: 5px">
-            <div class="col-12 center-content-left">
-                <div class="col-4 center-content">
-                    <div class="small-text center-content">
-                        Net
-                    </div>
-                </div>
-                <div class="col-4 center-content">
-                    <div class="small-text w-33 center-content">
-                        Throws
-                    </div>
-                </div>
-            </div>
-        </div>
-
-        <!--Player information-->
-        <div class="container h85 top-align" style="background-color: aquamarine">
-            <div class="col-12 h20 center-content-h">
-                <div class="col-4 center-content">
-                    <div class="small-text center-content">
-                        Andreas Gustafsson
-                    </div>
-                </div>
-                <div class="col-4 center-content">
-                    <div class="small-text center-content">
-                        3
-                    </div>
-                </div>
-                <div class="col-4 center-content">
-                    <label>
-                        <input class="form-control form-control-sm" type="text" placeholder="">
-                    </label>
-                </div>
-            </div>
-        </div>
     </section>
+
+    <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
+    <script src="../static/js/scorecard_play.js"></script>
 
 {% endblock %}
