@@ -139,3 +139,41 @@ width:100%;
 .button-text {
     white-space: nowrap;
 }
+
+.h100 {
+    height: 100%;
+}
+
+.h10 {
+    height: 10%;
+}
+
+.h05 {
+    height: 5%;
+}
+
+.w-33 {
+    width: 33%;
+}
+
+.center-content-left {
+    display: flex;
+    justify-content: flex-end;
+}
+
+.shadow {
+    box-shadow: #161515;
+}
+
+.h85 {
+    height: 85%;
+}
+
+.w80 {
+    width: 80%;
+}
+
+.top-align {
+    align-items: flex-start;
+    padding-top: 20px;
+}
