@@ -1,4 +1,4 @@
-from app.Data.DB_SETTINGS import LOCALHOST, USER, PASSWORD
+from App.Data.DB_SETTINGS import LOCALHOST, USER, PASSWORD
 from pymongo import MongoClient
 from abc import ABC
 
