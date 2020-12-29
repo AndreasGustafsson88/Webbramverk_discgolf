@@ -56,7 +56,7 @@ def scorecard_play():
 
 
 @app.route('/profile_page', methods=["GET", "POST"])
-def main():
+def profile_page():
     return render_template('profile_page.html')
 
 
