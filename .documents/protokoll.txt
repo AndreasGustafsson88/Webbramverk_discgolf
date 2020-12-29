@@ -44,3 +44,21 @@ Att göra till nästkommande möte:
     Gruppen ska individuellt jobba med att läsa upp på Javascript och jobba med att bekanta sig mer med projektets olika delar
 
 Övriga kommentarer:
+
+Datum:2020-12-28
+    Närvarande: William Åslund, Andreas Gustafsson, Christoffer Jakonen
+
+Protokollförare: William Åslund
+
+Gjort sen senaste möte:
+    Vi har arbetat vidare med sidorna, och lagt in lite javascript på dom.
+    Vi har även börjat skissa lite på hur vi vill att databasen ska se ut.
+    Christoffer har även gjort klart filen med information om olika discgolfbanor som nu alla har fått.
+
+Att göra till nästkommande möte:
+    Gruppen ska individuellt titta på filen som Christoffer har gjort, och se hur vi kan lägga in den i databasen.
+
+Övriga kommentarer:
+
+
+
