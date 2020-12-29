@@ -10,25 +10,21 @@ app = Flask(__name__,
 
 @app.route('/')
 def index():
-
     return render_template("index.html")
 
 
 @app.route('/signup')
 def signup():
-
     return render_template("signup.html")
 
 
 @app.route('/courses')
 def courses():
-
     return render_template("courses.html")
 
 
 @app.route('/scorecard')
 def scorecard():
-
     return render_template("create_scorecard.html")
 
 
@@ -56,7 +52,7 @@ def scorecard_play():
 
 
 @app.route('/profile_page', methods=["GET", "POST"])
-def main():
+def profile_page():
     return render_template('profile_page.html')
 
 
