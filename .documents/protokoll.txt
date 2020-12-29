@@ -61,4 +61,23 @@ Att göra till nästkommande möte:
 Övriga kommentarer:
 
 
+Datum:2020-12-29
+    Närvarande: William Åslund, Andreas Gustafsson, Christoffer Jakonen
+
+Protokollförare: William Åslund
+
+Gjort sen senaste möte:
+    vi har gjort test data att skicka till databasen, där vi har lagt in banor och spelare, samt även lagt in rating på dom.
+    sedan har vi föröskt att skriva javascript för att få upp en lista på banorna på våran hemsida.
+
+
+Att göra till nästkommande möte:
+    Gruppen ska individuellt titta vidare på javascripten för att få upp listan på hemsidan.
+
+Övriga kommentarer:
+
+
+
+
+
 
