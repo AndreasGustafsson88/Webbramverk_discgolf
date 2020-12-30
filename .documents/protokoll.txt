@@ -78,6 +78,27 @@ Att göra till nästkommande möte:
 
 
 
+Datum:2020-12-30
+    Närvarande: William Åslund, Andreas Gustafsson, Christoffer Jakonen
+
+Protokollförare: William Åslund
+
+Gjort sen senaste möte:
+    vi har gjort en autofill för banor och vänner, samt lagt till error checking.
+    vi har även gjort autofill när du skapar ett scorecard, så att det blir en ny slide för varje hål på banan.
+    på varje slide har vi lagt till så att den visar data för varje hål (tex längd och par).
+
+
+Att göra till nästkommande möte:
+    vi ska jobba vidare med att ta fram rating på varje användare, räkna ut hur många extra slag dom har på banan och sedan fördela ut dom på hålen efter svårighet.
+    vi ska göra en resultatslide som summerar alla hålen så att du kan se resultatet innan du submittar.
+    json encode klassobjekten från databasen så att vi kan skicka in hela objekt till hemsidan.
+
+Övriga kommentarer:
+
+
+
+
 
 
 
