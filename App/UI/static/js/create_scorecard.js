@@ -64,6 +64,9 @@ function get_player() {
 
         block_to_insert.appendChild(delete_button);
         container_block.appendChild(block_to_insert);
+
+        let player_element = document.getElementById("player_search");
+        player_element.value = null;
     }
 
 }
