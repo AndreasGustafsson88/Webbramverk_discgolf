@@ -1,7 +1,11 @@
 from flask import Flask, render_template, make_response, request
 from time import time
 import json
+from App.Controller.courses_controller import get_all_names, get_one_course
 from App.Controller.my_chart_controller import return_random
+from App.Controller.users_controller import get_all_friends
+from App.Data.Models.courses import Course
+from App.Data.Models.users import User
 
 app = Flask(__name__,
             static_url_path="",
@@ -25,12 +29,21 @@ def courses():
 
 @app.route('/scorecard')
 def scorecard():
-    return render_template("create_scorecard.html")
+
+    current_user = User.find(user_name="Mcbeast").first_or_none()
+    friends = get_all_friends(current_user)
+
+
+
+    all_courses = get_all_names()
+
+    return render_template("create_scorecard.html", all_courses=all_courses, friends=friends, current_user=current_user)
+
 
 
 @app.route("/scorecard/play")
 def scorecard_play():
-    course = {
+    '''course = {
         "Gässlösa Discgolfcenter": {
             1: ["Par 3", 156],
             2: ["Par 3", 76],
@@ -42,11 +55,12 @@ def scorecard_play():
             8: ["Par 3", 79],
             9: ["Par 3", 114],
         }
-    }
+    }'''
     # course = request.args.get("course")
-    players = request.args.get("players").replace("[", "").replace("]", "").split(",")
-
-    course = course["Gässlösa Discgolfcenter"]
+    players = request.args.get("players").replace("[", "").replace("]", "").replace('"','').split(",")
+    print()
+    course = get_one_course(request.args.get("course"))
+    print()
 
     return render_template("scorecard.html", course=course, players=players)
 

@@ -1,7 +1,12 @@
 function create_scorecard() {
     let course = document.getElementById("Course");
+    if(course.innerHTML !=="No course selected"){
+
+
     let players = document.getElementById("player_content_div");
     let player_list = [];
+
+
 
     for (let player of players.children) {
         player_list.push(player.id)
@@ -13,21 +18,14 @@ function create_scorecard() {
     new_url += "&players=" + j_players;
 
     window.location.href = new_url;
+
+}
+    else{
+        alert("Please select a Course")
+    }
 }
 
 
-function fill_out_course(course_input, course_text) {
-    course_input.addEventListener("input", function () {
-        if (course_input.value){
-            course_text.innerHTML = course_input.value;
-        }
-        else {
-            course_text.innerHTML = "No course selected"
-        }
-    })
-}
-
-fill_out_course(document.getElementById("course_search"), document.getElementById("Course"));
 
 
 function delete_player(id) {
@@ -45,7 +43,7 @@ function get_player() {
 
     let player_name = document.getElementById("player_search").value;
 
-    if (player_name) {
+    if (player_name && friends.includes(player_name)) {
         let container_block = document.getElementById("player_content_div");
         let player_amount = $('#player_content_div > div').length
 
