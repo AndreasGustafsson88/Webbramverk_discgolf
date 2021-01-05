@@ -59,7 +59,7 @@
                                             </div>
                                         </div>
                                         <div class="col-4 center-content">
-                                            <input class="form-control form-control-sm" type="number" placeholder="" style="text-align: center">
+                                            <input class="form-control form-control-sm throws-input" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ course.holes[i + 1]['Par']}}_{{player.hcp[i]['strokes'] }}">
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -83,7 +83,7 @@
                                         <tr>
                                             <td scope="row">{{ player.user_name }}</td>
                                             {% for i in range(1, 10) %}
-                                                <td id="{{ player.user_name}}{{ i }} ">0</td>
+                                                <td id="{{ player.user_name}}{{ i }}">0</td>
                                             {% endfor %}
                                         </tr>
                                     {% endfor %}
@@ -104,7 +104,7 @@
                                             <tr>
                                                 <td scope="row">{{ player.user_name }}</td>
                                                 {% for i in range(course.holes[0] - 8, course.holes[0] + 1) %}
-                                                    <td id="{{ player.user_name}}{{ i }} ">0</td>
+                                                    <td id="{{ player.user_name}}{{ i }}">0</td>
                                                 {% endfor %}
                                             </tr>
                                         {% endfor %}
@@ -134,7 +134,32 @@
 
     </section>
 
+
+
+{% endblock %}
+
+{% block javascript %}
+
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
+    <script>
+        let player_summary = {};
+        {% for player in players %}
+            player_summary["{{ player.user_name }}"] = {
+                {% for i in range(course.holes[0]) %}
+                    "hole{{ i + 1 }}_points": 0,
+                    "hole{{ i + 1 }}_par": 0,
+                {% endfor %}
+            };
+        {% endfor %}
 
+
+
+
+
+
+
+    var elements=document.getElementsByClassName("throws-input");
+    for (let i = 0; i < elements.length; i++ ){elements[i].addEventListener("input", update_result) }
+    </script>
 {% endblock %}
