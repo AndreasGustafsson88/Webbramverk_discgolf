@@ -69,57 +69,56 @@
                     {% else %}
                          <div class="swiper-slide">
                         <section class="scorecard">
-                            <!--Hole Info-->
-                            <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
-                                <div class="container h100 center-content" style="background-color: #23c2ff">
-                                    <div class="small-text font-weight-bold"> Hole slut </div>
-                                </div>
-                                <div class="container h100 center-content" style="background-color: #eeeeee">
-                                    <div class="small-text font-weight-bold"> {{ i }}</div>
-                                </div>
-                                <div class="container h100 center-content" style="background-color: purple">
-                                    <div class="small-text font-weight-bold"> {{ i }}</div>
-                                </div>
-                            </div>
-
-                            <!--Net & Throws-->
-                            <div class="container h05 center-content" style="margin-top: 5px">
-                                <div class="col-12 center-content-left">
-                                    <div class="col-4 center-content">
-                                        <div class="small-text center-content">
-                                            Net
-                                        </div>
-                                    </div>
-                                    <div class="col-4 center-content">
-                                        <div class="small-text w-33 center-content">
-                                            Throws
-                                        </div>
-                                    </div>
-                                </div>
-                            </div>
-
-                            <!--Player information-->
-                            <div class="container h85 top-align" style="background-color: aquamarine">
+                            <table class="table table-striped table-sm">
+                                <thead>
+                                    <tr>
+                                        <th scope="col">Player</th>
+                                        {% for i in range(1, 10) %}
+                                            <th scope="col">{{ i }}</th>
+                                        {% endfor %}
+                                    </tr>
+                                </thead>
+                                <tbody>
+                                    {% for player in players %}
+                                        <tr>
+                                            <td scope="row">{{ player.user_name }}</td>
+                                            {% for i in range(1, 10) %}
+                                                <td id="{{ player.user_name}}{{ i }} ">0</td>
+                                            {% endfor %}
+                                        </tr>
+                                    {% endfor %}
+                                </tbody>
+                            </table>
+                            {% if course.holes[0] > 9 %}
+                                <table class="table table-striped table-sm">
+                                    <thead>
+                                        <tr>
+                                            <th scope="col">Player</th>
+                                            {% for i in range(course.holes[0] - 8, course.holes[0] + 1) %}
+                                                <th scope="col">{{ i }}</th>
+                                            {% endfor %}
+                                        </tr>
+                                    </thead>
+                                    <tbody>
+                                        {% for player in players %}
+                                            <tr>
+                                                <td scope="row">{{ player.user_name }}</td>
+                                                {% for i in range(course.holes[0] - 8, course.holes[0] + 1) %}
+                                                    <td id="{{ player.user_name}}{{ i }} ">0</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
                                 {% for player in players %}
-                                    <div class="col-12 h20 center-content-h">
-                                        <div class="col-4 center-content">
-                                            <div class="small-text center-content">
-                                                {{ player.user_name }}
-                                            </div>
-                                        </div>
-                                        <div class="col-4 center-content">
-                                            <div class="small-text center-content">
-                                                3
-                                            </div>
-                                        </div>
-                                        <div class="col-4 center-content">
-                                            <label>
-                                                <input class="form-control form-control-sm" type="text" placeholder="">
-                                            </label>
-                                        </div>
+                                    <div class="container w100 center-content-h">
+                                        <div class="col-4">{{ player.user_name }}</div>
+                                        <div class="col-4" id="{{ player.user_name }}_points">0</div>
+                                        <div class="col-4" id="{{ player.user_name }}_par">0</div>
+                                        <hr>
                                     </div>
                                 {% endfor %}
-                            </div>
                         </section>
                     </div>
 
