@@ -284,3 +284,11 @@ input[type=submit] {
   background-color: DodgerBlue !important;
   color: #ffffff;
 }
+
+.tiny-text {
+    font-size: 12px;
+}
+
+.no-padding {
+    padding: 0
+}
