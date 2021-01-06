@@ -292,3 +292,14 @@ input[type=submit] {
 .no-padding {
     padding: 0
 }
+
+hr {
+    width: 80%;
+    background-color: #d5d5d9;
+    margin-top: 0.5em;
+    margin-bottom: 0.5em;
+}
+
+.w70 {
+    width: 70%;
+}
