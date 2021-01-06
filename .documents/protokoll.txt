@@ -97,6 +97,26 @@ Att göra till nästkommande möte:
 Övriga kommentarer:
 
 
+Datum:2021-01-06
+    Närvarande: William Åslund, Andreas Gustafsson, Christoffer Jakonen, Måns Ewards Öberg
+
+Protokollförare: William Åslund
+
+Gjort sen senaste möte:
+    vi har fixat scorecard sidan, så att vi kan fylla i resultat och att den sedan räknar ut points och par åt dig.
+    vi har påbörjat att lägga till en submit knapp på sista sliden så att vi kan skicka in resultaten till databasen.
+
+
+
+
+Att göra till nästkommande möte:
+    vi ska fortsätta med submit knappen så att den samlar ihop den datan vi vill skicka till databasen.
+    vi ska även börja med att hämta data från databasen till profile_page sidan för att lägga in i grafen, så att man se sin rating.
+    vi ska även göra så att man kan lägga till/ se sina vänner på sin profil sida.
+
+Övriga kommentarer:
+
+
 
 
 
