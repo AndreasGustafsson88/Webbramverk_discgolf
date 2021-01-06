@@ -20,7 +20,7 @@ function update_result() {
   info.innerHTML = this.value;
   par_diff = this.value - par;
   player_summary[user_name]['hole'+ hole + '_par'] = par_diff;
-  points = par + strokes - this.value + 2;
+  points = parseInt(par) + parseInt(strokes) - this.value + 2;
   player_summary[user_name]['hole'+ hole + '_points'] = points;
 
   let total_par = document.getElementById(user_name +"_par")
