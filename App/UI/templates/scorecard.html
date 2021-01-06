@@ -111,14 +111,31 @@
                                     </tbody>
                                 </table>
                             {% endif %}
-                                {% for player in players %}
-                                    <div class="container w100 center-content-h">
-                                        <div class="col-4">{{ player.user_name }}</div>
-                                        <div class="col-4" id="{{ player.user_name }}_points">0</div>
-                                        <div class="col-4" id="{{ player.user_name }}_par">0</div>
-                                        <hr>
+                            <div class="container w100 center-content-h">
+                                <div class="col-4"></div>
+                                <div class="col-4">
+                                    <div class="tiny-text">Points</div>
+                                </div>
+                                <div class="col-4">
+                                    <div class="tiny-text">Par</div>
+                                </div>
+                            </div>
+                            <hr>
+                            {% for player in players %}
+                                <div class="container w100 center-content-h">
+                                    <div class="col-4 center-content-v" style="text-align: left">
+                                        <div class="tiny-text" style="padding-left: 10px">{{ player.user_name }}</div>
                                     </div>
-                                {% endfor %}
+                                    <div class="col-4 tiny-text" id="{{ player.user_name }}_points">0</div>
+                                    <div class="col-4 tiny-text" id="{{ player.user_name }}_par">0</div>
+                                </div>
+                                <hr>
+                            {% endfor %}
+                            <div class="container w100 center-content">
+                                <div class="container w70">
+                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="submit_scorecards()" style="margin-top: 30px" role="button">Submit Scorecards</a>
+                                </div>
+                            </div>
                         </section>
                     </div>
 
