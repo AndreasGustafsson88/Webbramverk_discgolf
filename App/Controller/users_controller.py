@@ -15,3 +15,7 @@ def get_user_by_email(email):
 
 def get_user_by_username(username):
     return ur.get_user_by_username(username)
+
+
+def get_user(**kwargs):
+    return ur.get_user(kwargs)

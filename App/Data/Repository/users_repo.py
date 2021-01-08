@@ -16,3 +16,7 @@ def get_user_by_email(email):
 
 def get_user_by_username(username):
     return User.find(user_name=username).first_or_none()
+
+
+def get_user(kwargs):
+    return User.find(**kwargs).first_or_none()

@@ -5,7 +5,8 @@ from time import time
 import json
 from App.Controller.courses_controller import get_all_names, get_one_course
 from App.Controller.my_chart_controller import return_random
-from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username
+from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
+    get_user
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm
 from App.Data.Models.users import User
