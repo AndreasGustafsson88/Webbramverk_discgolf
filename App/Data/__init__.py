@@ -25,6 +25,9 @@ class Document(dict, ABC):
             self._id = None
         self.__dict__.update(data)
 
+    def __len__(self):
+        return len(self.__dict__)
+
     def __repr__(self):
         return '\n'.join(f'{k} = {v}' for k, v in self.__dict__.items())
 
