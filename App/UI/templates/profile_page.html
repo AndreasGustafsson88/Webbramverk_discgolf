@@ -40,27 +40,27 @@
 				<div class="row" style="display: -ms-flexbox;">
 					<div class="col-sm-12 ml-auto mr-auto">
                         <div class="profile-tabs">
-                          <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist">
+                          <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist" >
 							  <li class="nav-item">
-                                <a class="nav-link active" href="#my_stats" role="tab" data-toggle="tab">
+                                <a class="nav-link active" data-target="#my_stats" role="tab" data-toggle="tab" onclick="show_tab('my_stats')" >
                                   <i class="material-icons"><img src="../static/assets/img/baseline_insights_black_24dp.png" ></i>
                                     My Stats
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#settings" role="tab" data-toggle="tab">
+                                <a class="nav-link" data-target="#settings" role="tab" data-toggle="tab" onclick="show_tab('settings')" >
                                   <i class="material-icons"><img src="../static/assets/img/baseline_settings_black_24dp.png"> </i>
                                   Settings
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#friend" role="tab" data-toggle="tab">
+                                <a class="nav-link" data-target="#friends" role="tab" data-toggle="tab" onclick="show_tab('friends')" >
                                   <i class="material-icons"><img src="../static/assets/img/baseline_people_alt_black_24dp.png"></i>
                                     Friends
                                 </a>
                             </li>
                             <li class="nav-item">
-                                <a class="nav-link" href="#favorite_coruse" role="tab" data-toggle="tab">
+                                <a class="nav-link" data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
                                   <i class="material-icons"><img src="../static/assets/img/baseline_favorite_black_24dp.png"></i>
                                     Favorite Courses
                                 </a>
@@ -69,7 +69,7 @@
                         </div>
     	    	</div>
             </div>
-                <div class="tab-content tab-space">
+                <div class="tab-content tab-space" id="profile_content">
 			  <!--Put content when pressed my_stats-->
 			  <div class="tab-pane active text-center gallery" id="my_stats" style="padding-top: 20px;">
                       <div class="container-fluid">
@@ -80,7 +80,7 @@
                     </div>
                 </div>
       			</div>
-              </div>
+
 				  <!--Put content when pressed settings-->
             <div class="tab-pane text-center gallery" id="settings"style="display: none" >
                 <form role="form">
@@ -125,8 +125,9 @@
       				</div>
       			</div>
               </div>
+            </div>
             <!--Put content when pressed favorite course-->
-            <div class="tab-pane text-center gallery" id="favorite_course">
+            <div class="tab-pane text-center gallery" id="favorite_courses">
       			<div class="row">
       				<div class="col-md-3 ml-auto">
       				</div>
@@ -136,9 +137,11 @@
       		</div>
             </div>
             </div>
-</s</section>
+            </div>
+</section>
 {% endblock %}
 {%block javascript %}<!--High CHART LIVE  -->
+    <script src="../static/js/profile_page.js"></script>
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
