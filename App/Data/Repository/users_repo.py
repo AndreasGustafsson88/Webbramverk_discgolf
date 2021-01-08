@@ -8,3 +8,11 @@ def get_all_friends(current_user):
 
 def get_users(users):
     return [User.find(user_name=user).first_or_none() for user in users]
+
+
+def get_user_by_email(email):
+    return User.find(email=email).first_or_none()
+
+
+def get_user_by_username(username):
+    return User.find(user_name=username).first_or_none()

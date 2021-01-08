@@ -303,3 +303,9 @@ hr {
 .w70 {
     width: 70%;
 }
+
+.show-login {
+    transition: 1s ease;
+    max-height: 1px;
+    opacity: 0.1;
+}

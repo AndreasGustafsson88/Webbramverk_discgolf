@@ -1,8 +1,24 @@
+from flask_login import UserMixin
+
 from App.Data import Document, db
 
 
-class User(Document):
+class User(Document, UserMixin):
     collection = db.users
+
+ # Lägg in dessa metoder som fält i dokument User.
+
+    def is_authenticated(self):
+        return True
+
+    def is_active(self):
+        return True
+
+    def is_anonymous(self):
+        return False
+
+    def get_id(self):
+        return str(self._id)
 
     def player_hcp(self, course):
 
