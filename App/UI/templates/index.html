@@ -8,8 +8,18 @@
         <div class="container-fluid">
             <div class="row justify-content-center">
                 <div class="col-8" align="center" style="padding-top: 200px">
-                   <a class="btn btn-primary btn-lg" style="margin: 10px" href="#" role="button">Login</a>
-                    <a class="btn btn-primary btn-lg" style="margin: 10px" href="#" role="button">Sign-up</a>
+                    <div id="box" class="menu-box">
+                        <a class="btn btn-primary btn-lg" style="margin: 10px" href="#" id="button" role="button">Login</a>
+                            <div class="show-login" id="show-login" style="visibility: hidden; max-height: 1px">
+                                <form action="" method="POST" id="form">
+                                    {{ form.csrf_token }}
+                                    {{ form.username }}
+                                    {{ form.password }}
+                                    {{ form.submit }}
+                                </form>
+                            </div>
+                        <a class="btn btn-primary btn-lg" style="margin: 10px" href="#" role="button">Sign-up</a>
+                    </div>
                 </div>
             </div>
         </div>
@@ -33,3 +43,26 @@
 
 {% endblock %}
 
+{% block javascript %}
+    <script>
+        function show_login() {
+
+            let login = document.getElementById("show-login")
+
+            if (login.style.visibility === "hidden") {
+                login.style.visibility = "visible"
+                login.style.maxHeight = "500px"
+                login.style.opacity = "1"
+            }
+            else {
+                login.style.visibility = "hidden"
+                login.style.maxHeight = "1px"
+                login.style.opacity = "0"
+            }
+
+        }
+
+        document.getElementById("button").addEventListener("click", show_login)
+
+    </script>
+{% endblock %}

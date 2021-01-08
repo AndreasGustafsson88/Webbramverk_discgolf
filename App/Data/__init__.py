@@ -8,6 +8,7 @@ db = client.discgolf
 
 
 class ResultList(list):
+
     def first_or_none(self):
         return self[0] if len(self) > 0 else None
 
@@ -40,7 +41,6 @@ class Document(dict, ABC):
     def update_field(self, field, value):
         return self.collection.update_one({'_id': self._id}, {"$set": {field: value}})
 
-
     @classmethod
     def insert_many(cls, items):
         cl_objects = []
@@ -58,6 +58,10 @@ class Document(dict, ABC):
     @classmethod
     def all(cls):
         return [cls(item) for item in cls.collection.find({})]
+
+    @classmethod
+    def find_unique(cls, **kwargs):
+        return cls(cls.collection.find_one(kwargs)) if cls.collection.find_one(kwargs) else None
 
     @classmethod
     def find(cls, **kwargs):

@@ -1,36 +1,85 @@
-from flask import Flask, render_template, make_response, request
+from bson import ObjectId
+from flask import Flask, render_template, make_response, request, redirect, url_for, flash
+from werkzeug.security import generate_password_hash, check_password_hash
 from time import time
 import json
 from App.Controller.courses_controller import get_all_names, get_one_course
 from App.Controller.my_chart_controller import return_random
-from App.Controller.users_controller import get_all_friends, get_users
+from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username
 from App.Data.Models.courses import Course
+from App.Data.Models.flaskform import SignInForm, SignUpForm
 from App.Data.Models.users import User
+from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
 app = Flask(__name__,
             static_url_path="",
             static_folder="")
 
+app.config["SECRET_KEY"] = "supersecret, don't tell"
+login_manager = LoginManager()
+login_manager.login_view = "index"
+login_manager.init_app(app)
 
-@app.route('/')
+
+@login_manager.user_loader
+def load_user(_id):
+    return User.find_unique(_id=ObjectId(_id))
+
+
+@app.route('/', methods=["POST", "GET"])
 def index():
-    return render_template("index.html")
+    form = SignInForm()
+
+    if form.validate_on_submit():
+        username = form.username.data
+        password = form.password.data
+
+        user = User.find_unique(user_name=username)
+
+        if user is not None:
+            if password == user.password:
+                login_user(user)
+                return redirect(url_for("profile_page"))
+
+    return render_template("index.html", form=form)
 
 
-@app.route('/signup')
+@app.route('/signup', methods=["POST", "GET"])
 def signup():
-    return render_template("signup.html")
+    form = SignUpForm()
+    if form.validate_on_submit():
+
+        password = form.password.data
+        confirmed_password = form.confirm_password.data
+
+        if password != confirmed_password:
+            flash("password are not the same")
+            return redirect(url_for("signup"))
+
+        if get_user_by_email(form.email.data) is not None:
+            flash("Email already exists")
+            return redirect(url_for("signup"))
+
+        #TODO fråga JockeBoi
+        if get_user_by_username(form.user_name.data) is not None:
+            flash("Username already exists")
+            return redirect(url_for("signup"))
+
+
+
+        return redirect(url_for("index"))
+    return render_template("signup.html", form=form)
 
 
 @app.route('/courses')
 def courses():
+    logout_user()
     return render_template("courses.html")
 
 
 @app.route('/scorecard')
 def scorecard():
 
-    current_user = User.find(user_name="Mcbeast").first_or_none()
     friends = get_all_friends(current_user)
 
 
@@ -67,6 +116,7 @@ def scorecard_play():
 
 
 @app.route('/profile_page', methods=["GET", "POST"])
+@login_required
 def profile_page():
     return render_template('profile_page.html')
 
