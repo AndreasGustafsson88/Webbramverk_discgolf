@@ -20,3 +20,9 @@ def get_user_by_username(username):
 
 def get_user(kwargs):
     return User.find(**kwargs).first_or_none()
+
+
+def add_user(insert_dict):
+    return User.insert_one(insert_dict)
+
+

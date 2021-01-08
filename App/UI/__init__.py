@@ -6,7 +6,7 @@ import json
 from App.Controller.courses_controller import get_all_names, get_one_course
 from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
-    get_user
+get_user, add_user
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm
 from App.Data.Models.users import User
@@ -38,7 +38,7 @@ def index():
         user = User.find_unique(user_name=username)
 
         if user is not None:
-            if password == user.password:
+            if check_password_hash(user.password, password):
                 login_user(user)
                 return redirect(url_for("profile_page"))
 
@@ -57,24 +57,28 @@ def signup():
             flash("password are not the same")
             return redirect(url_for("signup"))
 
-        if get_user_by_email(form.email.data) is not None:
+        if get_user_by_email(form.email.data):
             flash("Email already exists")
             return redirect(url_for("signup"))
 
-        #TODO fråga JockeBoi
-        if get_user_by_username(form.user_name.data) is not None:
+        if get_user_by_username(form.user_name.data):
             flash("Username already exists")
             return redirect(url_for("signup"))
 
-
+        add_user(full_name=form.full_name.data, user_name=form.user_name.data, password=generate_password_hash(form.password.data, "sha256", ), email=form.email.data)
 
         return redirect(url_for("index"))
     return render_template("signup.html", form=form)
 
 
+@app.route('/log_out', methods=['GET'])
+def log_out():
+    logout_user()
+    return redirect(url_for("index"))
+
+
 @app.route('/courses')
 def courses():
-    logout_user()
     return render_template("courses.html")
 
 
