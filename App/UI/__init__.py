@@ -72,9 +72,14 @@ def signup():
     return render_template("signup.html", form=form)
 
 
+@app.route('/log_out', methods=['GET'])
+def log_out():
+    logout_user()
+    return redirect(url_for("index"))
+
+
 @app.route('/courses')
 def courses():
-    logout_user()
     return render_template("courses.html")
 
 
