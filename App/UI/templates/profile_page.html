@@ -47,12 +47,15 @@
                                     My Stats
                                 </a>
                             </li>
+                              {% if visited_profile.user_name == current_user.user_name %}
+
                             <li class="nav-item">
                                 <a class="nav-link" data-target="#settings" role="tab" data-toggle="tab" onclick="show_tab('settings')" >
                                   <i class="material-icons"><img src="../static/assets/img/baseline_settings_black_24dp.png"> </i>
                                   Settings
                                 </a>
                             </li>
+                            {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" data-target="#friends" role="tab" data-toggle="tab" onclick="show_tab('friends')" >
                                   <i class="material-icons"><img src="../static/assets/img/baseline_people_alt_black_24dp.png"></i>
@@ -118,12 +121,10 @@
 			    		</form>
             </div>
             <!--Put content when pressed friends-->
-            <div class="tab-pane text-center gallery" id="friends">
-      			<div class="row">
-      				<div class="col-md-3 ml-auto">
-      				<div class="col-md-3 mr-auto">
-      				</div>
-      			</div>
+            <div class="tab-pane text-center gallery" id="friends" >
+      			<div class="row" id="friends_id">
+
+
               </div>
             </div>
             <!--Put content when pressed favorite course-->
@@ -141,10 +142,22 @@
 </section>
 {% endblock %}
 {%block javascript %}<!--High CHART LIVE  -->
-    <script src="../static/js/profile_page.js"></script>
+
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
     <script src="../static/js/mystats_chart.js"></script>
+    <script>
+     let friends = {}
+    {% for friend in visited_profile.friends_list %}
+        friends["{{friend.user_name}}"] = "{{friend.full_name}}"
+    {% endfor %}
+
+    </script>
+
+    <script src="../static/js/profile_page.js"></script>
+    <script>
+    show_friends()
+    </script>
     {% endblock %}
 
