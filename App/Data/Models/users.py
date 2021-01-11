@@ -2,12 +2,14 @@ from bson import ObjectId
 from flask_login import UserMixin
 
 from App.Data import Document, db
-
+from bson import ObjectId
 
 class User(Document, UserMixin):
     collection = db.users
 
- # Lägg in dessa metoder som fält i dokument User.
+    @property
+    def friends_list(self):
+        return [User.find(_id=ObjectId(user)).first_or_none() for user in self.friends]
 
     def is_authenticated(self):
         return True

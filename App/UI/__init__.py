@@ -128,10 +128,12 @@ def scorecard_play():
     return render_template("scorecard.html", course=course, players=players)
 
 
-@app.route('/profile_page', methods=["GET", "POST"])
+@app.route('/profile_page/<user_name>', methods=["GET", "POST"])
 @login_required
-def profile_page():
-    return render_template('profile_page.html')
+def profile_page(user_name):
+    visited_profile = get_user_by_username(user_name)
+
+    return render_template('profile_page.html', visited_profile=visited_profile)
 
 
 @app.route('/data', methods=["GET", "POST"])
@@ -140,3 +142,6 @@ def data():
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
     return response
+
+
+

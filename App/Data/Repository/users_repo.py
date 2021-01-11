@@ -24,5 +24,3 @@ def get_user(kwargs):
 
 def add_user(insert_dict):
     return User.insert_one(insert_dict)
-
-
