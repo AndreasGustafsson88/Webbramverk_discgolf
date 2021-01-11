@@ -32,3 +32,4 @@ def add_user(user_name, full_name, password, email):
     }
     ur.add_user(insert_dict)
 
+

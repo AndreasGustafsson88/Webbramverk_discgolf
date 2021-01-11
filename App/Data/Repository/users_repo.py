@@ -20,3 +20,8 @@ def get_user_by_username(username):
 
 def add_user(insert_dict):
     return User.insert_one(insert_dict)
+
+
+
+
+
