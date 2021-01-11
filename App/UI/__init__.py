@@ -37,10 +37,10 @@ def index():
 
         user = User.find_unique(user_name=username)
 
-        if user is not None:
+        if user:
             if check_password_hash(user.password, password):
                 login_user(user)
-                return redirect(url_for("profile_page"))
+                return redirect(url_for("profile_page", user_name=current_user.user_name))
 
     return render_template("index.html", form=form)
 
@@ -57,13 +57,21 @@ def signup():
             flash("password are not the same")
             return redirect(url_for("signup"))
 
-        if get_user_by_email(form.email.data):
+        if get_user(email=form.email.data):
             flash("Email already exists")
             return redirect(url_for("signup"))
 
-        if get_user_by_username(form.user_name.data):
+        if get_user(user_name=form.user_name.data):
             flash("Username already exists")
             return redirect(url_for("signup"))
+
+        # if get_user_by_email(form.email.data):
+        #     flash("Email already exists")
+        #     return redirect(url_for("signup"))
+        #
+        # if get_user_by_username(form.user_name.data):
+        #     flash("Username already exists")
+        #     return redirect(url_for("signup"))
 
         add_user(full_name=form.full_name.data, user_name=form.user_name.data, password=generate_password_hash(form.password.data, "sha256", ), email=form.email.data)
 

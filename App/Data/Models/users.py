@@ -1,3 +1,4 @@
+from bson import ObjectId
 from flask_login import UserMixin
 
 from App.Data import Document, db
