@@ -80,7 +80,8 @@ def log_out():
 
 @app.route('/courses')
 def courses():
-    return render_template("courses.html")
+    all_courses = get_all_names()
+    return render_template("courses.html", all_courses=all_courses)
 
 
 @app.route('/scorecard')
