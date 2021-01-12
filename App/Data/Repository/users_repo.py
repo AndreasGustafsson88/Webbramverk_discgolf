@@ -22,6 +22,11 @@ def add_user(insert_dict):
     return User.insert_one(insert_dict)
 
 
+def get_all_users():
+    return [user.user_name for user in User.all()]
 
 
+def add_friend(user, ob_id):
 
+    user.friends.append(ob_id)
+    user.save()

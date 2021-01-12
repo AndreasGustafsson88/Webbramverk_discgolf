@@ -1,3 +1,5 @@
+from bson import ObjectId
+
 from App.Data.Repository import users_repo as ur
 
 
@@ -31,5 +33,14 @@ def add_user(user_name, full_name, password, email):
         "profile_picture": None
     }
     ur.add_user(insert_dict)
+
+
+def get_all_users():
+    return ur.get_all_users()
+
+
+def add_friend(user, id):
+    ob_id = ObjectId(id)
+    return ur.add_friend(user, ob_id)
 
 

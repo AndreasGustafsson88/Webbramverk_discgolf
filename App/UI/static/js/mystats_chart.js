@@ -45,7 +45,7 @@ var chart;
                     }
                 },
                 series: [{
-                    name: 'Date',
+                    name: 'Rating',
                     data: []
                 }]
             });
