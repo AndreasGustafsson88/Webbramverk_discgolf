@@ -14,7 +14,7 @@ function create_scorecard() {
 
     let j_players = JSON.stringify(player_list);
 
-    let new_url = "http://127.0.0.1:5000/scorecard/play" + "?" + "course=" + course.innerHTML;
+    let new_url = "/scorecard/play" + "?" + "course=" + course.innerHTML;
     new_url += "&players=" + j_players;
 
     window.location.href = new_url;

@@ -24,3 +24,7 @@ def get_user(kwargs):
 
 def add_user(insert_dict):
     return User.insert_one(insert_dict)
+
+
+def find_unique(kwargs):
+    return User.find_unique(**kwargs)

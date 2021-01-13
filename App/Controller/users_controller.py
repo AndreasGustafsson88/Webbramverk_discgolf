@@ -35,3 +35,7 @@ def add_user(user_name, full_name, password, email):
         "profile_picture": None
     }
     ur.add_user(insert_dict)
+
+
+def find_unique(**kwargs):
+    return ur.find_unique(kwargs)

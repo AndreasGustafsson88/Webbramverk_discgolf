@@ -1,53 +1,49 @@
-var chart;
+        Highcharts.chart('container', {
 
-        function requestData()
-        {
-            // Ajax call to get the Data from Flask
-            var requests = $.get('/data');
+            title: {
+                text: 'Rating history'
+            },
 
-
-            var tm = requests.done(function (result)
-            {
-                var series = chart.series[0],
-                    shift = series.data.length > 15 ;
-
-                // add the points
-                chart.series[0].addPoint(result, true, shift);
-
-                // call it after two seconds
-                setTimeout(requestData, 2000);
-            });
-        }
-
-        $(document).ready(function() {
-            chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'data-container',
-                    defaultSeriesType: 'spline',
-                    events: {
-                        load: requestData
-                    }
-                },
+            yAxis: {
                 title: {
-                    text: 'My Latest Rounds'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    tickPixelInterval: 100,
-                    maxZoom: 20 * 1000
-                },
-                yAxis: {
-                    minPadding: 0.2,
-                    maxPadding: 0.2,
-                    title: {
-                        text: 'Ranking',
-                        margin: 80
-                    }
-                },
-                series: [{
-                    name: 'Date',
-                    data: []
-                }]
-            });
+                    text: 'Rating'
+                }
+            },
 
-        });
+            xAxis: {
+                categories: mydates,
+                labels: {
+                    enabled: false
+                }
+
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+
+            series: [{
+                name: 'My latest rounds',
+                data: ratings
+            }, {
+                name: 'Average rating',
+                data: avg
+            }, ],
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        })

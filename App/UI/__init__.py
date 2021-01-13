@@ -6,7 +6,7 @@ import json
 from App.Controller.courses_controller import get_all_names, get_one_course
 from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
-get_user, add_user
+    get_user, add_user, find_unique
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm
 from App.Data.Models.users import User
@@ -24,7 +24,8 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(_id):
-    return User.find_unique(_id=ObjectId(_id))
+
+    return find_unique(_id=ObjectId(_id))
 
 
 @app.route('/', methods=["POST", "GET"])
@@ -35,7 +36,7 @@ def index():
         username = form.username.data
         password = form.password.data
 
-        user = User.find_unique(user_name=username)
+        user = find_unique(user_name=username)
 
         if user:
             if check_password_hash(user.password, password):
@@ -64,14 +65,6 @@ def signup():
         if get_user(user_name=form.user_name.data):
             flash("Username already exists")
             return redirect(url_for("signup"))
-
-        # if get_user_by_email(form.email.data):
-        #     flash("Email already exists")
-        #     return redirect(url_for("signup"))
-        #
-        # if get_user_by_username(form.user_name.data):
-        #     flash("Username already exists")
-        #     return redirect(url_for("signup"))
 
         add_user(full_name=form.full_name.data, user_name=form.user_name.data, password=generate_password_hash(form.password.data, "sha256", ), email=form.email.data)
 
@@ -105,20 +98,7 @@ def scorecard():
 
 @app.route("/scorecard/play")
 def scorecard_play():
-    '''course = {
-        "Gässlösa Discgolfcenter": {
-            1: ["Par 3", 156],
-            2: ["Par 3", 76],
-            3: ["Par 4", 145],
-            4: ["Par 3", 96],
-            5: ["Par 3", 75],
-            6: ["Par 3", 89],
-            7: ["Par 4", 201],
-            8: ["Par 3", 79],
-            9: ["Par 3", 114],
-        }
-    }'''
-    # course = request.args.get("course")
+
     players = get_users(request.args.get("players").replace("[", "").replace("]", "").replace('"', '').split(","))
     course = get_one_course(request.args.get("course"))
 
