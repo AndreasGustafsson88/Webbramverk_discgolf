@@ -1,0 +1,35 @@
+#courses-page {
+    background-color: #eeeeee;
+    height: 90vh;
+    width: 100%;
+    display: block;
+}
+
+#courses-container {
+    width: 25%;
+    height: 100%;
+    float: left;
+    background-color: #23c2ff;
+}
+
+#map-container {
+    width: 75%;
+    height: 100%;
+    float: right;
+    background-color: #ff3333;
+}
+
+#courses-search {
+    width: 100%;
+    height: 10%;
+    background-color: #00b7ff;
+    padding: 15px;
+
+
+}
+
+#courses-list {
+    width: 100%;
+    height: 90%;
+    background-color: green;
+}

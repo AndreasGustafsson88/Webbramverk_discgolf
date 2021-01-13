@@ -41,6 +41,7 @@ width:100%;
     background-color: #eeeeee;
     height: 90vh;
     width: 100%;
+    display: block;
 }
 
 .search-form {
