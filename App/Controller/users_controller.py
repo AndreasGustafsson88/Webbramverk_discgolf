@@ -19,6 +19,10 @@ def get_user_by_username(username):
     return ur.get_user_by_username(username)
 
 
+def get_user(**kwargs):
+    return ur.get_user(kwargs)
+
+
 def add_user(user_name, full_name, password, email):
 
     insert_dict = {
@@ -35,6 +39,10 @@ def add_user(user_name, full_name, password, email):
     ur.add_user(insert_dict)
 
 
+def find_unique(**kwargs):
+    return ur.find_unique(kwargs)
+
+
 def get_all_users():
     return ur.get_all_users()
 
@@ -42,5 +50,3 @@ def get_all_users():
 def add_friend(user, id):
     ob_id = ObjectId(id)
     return ur.add_friend(user, ob_id)
-
-

@@ -1,7 +1,7 @@
 from flask_login import UserMixin
-
 from App.Data import Document, db
 from bson import ObjectId
+
 
 class User(Document, UserMixin):
     collection = db.users
@@ -9,15 +9,6 @@ class User(Document, UserMixin):
     @property
     def friends_list(self):
         return [User.find(_id=ObjectId(user)).first_or_none() for user in self.friends]
-
-    def is_authenticated(self):
-        return True
-
-    def is_active(self):
-        return True
-
-    def is_anonymous(self):
-        return False
 
     def get_id(self):
         return str(self._id)
