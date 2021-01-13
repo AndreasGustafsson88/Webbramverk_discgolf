@@ -26,3 +26,7 @@ function show_friends(){
     }
 
 }
+
+function add_friend(){
+
+}

@@ -6,7 +6,7 @@ import json
 from App.Controller.courses_controller import get_all_names, get_one_course
 from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
-    get_user, add_user, find_unique
+    get_user, add_user, find_unique, add_friend, get_all_users
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm
 from App.Data.Models.users import User
@@ -24,7 +24,6 @@ login_manager.init_app(app)
 
 @login_manager.user_loader
 def load_user(_id):
-
     return find_unique(_id=ObjectId(_id))
 
 
@@ -66,7 +65,8 @@ def signup():
             flash("Username already exists")
             return redirect(url_for("signup"))
 
-        add_user(full_name=form.full_name.data, user_name=form.user_name.data, password=generate_password_hash(form.password.data, "sha256", ), email=form.email.data)
+        add_user(full_name=form.full_name.data, user_name=form.user_name.data,
+                 password=generate_password_hash(form.password.data, "sha256", ), email=form.email.data)
 
         return redirect(url_for("index"))
     return render_template("signup.html", form=form)
@@ -80,25 +80,21 @@ def log_out():
 
 @app.route('/courses')
 def courses():
-    return render_template("courses.html")
+    all_courses = get_all_names()
+    return render_template("courses.html", all_courses=all_courses)
 
 
 @app.route('/scorecard')
 def scorecard():
-
     friends = get_all_friends(current_user)
-
-
 
     all_courses = get_all_names()
 
     return render_template("create_scorecard.html", all_courses=all_courses, friends=friends, current_user=current_user)
 
 
-
 @app.route("/scorecard/play")
 def scorecard_play():
-
     players = get_users(request.args.get("players").replace("[", "").replace("]", "").replace('"', '').split(","))
     course = get_one_course(request.args.get("course"))
 
@@ -111,9 +107,11 @@ def scorecard_play():
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])
 @login_required
 def profile_page(user_name):
+    if request.method == "POST":
+        add_friend(current_user, request.form['id'])
     visited_profile = get_user_by_username(user_name)
-
-    return render_template('profile_page.html', visited_profile=visited_profile)
+    all_users = get_all_users()
+    return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users)
 
 
 @app.route('/data', methods=["GET", "POST"])
@@ -122,6 +120,3 @@ def data():
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
     return response
-
-
-
