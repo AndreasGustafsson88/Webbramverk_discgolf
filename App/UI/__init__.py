@@ -6,7 +6,7 @@ import json
 from App.Controller.courses_controller import get_all_names, get_one_course
 from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
-    add_user
+    add_user, get_all_users, add_friend
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm
 from App.Data.Models.users import User
@@ -89,12 +89,9 @@ def scorecard():
 
     friends = get_all_friends(current_user)
 
-
-
     all_courses = get_all_names()
 
     return render_template("create_scorecard.html", all_courses=all_courses, friends=friends, current_user=current_user)
-
 
 
 @app.route("/scorecard/play")
@@ -125,9 +122,11 @@ def scorecard_play():
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])
 @login_required
 def profile_page(user_name):
+    if request.method == "POST":
+        add_friend(current_user, request.form['id'])
     visited_profile = get_user_by_username(user_name)
-
-    return render_template('profile_page.html', visited_profile=visited_profile)
+    all_users = get_all_users()
+    return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users)
 
 
 @app.route('/data', methods=["GET", "POST"])
@@ -136,6 +135,7 @@ def data():
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
     return response
+
 
 
 

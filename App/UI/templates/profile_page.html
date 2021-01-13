@@ -26,8 +26,11 @@
 	                            <img src="../static/assets/img/dog.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                             </div>
                             <!--Name on player-->
-	                        <div class="name">
-	                            <h3 class="title">Doris the Dog</h3>
+	                        <div class="name center-content-h" style="height: 35px;" >
+                                {% if visited_profile._id|string not in current_user.friends|string and visited_profile.user_name != current_user.user_name %}
+                                <input type="image" id="img1" src="../static/assets/img/add_friend.png" style="height: 100%; padding: 0; "/>
+                                {% endif %}
+	                            <h3 class="title">{{ visited_profile.user_name }}</h3>
 	                        </div>
 	                    </div>
     	            </div>
@@ -85,6 +88,7 @@
       			</div>
 
 				  <!--Put content when pressed settings-->
+             {% if visited_profile.user_name == current_user.user_name %}
             <div class="tab-pane text-center gallery" id="settings"style="display: none" >
                 <form role="form">
 			    			<div class="row row_names ">
@@ -120,8 +124,18 @@
 			    			<input type="submit" value="Save changes" class="btn btn-info">
 			    		</form>
             </div>
+                {% endif %}
             <!--Put content when pressed friends-->
             <div class="tab-pane text-center gallery" id="friends" >
+                {% if visited_profile.user_name == current_user.user_name %}
+                <div class="col-search-form">
+                    <form class="form-inline active-cyan-3 active-cyan-4 center-content" autocomplete="off" style="width: 100%; max-width: 500px">
+                        <div class=autocomplete aria-hidden="true" style="width: 100%">
+                            <input class="form-control form-control-m w-100" id="user_search" type="text" placeholder="Search Players" aria-label="Search" style="margin-bottom: 10px;">
+                        </div>
+                    </form>
+                </div>
+                    {% endif %}
       			<div class="row" id="friends_id">
 
 
@@ -147,17 +161,27 @@
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
     <script src="../static/js/mystats_chart.js"></script>
+    <script src="../static/js/profile_page.js"></script>
     <script>
+        let all_users = {{all_users|tojson|safe}};
      let friends = {}
     {% for friend in visited_profile.friends_list %}
         friends["{{friend.user_name}}"] = "{{friend.full_name}}"
     {% endfor %}
-
-    </script>
-
-    <script src="../static/js/profile_page.js"></script>
-    <script>
     show_friends()
     </script>
-    {% endblock %}
+    <script src="../static/js/create_scorecard.js"></script>
+    <script>
+      $('#img1').click(function (){
+        $.post("/profile_page/{{ visited_profile.user_name }}",
+            {
+                id: "{{ visited_profile._id }}"
+            },
+            function() {
+                alert("The amazing " + "{{ visited_profile.user_name }}" + " was added as your friend\nHe should be happy!")
+            },
 
+        )
+    })
+    </script>
+    {% endblock %}
