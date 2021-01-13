@@ -15,6 +15,9 @@
                 <div class="autocomplete" style="width: 100%">
                     <input class="form-control form-control-lg w-100" type="text" placeholder="Search" aria-label="Search" id="search_course">
                 </div>
+                {% if current_user.user_name %}
+                 <button onclick="add_favorite()">Submit </button>
+                {% endif %}
             </form>
         </div>
     </div>
@@ -35,10 +38,10 @@
 {% endblock %}
 {% block javascript %}
      <script>let all_courses = {{ all_courses|tojson|safe }};
-    autocomplete(document.getElementById("search_course"), all_courses, course=true);
+    autocomplete(document.getElementById("search_course"), all_courses);
 
 
-        function autocomplete(inp, arr, course=false) {
+        function autocomplete(inp, arr) {
           /*the autocomplete function takes two arguments,
           the text field element and an array of possible autocompleted values:*/
           var currentFocus;
@@ -70,10 +73,7 @@
                       b.addEventListener("click", function(e) {
                       /*insert the value for the autocomplete text field:*/
                       inp.value = this.getElementsByTagName("input")[0].value;
-                      if(course){
-                          let textfield = document.getElementById("Course");
-                          textfield.innerHTML = inp.value;
-                      }
+
                       /*close the list of autocompleted values,
                       (or any other open lists of autocompleted values:*/
                       closeAllLists();
@@ -138,4 +138,19 @@
             closeAllLists(e.target);
         });
         }</script>
+        <script>
+        function add_favorite(){
+
+            if(all_courses.includes(document.getElementById("search_course").value)){
+                console.log("hej")
+                 $.post("/courses",
+            {
+                course: document.getElementById("search_course").value
+            },
+            function() {
+                alert("submitted")
+            },)
+            }
+        }
+        </script>
 {% endblock %}
