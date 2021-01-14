@@ -1,3 +1,5 @@
+import json
+
 from bson import ObjectId
 
 from App.Data.Repository import users_repo as ur
@@ -49,4 +51,22 @@ def get_all_users():
 
 def add_friend(user, id):
     ob_id = ObjectId(id)
-    return ur.add_friend(user, ob_id)
+    if ob_id not in user.friends:
+        return ur.add_friend(user, ob_id)
+    else:
+        return {
+            'status': 200,
+            'mimetype': 'application/json',
+            'response': json.dumps('already in you friends list')
+        }
+
+
+def delete_friend(user, friend):
+    if friend in user.friends:
+        return ur.delete_friend(user, friend)
+    else:
+        return {
+            'status': 200,
+            'mimetype': 'application/json',
+            'response': json.dumps('Not in your friend list')
+        }

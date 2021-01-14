@@ -1,3 +1,4 @@
+import json
 from App.Data.Models.users import User
 from bson import ObjectId
 
@@ -31,9 +32,38 @@ def add_user(insert_dict):
 
 
 def add_friend(user, ob_id):
-    user.friends.append(ob_id)
-    user.save()
+    try:
+        user.friends.append(ob_id)
+        user.save()
+        return {
+            'status': 200,
+            'mimetype': 'application/json',
+            'response': json.dumps('added as you friend!')
+        }
+    except:
+        return {
+            'status': 200,
+            'mimetype': 'application/json',
+            'response': json.dumps('Unknown error, contact Admin')
+        }
 
 
 def find_unique(kwargs):
     return User.find_unique(**kwargs)
+
+
+def delete_friend(user, ob_id):
+    try:
+        user.friends.remove(ob_id)
+        user.save()
+        return {
+            'status': 200,
+            'mimetype': 'application/json',
+            'response': json.dumps('removed as friend!')
+        }
+    except:
+        return {
+            'status': 200,
+            'mimetype': 'application/json',
+            'response': json.dumps('Unknown error, contact Admin')
+        }

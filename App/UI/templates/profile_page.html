@@ -192,6 +192,19 @@
         {% endfor %}
 
         show_friends()
+        $(".remove").click(function (){
+            $.ajax({
+                method: 'delete',
+                url: "/profile_page/{{ visited_profile.user_name }}",
+                data: {
+                    id: this.id
+                },
+                success: (data) => {
+                    alert(data)
+                },
+            })
+            $(this).parent().remove();
+        })
 
     </script>
     <script src="../static/js/mystats_chart.js"></script>
@@ -204,15 +217,17 @@
         render_chart(player_history);
 
         $('#img1').click(function (){
-            $.post("/profile_page/{{ visited_profile.user_name }}",
-                {
+            $.ajax({
+                method: 'post',
+                url: "/profile_page/{{ visited_profile.user_name }}",
+                data: {
                     id: "{{ visited_profile._id }}"
                 },
-                function() {
-                    alert("The amazing " + "{{ visited_profile.user_name }}" + " was added as your friend\nHe should be happy!")
+                success: (data) => {
+                    alert(data)
                 },
-
-            );
+            })
+            $(this).remove()
         });
 
     </script>
