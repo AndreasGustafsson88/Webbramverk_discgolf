@@ -1,4 +1,20 @@
-        Highcharts.chart('container', {
+function render_chart(player_history) {
+
+        let my_dates = [];
+        let ratings = [];
+        let avg = [];
+        let tot = 0;
+
+        for (let i = 0; i < player_history.length; i++) {
+            my_dates.push(player_history[i][0])
+            ratings.push(player_history[i][1])
+
+            tot += player_history[i][1]
+            avg.push(tot / (i + 1));
+                }
+
+    $(function () {
+        $('#container').highcharts({
 
             title: {
                 text: 'Rating history'
@@ -11,7 +27,7 @@
             },
 
             xAxis: {
-                categories: mydates,
+                categories: my_dates,
                 labels: {
                     enabled: false
                 }
@@ -30,7 +46,7 @@
             }, {
                 name: 'Average rating',
                 data: avg
-            }, ],
+            },],
 
             responsive: {
                 rules: [{
@@ -47,3 +63,5 @@
                 }]
             }
         })
+    })
+}
