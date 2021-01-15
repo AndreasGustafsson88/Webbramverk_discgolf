@@ -6,7 +6,7 @@ import json
 from App.Controller.courses_controller import get_all_names, get_one_course
 from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
-    get_user, add_user, find_unique, add_friend, get_all_users
+    get_user, add_user, find_unique, add_friend, get_all_users, delete_friend
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm
 from App.Data.Models.users import User
@@ -104,11 +104,18 @@ def scorecard_play():
     return render_template("scorecard.html", course=course, players=players)
 
 
-@app.route('/profile_page/<user_name>', methods=["GET", "POST"])
+@app.route('/profile_page/<user_name>', methods=["GET", "POST", "DELETE"])
 @login_required
 def profile_page(user_name):
     if request.method == "POST":
-        add_friend(current_user, request.form['id'])
+        message = add_friend(current_user, request.form['id'])
+        response = app.response_class(**message)
+        return response
+    if request.method == "DELETE":
+        friend = get_user(user_name=request.form['id'])
+        message = delete_friend(current_user, friend._id)
+        response = app.response_class(**message)
+        return response
     visited_profile = get_user_by_username(user_name)
     all_users = get_all_users()
     return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users)
