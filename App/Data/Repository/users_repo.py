@@ -31,9 +31,11 @@ def add_user(insert_dict):
     return User.insert_one(insert_dict)
 
 
-def add_friend(user, ob_id):
+def add_friend(user, ob_id, from_request=False):
     try:
         user.friends.append(ob_id)
+        if from_request:
+            user.Oid_req.remove(ob_id)
         user.save()
         return {
             'status': 200,
@@ -60,6 +62,28 @@ def delete_friend(user, ob_id):
             'status': 200,
             'mimetype': 'application/json',
             'response': json.dumps('removed as friend!')
+        }
+    except:
+        return {
+            'status': 200,
+            'mimetype': 'application/json',
+            'response': json.dumps('Unknown error, contact Admin')
+        }
+
+
+def add_friend_request(current_user, visited_user):
+    visited_user.Oid_req.append(current_user._id)
+    visited_user.save()
+
+
+def delete_friend_request(user, ob_id):
+    try:
+        user.Oid_req.remove(ob_id)
+        user.save()
+        return {
+            'status': 200,
+            'mimetype': 'application/json',
+            'response': json.dumps('wasn\'t added as your friend')
         }
     except:
         return {
