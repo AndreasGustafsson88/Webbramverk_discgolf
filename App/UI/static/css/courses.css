@@ -9,14 +9,16 @@
     width: 25%;
     height: 100%;
     float: left;
-    background-color: #23c2ff;
+    background-color: #86fdfb;
+    border: #6e6e6e 1px solid;
+
 }
 
 #map-container {
     width: 75%;
     height: 100%;
     float: right;
-    background-color: #ff3333;
+    background-color: white;
 }
 
 #courses-search {
@@ -24,6 +26,9 @@
     height: 10%;
     background-color: #00b7ff;
     padding: 15px;
+    border: #6e6e6e 1px solid;
+
+
 
 
 }
@@ -31,24 +36,33 @@
 #courses-list {
     width: 100%;
     height: 90%;
-    background-color: green;
+    background-color: #86fdfb;
     overflow-y: auto;
 }
 
 #map-frame {
-    background-color: #00b7ff;
+    background-color: #d5d5d9;
     height: 100%;
     width: 100%;
 
 }
 
 .course {
-    background-color: #d4d4d4;
+    background-color: #6e6e6e;
     width: 100%;
     height: 50px;
     display: flex;
     border: #161515 1px solid;
-    border-radius: 10px;
+    border-radius: 2px;
     overflow: hidden;
 
+}
+
+.course-text {
+    flex-grow: 100;
+    background-color: #f87019;
+    border-left: #434242 1px solid;
+    padding-left: 5px;
+    display: inherit;
+    align-items: center;
 }
