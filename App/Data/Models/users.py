@@ -10,6 +10,10 @@ class User(Document, UserMixin):
     def friends_list(self):
         return [User.find(_id=ObjectId(user)).first_or_none() for user in self.friends]
 
+    @property
+    def friend_requests(self):
+        return [User.find(_id=ObjectId(user)).first_or_none() for user in self.Oid_req]
+
     def get_id(self):
         return str(self._id)
 

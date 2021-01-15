@@ -36,7 +36,8 @@ def add_user(user_name, full_name, password, email):
         "friends": [],
         "rating": None,
         "history": [],
-        "profile_picture": None
+        "profile_picture": None,
+        "Oid_req": []
     }
     ur.add_user(insert_dict)
 
@@ -49,10 +50,10 @@ def get_all_users():
     return ur.get_all_users()
 
 
-def add_friend(user, id):
+def add_friend(user, id, from_request=False):
     ob_id = ObjectId(id)
     if ob_id not in user.friends:
-        return ur.add_friend(user, ob_id)
+        return ur.add_friend(user, ob_id, from_request)
     else:
         return {
             'status': 200,
@@ -70,3 +71,12 @@ def delete_friend(user, friend):
             'mimetype': 'application/json',
             'response': json.dumps('Not in your friend list')
         }
+
+
+def delete_friend_request(user, ob_id):
+    return ur.delete_friend_request(user, ob_id)
+
+
+def add_friend_request(current_user, visited_user):
+    if current_user not in visited_user.friends_list:
+        return ur.add_friend_request(current_user, visited_user)

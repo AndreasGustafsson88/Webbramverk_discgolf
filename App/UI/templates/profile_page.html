@@ -28,7 +28,9 @@
                             <!--Name on player-->
 	                        <div class="name center-content-h" style="height: 35px;" >
                                 {% if visited_profile._id|string not in current_user.friends|string and visited_profile.user_name != current_user.user_name %}
-                                <input type="image" id="img1" src="../static/assets/img/add_friend.png" style="height: 100%; padding: 0; "/>
+                                    <div style="width: 35px">
+                                        <input type="image" class="post add_friend" id="img1" src="../static/assets/img/add_friend.png" style="height: 100%; padding: 0; "/>
+                                    </div>
                                 {% endif %}
 	                            <h3 class="title">{{ visited_profile.user_name }}</h3>
 	                        </div>
@@ -61,7 +63,7 @@
                             {% endif %}
                             <li class="nav-item">
                                 <a class="nav-link" data-target="#friends" role="tab" data-toggle="tab" onclick="show_tab('friends')" >
-                                  <i class="material-icons"><img src="../static/assets/img/baseline_people_alt_black_24dp.png"></i>
+                                  <i class="material-icons"><img src="../static/assets/img/baseline_people_alt_black_24dp.png" id="friend_logo_image" style="height: 48px;"></i>
                                     Friends
                                 </a>
                             </li>
@@ -153,6 +155,7 @@
       			<div class="row" id="friends_id">
 
 
+
               </div>
             </div>
             <!--Put content when pressed favorite course-->
@@ -177,6 +180,49 @@
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
     <script src="../static/js/profile_page.js"></script>
     <script>
+        let request_list = {}
+
+        {% for req in current_user.friend_requests %}
+            request_list["{{req.user_name}}"] = "{{req.full_name}}"
+        {% endfor %}
+
+
+        if (!jQuery.isEmptyObject(request_list)) {
+            $('#friend_logo_image')[0].src = "../static/assets/img/friend_request.png"
+            for (let username in request_list) {
+
+                let parent = document.getElementById('friends_id')
+
+                let block_to_insert = document.createElement('div')
+                block_to_insert.className= "col-container w100 center-content-h"
+                block_to_insert.style.height = '50px'
+                block_to_insert.innerHTML = request_list[username];
+
+                let friend_link = document.createElement("a");
+                friend_link.setAttribute("href","/profile_page/" + username);
+                friend_link.innerHTML = username;
+
+                let accept_request = document.createElement("input");
+                accept_request.setAttribute("type", "image");
+                accept_request.setAttribute("id", username);
+                accept_request.setAttribute("class", "post accept_request");
+                accept_request.setAttribute("src", "../static/assets/img/check_mark.png");
+                accept_request.style.height="100%"
+
+                let decline_request = document.createElement("input");
+                decline_request.setAttribute("type", "image");
+                decline_request.setAttribute("id", username);
+                decline_request.setAttribute("class", "action decline_request");
+                decline_request.setAttribute("src", "../static/assets/img/red_cross.jpg");
+                decline_request.style.height="100%"
+
+                block_to_insert.appendChild(friend_link)
+                block_to_insert.appendChild(accept_request)
+                block_to_insert.appendChild(decline_request)
+
+                parent.appendChild(block_to_insert)
+            }
+        }
 
         $('.rounds').click(function () {
             player_history = {{ visited_profile.history|tojson }}
@@ -192,19 +238,29 @@
         {% endfor %}
 
         show_friends()
-        $(".remove").click(function (){
+
+        $(".action").click(function (){
             $.ajax({
                 method: 'delete',
                 url: "/profile_page/{{ visited_profile.user_name }}",
                 data: {
-                    id: this.id
+                    username: this.id,
+                    action: this.className
                 },
                 success: (data) => {
-                    alert(data)
+                    alert(this.id + ' ' + data)
+
+                    delete request_list[this.id]
+
+                    if (jQuery.isEmptyObject(request_list)) {
+                            $('#friend_logo_image')[0].src = "../static/assets/img/baseline_people_alt_black_24dp.png"
+                        }
                 },
             })
             $(this).parent().remove();
         })
+
+
 
     </script>
     <script src="../static/js/mystats_chart.js"></script>
@@ -216,19 +272,37 @@
         player_history = player_history.slice(Math.max(player_history.length - 20, 0));
         render_chart(player_history);
 
-        $('#img1').click(function (){
+        $('.post').click(function (){
             $.ajax({
                 method: 'post',
                 url: "/profile_page/{{ visited_profile.user_name }}",
                 data: {
-                    id: "{{ visited_profile._id }}"
+                    id: "{{ visited_profile._id }}",
+                    action: this.className,
+                    request_username: this.id
                 },
                 success: (data) => {
-                    alert(data)
+                    if (this.id !== 'img1') {
+                        alert( this.id + ' ' + data)
+
+                        friends[this.id] = "New pal"
+                        delete request_list[this.id]
+
+                        show_friends()
+
+                        if (jQuery.isEmptyObject(request_list)) {
+                            $('#friend_logo_image')[0].src = "../static/assets/img/baseline_people_alt_black_24dp.png"
+                        }
+                    }
+                    else {
+                        alert('{{ visited_profile.user_name }}' + ' ' + data)
+                    }
                 },
             })
-            $(this).remove()
+            $(this).parent().remove()
         });
+
+
 
     </script>
     {% endblock %}

@@ -11,6 +11,7 @@ function show_tab(tab_id){
 
 
 function show_friends(){
+
     var show_friends = document.getElementById("friends_id");
 
     for(let key in friends){
@@ -19,7 +20,7 @@ function show_friends(){
         var remove_button = document.createElement("input");
         remove_button.setAttribute("type", "image");
         remove_button.setAttribute("id", key);
-        remove_button.setAttribute("class", "remove");
+        remove_button.setAttribute("class", "action remove");
         remove_button.setAttribute("src", "../static/assets/img/delete.png");
         remove_button.style.height="100%"
         block_to_insert.setAttribute("class", "col-container w100 center-content-h");
