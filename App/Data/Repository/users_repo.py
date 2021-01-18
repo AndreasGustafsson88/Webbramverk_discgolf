@@ -91,3 +91,8 @@ def delete_friend_request(user, ob_id):
             'mimetype': 'application/json',
             'response': json.dumps('Unknown error, contact Admin')
         }
+
+
+def update_profile(current_user, profile_picture, user_name, email, password):
+    pass
+

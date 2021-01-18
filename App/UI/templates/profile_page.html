@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div> -->
-        <div class="content">
+        <div class="p-content">
             <div class="container profile">
                 <div class="row">
 	                <div class="col-md-6 ml-auto mr-auto">
@@ -106,44 +106,44 @@
 				  <!--Put content when pressed settings-->
              {% if visited_profile.user_name == current_user.user_name %}
             <div class="tab-pane text-center gallery" id="settings"style="display: none" >
-                <form role="form">
-			    			<div class="row row_names ">
+                <div class="panel-body">
+			    		<form action="{{ url_for('profile_page_update') }}" role="form" method="POST">
+                            {{ form.csrf_token }}
+			    			<div class="row">
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-			                <input type="text" name="first_name" id="first_name" class="form-control input-sm" placeholder="New First Name">
-			    					</div>
+                                    {{ form.profile_picture }}
 			    				</div>
 			    				<div class="col-xs-6 col-sm-6 col-md-6">
 			    					<div class="form-group">
-			    						<input type="text" name="last_name" id="last_name" class="form-control input-sm" placeholder="New Last Name">
-			    					</div>
-			    				</div>
-			    			</div>
-
-			    			<div class="form-group mail_bar">
-			    				<input type="email" name="email" id="email" class="form-control input-sm" placeholder="New Email Address">
-			    			</div>
-
-			    			<div class="row row_password">
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-			    						<input type="password" name="password" id="password" class="form-control input-sm" placeholder="New Password">
-			    					</div>
-			    				</div>
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-			    						<input type="password" name="password_confirmation" id="password_confirmation" class="form-control input-sm" placeholder="Confirm New Password">
+                                        {{ form.user_name }}
 			    					</div>
 			    				</div>
 			    			</div>
 
-			    			<input type="submit" value="Save changes" class="btn btn-info">
+			    			<div class="form-group">
+			    				{{ form.email }}
+			    			</div>
+
+			    			<div class="row">
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						{{ form.password }}
+			    					</div>
+			    				</div>
+			    				<div class="col-xs-6 col-sm-6 col-md-6">
+			    					<div class="form-group">
+			    						{{ form.confirm_password }}
+			    					</div>
+			    				</div>
+			    			</div>
+                            {{ form.submit }}
 			    		</form>
+			    	</div>
             </div>
                 {% endif %}
             <!--Put content when pressed friends-->
             <div class="tab-pane text-center gallery" id="friends" >
-                {% if visited_profile.user_name == current_user.user_name %}
+
                 <div class="col-search-form">
                     <form class="form-inline active-cyan-3 active-cyan-4 center-content" autocomplete="off" style="width: 100%; max-width: 500px">
                         <div class=autocomplete aria-hidden="true" style="width: 100%">
@@ -151,7 +151,7 @@
                         </div>
                     </form>
                 </div>
-                    {% endif %}
+
       			<div class="row" id="friends_id">
 
 
@@ -236,9 +236,9 @@
         {% for friend in visited_profile.friends_list %}
             friends["{{friend.user_name}}"] = "{{friend.full_name}}"
         {% endfor %}
-
-        show_friends()
-
+         {% if visited_profile.user_name == current_user.user_name %}
+            show_friends()
+        {% endif %}
         $(".action").click(function (){
             $.ajax({
                 method: 'delete',
