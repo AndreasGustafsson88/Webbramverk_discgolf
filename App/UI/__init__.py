@@ -6,7 +6,8 @@ import json
 from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id
 from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
-    get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, delete_friend_request
+    get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, \
+    delete_friend_request, get_favorite_courses
 from App.Data.Models.flaskform import SignInForm, SignUpForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
@@ -160,8 +161,9 @@ def profile_page(user_name):
 
 
     visited_profile = get_user_by_username(user_name)
+    favorite_courses = get_favorite_courses(visited_profile.favourite_courses)
     all_users = get_all_users()
-    return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users)
+    return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users, favorite_courses=favorite_courses)
 
 
 @app.route('/data', methods=["GET", "POST"])

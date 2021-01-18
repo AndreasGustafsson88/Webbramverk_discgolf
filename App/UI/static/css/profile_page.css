@@ -86,3 +86,7 @@
   border-radius: 20px;
   border: #161515 2px solid;
 }
+
+#favorite-courses-list {
+  list-style-type: none;
+}
