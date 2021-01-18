@@ -40,17 +40,17 @@
             <a class="nav-link" href="{{ url_for("log_out") }}">Logout</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">{{ current_user.user_name }}</a>
+            <a class="nav-link" href="{{ url_for("profile_page", user_name=current_user.user_name)}}" tabindex="-1" aria-disabled="true">{{ current_user.user_name }}</a>
           </li>
         </ul>
       </div>
     </nav>
 
     <!-- Content -->
-    <div id="content">{% block content %}{% endblock %}</div>
+    {% block content %}{% endblock %}
 
-    <nav class="navbar fixed-bottom navbar-dark bg-dark">
-        <a class="footer Fixed bottom">
+    <nav class="navbar navbar-dark bg-dark">
+        <a class="footer">
             <img src="../static/assets/img/UDisc_Logo_Full_White.svg" alt="" height="30rem">
         </a>
     </nav>

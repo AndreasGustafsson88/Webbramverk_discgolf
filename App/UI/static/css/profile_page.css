@@ -15,7 +15,6 @@
 .container {
   background-color: #eeeeee;
   width: 80%;
-  position: absolute;top: 20%;left: 10%;
   border-collapse: collapse;
   border-radius: 20px;
   border: #434242 1px solid;

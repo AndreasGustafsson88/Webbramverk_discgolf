@@ -1,53 +1,67 @@
-var chart;
+function render_chart(player_history) {
 
-        function requestData()
-        {
-            // Ajax call to get the Data from Flask
-            var requests = $.get('/data');
+        let my_dates = [];
+        let ratings = [];
+        let avg = [];
+        let tot = 0;
 
+        for (let i = 0; i < player_history.length; i++) {
+            my_dates.push(player_history[i][0])
+            ratings.push(player_history[i][1])
 
-            var tm = requests.done(function (result)
-            {
-                var series = chart.series[0],
-                    shift = series.data.length > 15 ;
+            tot += player_history[i][1]
+            avg.push(tot / (i + 1));
+                }
 
-                // add the points
-                chart.series[0].addPoint(result, true, shift);
+    $(function () {
+        $('#container').highcharts({
 
-                // call it after two seconds
-                setTimeout(requestData, 2000);
-            });
-        }
+            title: {
+                text: 'Rating history'
+            },
 
-        $(document).ready(function() {
-            chart = new Highcharts.Chart({
-                chart: {
-                    renderTo: 'data-container',
-                    defaultSeriesType: 'spline',
-                    events: {
-                        load: requestData
-                    }
-                },
+            yAxis: {
                 title: {
-                    text: 'My Latest Rounds'
-                },
-                xAxis: {
-                    type: 'datetime',
-                    tickPixelInterval: 100,
-                    maxZoom: 20 * 1000
-                },
-                yAxis: {
-                    minPadding: 0.2,
-                    maxPadding: 0.2,
-                    title: {
-                        text: 'Ranking',
-                        margin: 80
-                    }
-                },
-                series: [{
-                    name: 'Date',
-                    data: []
-                }]
-            });
+                    text: 'Rating'
+                }
+            },
 
-        });
+            xAxis: {
+                categories: my_dates,
+                labels: {
+                    enabled: false
+                }
+
+            },
+
+            legend: {
+                layout: 'vertical',
+                align: 'right',
+                verticalAlign: 'middle'
+            },
+
+            series: [{
+                name: 'My latest rounds',
+                data: ratings
+            }, {
+                name: 'Average rating',
+                data: avg
+            },],
+
+            responsive: {
+                rules: [{
+                    condition: {
+                        maxWidth: 500
+                    },
+                    chartOptions: {
+                        legend: {
+                            layout: 'horizontal',
+                            align: 'center',
+                            verticalAlign: 'bottom'
+                        }
+                    }
+                }]
+            }
+        })
+    })
+}

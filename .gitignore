@@ -3,8 +3,5 @@ venv/
 __pycache__/
 App/Data/DB_SETTINGS/__init__.py
 docker-compose.yml
-.documents/Courses_info.json
-.documents/dummy.py
-.documents/course_update.txt
 dump/
-.documents/dump_restore_mongo.txt
+.documents/div/

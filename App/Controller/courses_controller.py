@@ -1,5 +1,6 @@
 from App.Data.Repository import courses_repo as co
 
+
 def get_all_names():
     return co.get_all_names()
 
@@ -15,3 +16,4 @@ def update_favorite_courses(course_name, current_user):
 
 def get_course_by_id(course_id):
     return co.get_course_by_id(course_id)
+

@@ -41,6 +41,7 @@ width:100%;
     background-color: #eeeeee;
     height: 90vh;
     width: 100%;
+    display: block;
 }
 
 .search-form {
@@ -60,9 +61,13 @@ width:100%;
     justify-content: center;
 }
 
-#content {
-    height: 500px;
+.content {
+    height: 85vh;
+    display: flex;
+    justify-content: center;
     width: auto;
+    margin-top: 15%;
+    margin-bottom: -15%;
 }
 
 
@@ -83,7 +88,7 @@ width:100%;
 
 .scorecard {
     background-color: #eeeeee;
-    height: 85vh;
+    height: 84vh;
     width: 100vw;
 }
 

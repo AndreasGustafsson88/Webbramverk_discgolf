@@ -1,5 +1,4 @@
 from App.Data.Models.courses import Course
-from App.Data.Models.users import User
 
 
 def get_all_names():
