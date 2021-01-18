@@ -88,5 +88,8 @@
 }
 
 #favorite-courses-list {
-  list-style-type: none;
+  background-color: #23c2ff;
+  border-radius: 10px ;
+  border: #161515 2px solid;
+  margin-bottom: 10px;
 }

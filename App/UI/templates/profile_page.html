@@ -161,11 +161,11 @@
             <!--Put content when pressed favorite course-->
             <div class="tab-pane text-center gallery" id="favorite_courses">
                 <p>Gå till courses för att lägga till bana</p>
-                <ul id="favorite-courses-list" >
+                <div id="favorite-courses-list" >
                     {% for course in favorite_courses %}
-                        <li><h3>{{ course }}</h3></li>
+                        <h3>{{ course }}</h3>
                     {% endfor %}
-                </ul>
+                </div>
 
       		</div>
             </div>
