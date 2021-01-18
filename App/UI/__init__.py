@@ -3,13 +3,11 @@ from flask import Flask, render_template, make_response, request, redirect, url_
 from werkzeug.security import generate_password_hash, check_password_hash
 from time import time
 import json
-from App.Controller.courses_controller import get_all_names, get_one_course, add_favorite_course
+from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id
 from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
     get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, delete_friend_request
-from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm
-from App.Data.Models.users import User
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
 app = Flask(__name__,
@@ -81,13 +79,29 @@ def log_out():
 @app.route('/courses', methods=["POST", "GET"])
 def courses():
     if request.method == "POST":
-        course_name = request.form["course"]
-        if add_favorite_course(course_name, current_user):
-            #todo add response code depending on success
-            pass
+        if "loading" in request.form:
+            favorites = [get_course_by_id(course).name for course in current_user.favourite_courses]
+            response = app.response_class(
+                response=json.dumps({"favorites": favorites}),
+                status=200,
+                mimetype="application/json"
+            )
+            return response
+        if "course" in request.form:
+            course_name = request.form["course"]
+            if update_favorite_courses(course_name, current_user):
+                message = "Course added to favorites"
+            else:
+                message = "Course removed from favorites"
+            response = app.response_class(
+                response=json.dumps(message),
+                status=200,
+                mimetype="application/json"
+            )
+            return response
 
     all_courses = get_all_names()
-    return render_template("courses.html", all_courses=all_courses)
+    return render_template('courses.html', all_courses=json.dumps(all_courses))
 
 
 @app.route('/scorecard')
