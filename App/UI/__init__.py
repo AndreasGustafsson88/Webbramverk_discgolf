@@ -3,11 +3,9 @@ from flask import Flask, render_template, make_response, request, redirect, url_
 from werkzeug.security import generate_password_hash, check_password_hash
 from time import time
 import json
-from App.Controller.courses_controller import get_all_names, get_one_course
+from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id
 from App.Controller.my_chart_controller import return_random
-from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
-    add_user
-from App.Data.Models.courses import Course
+from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, add_user
 from App.Data.Models.flaskform import SignInForm, SignUpForm
 from App.Data.Models.users import User
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
@@ -135,6 +133,34 @@ def data():
     response = make_response(json.dumps(data))
     response.content_type = 'application/json'
     return response
+
+
+@app.route('/testing', methods=["GET", "POST"])
+def testing():
+    if request.method == "POST":
+        if "loading" in request.form:
+            favorites = [get_course_by_id(course).name for course in current_user.favourite_courses]
+            response = app.response_class(
+                response=json.dumps({"favorites": favorites}),
+                status=200,
+                mimetype="application/json"
+            )
+            return response
+        if "course" in request.form:
+            course_name = request.form["course"]
+            if update_favorite_courses(course_name, current_user):
+                message = "Course added to favorites"
+            else:
+                message = "Course removed from favorites"
+            response = app.response_class(
+                response=json.dumps(message),
+                status=200,
+                mimetype="application/json"
+            )
+            return response
+
+    all_courses = get_all_names()
+    return render_template('testing.html', all_courses=json.dumps(all_courses))
 
 
 
