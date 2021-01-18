@@ -79,27 +79,28 @@ def log_out():
 
 @app.route('/courses', methods=["POST", "GET"])
 def courses():
-    if request.method == "POST":
-        if "loading" in request.form:
-            favorites = [get_course_by_id(course).name for course in current_user.favourite_courses]
-            response = app.response_class(
-                response=json.dumps({"favorites": favorites}),
-                status=200,
-                mimetype="application/json"
-            )
-            return response
-        if "course" in request.form:
-            course_name = request.form["course"]
-            if update_favorite_courses(course_name, current_user):
-                message = "Course added to favorites"
-            else:
-                message = "Course removed from favorites"
-            response = app.response_class(
-                response=json.dumps(message),
-                status=200,
-                mimetype="application/json"
-            )
-            return response
+    if not current_user.is_anonymous:
+        if request.method == "POST":
+            if "loading" in request.form:
+                favorites = [get_course_by_id(course).name for course in current_user.favourite_courses]
+                response = app.response_class(
+                    response=json.dumps({"favorites": favorites}),
+                    status=200,
+                    mimetype="application/json"
+                )
+                return response
+            if "course" in request.form:
+                course_name = request.form["course"]
+                if update_favorite_courses(course_name, current_user):
+                    message = "Course added to favorites"
+                else:
+                    message = "Course removed from favorites"
+                response = app.response_class(
+                    response=json.dumps(message),
+                    status=200,
+                    mimetype="application/json"
+                )
+                return response
 
     all_courses = get_all_names()
     return render_template('courses.html', all_courses=json.dumps(all_courses))
