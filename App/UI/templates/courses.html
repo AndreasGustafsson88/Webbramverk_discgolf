@@ -1,44 +1,56 @@
 {% extends "base_logged_in.html" %}
-
+{% block css %}
+<link rel="stylesheet" type="text/css" href="../static/css/courses.css"/>
+{% endblock %}
 
 {% block content %}
 
-<section class="courses-section">
+<div id="courses-page">
 
     <!-- Search form -->
-    <div class="container-fluid search-form">
-        <div class="col-search-form">
-            <p class="text-center heading-text">Find a course</p>
-
-            <form class="form-inline active-cyan-3 active-cyan-4" style="width: 80%">
-               <!-- <i class="fas fa-search" aria-hidden="true"></i> -->
-                <div class="autocomplete" style="width: 100%">
-                    <input class="form-control form-control-lg w-100" type="text" placeholder="Search" aria-label="Search" id="search_course">
-                </div>
+    <div id="courses-container">
+        <div id="courses-search">
+            <form>
+                <!-- todo fix border focus not black, button, fill courses list -->
+                <input type="text"placeholder="Search" style="border: #6e6e6e 1px solid; border-radius: 5px; outline: none;">
             </form>
         </div>
+        <div id="courses-list">
+            <div class="course">
+                <img src="../static/assets/img/Star%20Filled-595b40b65ba036ed117d408e.svg" alt="fav" style="margin: 10px; background-color: #6e6e6e;" height="30px" width="30px">
+                <div class="course-text"><h3> hej </h3> </div>
+            </div>
+
+
+        </div>
+
+
+
     </div>
+
+
+
 
     <!--Google map-->
-    <div class="container-fluid" style="height: 70%; padding-bottom: 50px">
-        <div class="card-body card-body-cascade text-center" style="height: 100%; padding-bottom: 0">
-            <div id="map-container-google-2" class="z-depth-1-half map-container">
-                <iframe src="https://www.google.com/maps/d/embed?mid=1BKnIaG_SE17mmhzPZcj_ZUvZ7Oo" width="640" height="480"></iframe>
-            </div>
+    <div id="map-container">
+        <div id="map-frame" >
+            <iframe src="https://www.google.com/maps/d/embed?mid=1BKnIaG_SE17mmhzPZcj_ZUvZ7Oo" width="100%" height="98.5%"></iframe>
         </div>
+
     </div>
 
-</section>
+
+</div>
 
 
 
 {% endblock %}
 {% block javascript %}
      <script>let all_courses = {{ all_courses|tojson|safe }};
-    autocomplete(document.getElementById("search_course"), all_courses, course=true);
+    autocomplete(document.getElementById("search_course"), all_courses);
 
 
-        function autocomplete(inp, arr, course=false) {
+        function autocomplete(inp, arr) {
           /*the autocomplete function takes two arguments,
           the text field element and an array of possible autocompleted values:*/
           var currentFocus;
@@ -70,10 +82,7 @@
                       b.addEventListener("click", function(e) {
                       /*insert the value for the autocomplete text field:*/
                       inp.value = this.getElementsByTagName("input")[0].value;
-                      if(course){
-                          let textfield = document.getElementById("Course");
-                          textfield.innerHTML = inp.value;
-                      }
+
                       /*close the list of autocompleted values,
                       (or any other open lists of autocompleted values:*/
                       closeAllLists();
@@ -138,4 +147,19 @@
             closeAllLists(e.target);
         });
         }</script>
+        <script>
+        function add_favorite(){
+
+            if(all_courses.includes(document.getElementById("search_course").value)){
+                console.log("hej")
+                 $.post("/courses",
+            {
+                course: document.getElementById("search_course").value
+            },
+            function() {
+                alert("submitted")
+            },)
+            }
+        }
+        </script>
 {% endblock %}
