@@ -15,7 +15,7 @@ class Course(Document):
 
     def update_rating(self):
         coef = np.polyfit(list(map(lambda x: x[1], self.history)), list(map(lambda x: x[2], self.history)), 1)
-        predicted_ratings = [i for i in range(500, 1200)]
+        predicted_ratings = [i for i in range(0, 1400)]
         predicted = list(map(int, np.polyval(coef, predicted_ratings)))
         self.rating = {str(predicted[i]): predicted_ratings[i] for i in range(len(predicted))}
         self.save()
@@ -42,3 +42,14 @@ class Course(Document):
 
         self.holes = new_holes
         self.save()
+
+    def average_per_hole(self, throw_per_hole):
+        for i in range(1, len(self.holes)):
+            if self.logged_rounds - 1:
+                average = ((self.holes[i]['average'] * (self.logged_rounds - 1)) + throw_per_hole[i-1])/self.logged_rounds
+            else:
+                average = throw_per_hole[i-1]
+
+            self.holes[i]['average'] = average
+        self.save()
+        return True

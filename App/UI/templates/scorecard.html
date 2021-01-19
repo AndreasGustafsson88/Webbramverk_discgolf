@@ -160,12 +160,15 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
     <script>
+
         let player_summary = {};
+        player_summary['Course'] = '{{ course._id }}'
         {% for player in players %}
             player_summary["{{ player.user_name }}"] = {
                 {% for i in range(course.holes[0]) %}
                     "hole{{ i + 1 }}_points": 0,
                     "hole{{ i + 1 }}_par": 0,
+                    "hole{{ i + 1 }}_throws": 0,
                 {% endfor %}
             };
         {% endfor %}

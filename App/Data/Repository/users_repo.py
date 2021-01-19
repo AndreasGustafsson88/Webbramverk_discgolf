@@ -1,6 +1,4 @@
 import json
-
-from App.Data.Models.courses import Course
 from App.Data.Models.users import User
 from bson import ObjectId
 
@@ -95,6 +93,10 @@ def delete_friend_request(user, ob_id):
         }
 
 
-def get_favorite_courses(courses):
-    return [Course.find(_id=course).first_or_none().name for course in courses]
+def update_profile(current_user, profile_picture, user_name, email, password):
+    pass
 
+
+def add_round(user, user_round):
+    user.history.append(user_round)
+    user.save()

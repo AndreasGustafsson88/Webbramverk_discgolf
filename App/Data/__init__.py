@@ -44,6 +44,14 @@ class Document(dict, ABC):
     def update_field(self, field, value):
         return self.collection.update_one({'_id': self._id}, {"$set": {field: value}})
 
+    def update_user_settings(self, profile_picture, user_name, email, password):
+        return self.collection.update.one({'_id': self._id}, {'$set': {
+            'profile_picture': profile_picture,
+            'user_name': user_name,
+            'email': email,
+            'password': password
+        }})
+
     @classmethod
     def insert_many(cls, items):
         cl_objects = []

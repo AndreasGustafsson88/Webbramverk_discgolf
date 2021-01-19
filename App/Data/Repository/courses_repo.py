@@ -1,3 +1,5 @@
+import time
+
 from App.Data.Models.courses import Course
 
 
@@ -22,3 +24,10 @@ def update_favorite_courses(course_id, current_user):
 
 def get_course_by_id(course_id):
     return Course.find(_id=course_id).first_or_none()
+
+
+def add_round(course, c_round):
+    course.history.append(c_round)
+    course.logged_rounds += 1
+    course.save()
+    return True
