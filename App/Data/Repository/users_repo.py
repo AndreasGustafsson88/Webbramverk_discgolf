@@ -96,3 +96,7 @@ def delete_friend_request(user, ob_id):
 def update_profile(current_user, profile_picture, user_name, email, password):
     pass
 
+
+def add_round(user, user_round):
+    user.history.append(user_round)
+    user.save()

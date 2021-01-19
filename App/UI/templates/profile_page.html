@@ -227,7 +227,7 @@
         }
 
         $('.rounds').click(function () {
-            player_history = {{ visited_profile.history|tojson }}
+            player_history = {{ visited_profile.history|safe }}
             player_history = player_history.slice(Math.max(player_history.length - this.value, 0));
             render_chart(player_history);
         });
@@ -270,7 +270,7 @@
 
     <script>
 
-        let player_history = {{ visited_profile.history|tojson }}
+        let player_history = {{ visited_profile.history|safe }}
         player_history = player_history.slice(Math.max(player_history.length - 20, 0));
         render_chart(player_history);
 

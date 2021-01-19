@@ -1,8 +1,10 @@
+import time
 import json
 
 from bson import ObjectId
 
 from App.Data.Repository import users_repo as ur
+from App.Data.Repository import courses_repo as cr
 
 
 def get_all_friends(current_user):
@@ -84,3 +86,24 @@ def add_friend_request(current_user, visited_user):
 
 def update_profile(current_user, profile_picture, user_name, email, password):
     return ur.update_profile(current_user, profile_picture, user_name, email, password)
+
+
+def add_round(player_summary):
+    course = cr.get_course_by_id(ObjectId(player_summary['Course']))
+    users = [ur.get_user_by_username(user) for user in player_summary.keys() if isinstance(player_summary[user], dict)]
+
+    for user in users:
+        u_round = []
+        u_round.append(time.strftime('%Y-%m-%d'))
+        total_throws = sum([int(player_summary[user.user_name][key]) for key in player_summary[user.user_name].keys() if 'throws' in key])
+        throw_per_hole = [int(player_summary[user.user_name][key]) for key in player_summary[user.user_name].keys() if 'throws' in key]
+        if str(total_throws) in course.rating:
+            rating = course.rating[str(total_throws)]
+            u_round.append(rating)
+        u_round.append(total_throws)
+        #TODO Fråga Joakim om u_round.copy()?! loggar ObjectId på första runda utan.copy()
+        cr.add_round(course, u_round.copy())
+        u_round.append(course._id)
+        ur.add_round(user, u_round)
+        course.average_per_hole(throw_per_hole)
+    return True

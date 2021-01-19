@@ -22,6 +22,7 @@ function update_result() {
   player_summary[user_name]['hole'+ hole + '_par'] = par_diff;
   points = parseInt(par) + parseInt(strokes) - this.value + 2;
   player_summary[user_name]['hole'+ hole + '_points'] = points;
+  player_summary[user_name]['hole'+ hole + '_throws'] = this.value;
 
   let total_par = document.getElementById(user_name +"_par")
   let total_points = document.getElementById(user_name +"_points")
@@ -45,5 +46,19 @@ function update_result() {
 
 
 
+}
+
+function submit_scorecards() {
+    $.ajax({
+        method: 'post',
+        url: '/scorecard/play',
+        data: {
+            p_summary: JSON.stringify(player_summary)
+        },
+        success: (data) => {
+            alert(data)
+            location.replace('/scorecard')
+    }
+    })
 }
 

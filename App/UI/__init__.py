@@ -4,11 +4,13 @@ from flask import Flask, render_template, make_response, request, redirect, url_
 from werkzeug.security import generate_password_hash, check_password_hash
 from time import time
 import json
+
+from App.Controller.my_encoder import MyEncoder
 from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id
 from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
     get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, \
-    delete_friend_request, update_profile
+    delete_friend_request, update_profile, add_round
 from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
@@ -84,6 +86,7 @@ def log_out():
 @app.route('/courses', methods=["POST", "GET"])
 def courses():
     if request.method == "POST":
+
         if "loading" in request.form:
             favorites = [get_course_by_id(course).name for course in current_user.favourite_courses]
             response = app.response_class(
@@ -118,8 +121,20 @@ def scorecard():
     return render_template("create_scorecard.html", all_courses=all_courses, friends=friends, current_user=current_user)
 
 
-@app.route("/scorecard/play")
+@app.route("/scorecard/play", methods=['GET', 'POST'])
 def scorecard_play():
+
+    if request.method == 'POST':
+
+        player_summary = json.loads(request.form['p_summary'])
+        add_round(player_summary)
+        response = app.response_class(
+            response=json.dumps('Well played, you getting redirected to you profile page'),
+            status=200,
+            mimetype="application/json"
+        )
+        return response
+
     players = get_users(request.args.get("players").replace("[", "").replace("]", "").replace('"', '').split(","))
     course = get_one_course(request.args.get("course"))
 
@@ -150,6 +165,7 @@ def profile_page(user_name):
             return response
     settings_form = SettingsForm()
     visited_profile = get_user_by_username(user_name)
+    visited_profile.history = json.dumps(visited_profile.history, cls=MyEncoder)
     all_users = get_all_users()
     return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users, form=settings_form)
 
