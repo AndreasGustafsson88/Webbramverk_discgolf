@@ -102,7 +102,7 @@ Datum:2021-01-06
 
 Protokollförare: William Åslund
 
-Gjort sen senaste möte:
+Gjort sen senaste mötet:
     vi har fixat scorecard sidan, så att vi kan fylla i resultat och att den sedan räknar ut points och par åt dig.
     vi har påbörjat att lägga till en submit knapp på sista sliden så att vi kan skicka in resultaten till databasen.
 
@@ -115,6 +115,26 @@ Att göra till nästkommande möte:
     vi ska även göra så att man kan lägga till/ se sina vänner på sin profil sida.
 
 Övriga kommentarer:
+
+
+2021-01-19
+    Närvarande: William Åslund, Andreas Gustafsson, Christoffer Jakonen, Måns Ewards Öberg
+
+Protokollförare: William Åslund
+
+Gjort sen senaste mötet:
+    Vi har nu under två veckor jobbat ihop alla fyra, med att få klart grundfunktionerna på våran hemsida, vilket vi nu har fått klart.
+    vissa dagar har vi suttit alla fyra och skrivit kod tillsammans och vissa dagar har vi suttit två och två.
+    vi känner nu att hemsidan börjar bli tillräckligt färdig för att kunna användas på riktigt. så nu ska vi börja med att få till designen lite mer.
+
+
+Att göra till nästkommande möte:
+    vi ska sitta alla fyra och försöka få klart scorecard-sidan, vilken är den sista "bas" funktionen för att kunna använda sidan på riktigt,
+    när vi är klara med den så kommer vi att dela upp oss i mer individuellt arbete för att jobba med designen mer.
+
+
+Övriga kommentarer:
+
 
 
 
