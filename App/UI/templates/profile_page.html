@@ -16,7 +16,7 @@
                 </div>
             </div>
         </div> -->
-        <div class="content">
+        <div class="p-content">
             <div class="container profile">
                 <div class="row">
 	                <div class="col-md-6 ml-auto mr-auto">
@@ -160,12 +160,13 @@
             </div>
             <!--Put content when pressed favorite course-->
             <div class="tab-pane text-center gallery" id="favorite_courses">
-      			<div class="row">
-      				<div class="col-md-3 ml-auto">
-      				</div>
-      				<div class="col-md-3 mr-auto">
-      			    </div>
-      			</div>
+                <p>Gå till courses för att lägga till bana</p>
+                <div id="favorite-courses-list" >
+                    {% for course in favorite_courses %}
+                        <h3>{{ course }}</h3>
+                    {% endfor %}
+                </div>
+
       		</div>
             </div>
             </div>
@@ -180,6 +181,7 @@
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
     <script src="../static/js/profile_page.js"></script>
     <script>
+    console.log({{ favorite_courses|safe }})
         let request_list = {}
 
         {% for req in current_user.friend_requests %}

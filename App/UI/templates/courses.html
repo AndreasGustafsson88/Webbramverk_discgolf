@@ -50,13 +50,16 @@ function setFavorite(course){
         (response) => {console.log(response)},
         "json");
 }
-
+{% if not current_user.is_anonymous %}
 getFavorites().done((r) => {
     favorites = r["favorites"];
     autocomplete(document.getElementById("courses-search-input"), all_courses);
     getAllCourses(all_courses);
 });
-
+{% else %}
+autocomplete(document.getElementById("courses-search-input"), all_courses);
+getAllCourses(all_courses);
+{% endif %}
 function getAllCourses(arr) {
     var course, icon, courseText, courseName, i;
     var list = document.getElementById("courses-list")
@@ -70,6 +73,7 @@ function getAllCourses(arr) {
         course.setAttribute("class", "course");
         list.appendChild(course);
 
+        {% if not current_user.is_anonymous %}
         icon = document.createElement("img");
         if (favorites.includes(arr[i])){
             icon.setAttribute("src", "../static/assets/img/star_filled.svg")}
@@ -81,6 +85,7 @@ function getAllCourses(arr) {
         icon.setAttribute("style", "margin: 10px");
         icon.addEventListener("click", updateFavorite)
         course.appendChild(icon);
+        {% endif %}
 
         courseText = document.createElement("DIV");
         courseText.setAttribute("class", "course-text");
@@ -116,7 +121,7 @@ function autocomplete(inp, arr) {
                 course = document.createElement("div");
                 course.setAttribute("class", "course");
                 list.appendChild(course);
-
+                {% if not current_user.is_anonymous %}
                 icon = document.createElement("img");
                 if (favorites.includes(arr[i])){
                     icon.setAttribute("src", "../static/assets/img/star_filled.svg");}
@@ -128,7 +133,7 @@ function autocomplete(inp, arr) {
                 icon.setAttribute("style", "margin: 10px");
                 icon.addEventListener("click", updateFavorite);
                 course.appendChild(icon);
-
+                {% endif %}
                 courseText = document.createElement("DIV");
                 courseText.setAttribute("class", "course-text");
                 course.appendChild(courseText);
@@ -153,7 +158,7 @@ function emptyCourseList() {
         x.innerHTML = "";
         return true
 }
-
+{% if not current_user.is_anonymous %}
 function updateFavorite(){
     let course = this.parentNode.getElementsByClassName("course-text")[0].getElementsByTagName("input")[0].value;
     setFavorite(course).done((r1) => {
@@ -164,5 +169,6 @@ function updateFavorite(){
         });
     });
 }
+{% endif %}
 </script>
 {% endblock %}

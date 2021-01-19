@@ -1,4 +1,6 @@
 import json
+
+from App.Data.Models.courses import Course
 from App.Data.Models.users import User
 from bson import ObjectId
 
@@ -91,3 +93,8 @@ def delete_friend_request(user, ob_id):
             'mimetype': 'application/json',
             'response': json.dumps('Unknown error, contact Admin')
         }
+
+
+def get_favorite_courses(courses):
+    return [Course.find(_id=course).first_or_none().name for course in courses]
+
