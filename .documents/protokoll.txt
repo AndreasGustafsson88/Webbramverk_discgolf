@@ -136,7 +136,23 @@ Att göra till nästkommande möte:
 Övriga kommentarer:
 
 
+2021-01-20
+    Närvarande: William Åslund, Andreas Gustafsson, Måns Ewards Öberg
 
+Protokollförare: Andreas Gustafsson
+
+Gjort sen senaste mötet:
+    Fixat scorecortet så att data från rundorna loggas i databasen för banorna och spelarna. Baninformation, rating, average uppdateras.
+
+Att göra till nästkommande möte:
+    Fixat så scorecortet så att data från rundorna loggas i databasen för banorna och spelarna. Baninformation, rating, average uppdateras.
+    ordnat buggar och sett till så att informationen uppdateras korrekt!
+
+Övriga kommentarer:
+    pratat om webapplikationen framtid...!  Vi ser att vi måste lösa så att man kan välja olika layout för olika banor.
+    Bestämma hur mycket data som ska behöva vara loggade innan en bana kan gå "live"
+    pratat om att göra 9-håls banor så att man måste gå två rundor för att få rating från den. kan gå bara 9 hål för att få se statistik men rundan kommer inte räknas
+    med till spelarens rating.
 
 
 
