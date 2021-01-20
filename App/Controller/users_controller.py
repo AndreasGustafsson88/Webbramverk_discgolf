@@ -93,17 +93,30 @@ def add_round(player_summary):
     users = [ur.get_user_by_username(user) for user in player_summary.keys() if isinstance(player_summary[user], dict)]
 
     for user in users:
-        u_round = []
-        u_round.append(time.strftime('%Y-%m-%d'))
         total_throws = sum([int(player_summary[user.user_name][key]) for key in player_summary[user.user_name].keys() if 'throws' in key])
+        # TODO CHECK VALIDITY OF ROUND, difference not more than 150?!?
+        if len(course.rating) != 0:
+            if str(total_throws) in course.rating:
+                u_round = []
+                rating = course.rating[str(total_throws)]
+
+                u_round.append(time.strftime('%Y-%m-%d'))
+                u_round.append(rating)
+                u_round.append(total_throws)
+                u_round.append(course._id)
+
+                ur.add_round(user, u_round)
+
+        if user.rating is not None:
+            c_round = []
+
+            c_round.append(time.strftime('%Y-%m-%d'))
+            c_round.append(user.rating)
+            c_round.append(total_throws)
+
+            cr.add_round(course, c_round)
+
         throw_per_hole = [int(player_summary[user.user_name][key]) for key in player_summary[user.user_name].keys() if 'throws' in key]
-        if str(total_throws) in course.rating:
-            rating = course.rating[str(total_throws)]
-            u_round.append(rating)
-        u_round.append(total_throws)
-        #TODO Fråga Joakim om u_round.copy()?! loggar ObjectId på första runda utan.copy()
-        cr.add_round(course, u_round.copy())
-        u_round.append(course._id)
-        ur.add_round(user, u_round)
-        course.average_per_hole(throw_per_hole)
+        cr.add_logged_round_and_average(course, throw_per_hole)
+
     return True

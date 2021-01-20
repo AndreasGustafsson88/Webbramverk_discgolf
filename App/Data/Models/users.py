@@ -20,15 +20,19 @@ class User(Document, UserMixin):
     def player_hcp(self, course):
 
         hole_average = sorted([{"hole": i, "average": "{:.2f}".format(hole["average"] - hole["Par"]), "strokes": 0}
-                               for i, hole in enumerate(course.holes[1:], 1)], key=lambda x: x["average"])
+                               for i, hole in enumerate(course.holes[1:], 1)], key=lambda x: x["average"], reverse=True)
 
-        if self.rating is None:
-            return hole_average
+        if self.rating is None or len(course.rating) == 0:
+            return sorted(hole_average, key=lambda x: x['hole'])
 
         total_throws = 0
 
         for k, v in course.rating.items():
-            if v >= self.rating:
+            if v == self.rating:
+                total_throws += int(k)
+                break
+
+            elif v >= self.rating:
                 total_throws += int(k) + 1
                 break
 

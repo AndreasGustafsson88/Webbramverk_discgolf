@@ -27,7 +27,17 @@ def get_course_by_id(course_id):
 
 
 def add_round(course, c_round):
+
     course.history.append(c_round)
-    course.logged_rounds += 1
+    course.update_rating()
+
     course.save()
     return True
+
+
+def add_logged_round_and_average(course, throw_per_hole):
+
+    course.logged_rounds += 1
+    course.average_per_hole(throw_per_hole)
+
+    course.save()

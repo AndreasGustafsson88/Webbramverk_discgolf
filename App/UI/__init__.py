@@ -11,6 +11,7 @@ from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
     get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, \
     delete_friend_request, update_profile, add_round
+from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
@@ -34,6 +35,12 @@ def load_user(_id):
 
 @app.route('/', methods=["POST", "GET"])
 def index():
+    # ale = Course.find(_id=ObjectId('5feb2c28258a4c696c956955')).first_or_none()
+    # ale.history = []
+    # ale.rating = {}
+    # ale.logged_rounds = 0
+    # ale.save()
+
     form = SignInForm()
 
     if form.validate_on_submit():
