@@ -39,7 +39,13 @@
                 </div>
                 <!--Descprition player-->
                 <div class="description text-center">
-                    <p> Disc golf playing dog. </p>
+                   <p> {% if visited_profile.rating %}
+                       Rating:
+                        {{ visited_profile.rating }}
+                        {% else  %}
+                        NO Rating Calculated
+                        {% endif %}
+                    </p>
                 </div>
                 <!--Row for tablink (settings, friends, fav course)-->
 				<div class="row" style="display: -ms-flexbox;">
