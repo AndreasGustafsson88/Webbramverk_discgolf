@@ -11,9 +11,12 @@ from App.Controller.my_chart_controller import return_random
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
     get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, \
     delete_friend_request, update_profile, add_round
+from App.Data import db
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
+
+from App.Data.Models.users import User
 
 app = Flask(__name__,
             static_url_path="",
@@ -40,6 +43,19 @@ def index():
     # ale.rating = {}
     # ale.logged_rounds = 0
     # ale.save()
+    #all_users = User.all()
+    #for i in all_users:
+     #   i.history.append(["2021-01-20", 500, 50, ObjectId('5feb0289df7bbd3185383f52')])
+      #  i.history.append(["2021-01-20", 400, 50, ObjectId('5feb0289df7bbd3185383f52')])
+       # i.history.append(["2021-01-20", 600, 50, ObjectId('5feb0289df7bbd3185383f52')])
+       # print(i.rating)
+
+
+
+
+
+
+
 
     form = SignInForm()
 
