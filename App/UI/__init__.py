@@ -16,6 +16,7 @@ from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
+
 from App.Data.Models.users import User
 
 app = Flask(__name__,
@@ -29,6 +30,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager = LoginManager()
 login_manager.login_view = "index"
 login_manager.init_app(app)
+
+@app.template_filter("to_console")
+def to_console(text):
+    print(str(text))
+    return ""
 
 
 @login_manager.user_loader

@@ -3,28 +3,46 @@
 {% extends "base_logged_in.html" %}
 
 {% block content %}
+    <script>
+        var take_youre_rating =false;
+        {% set holes_multi=1 %}
+    {% if  course.holes[0] < 9 %}
+        alert("Den här banan har för få hål för att du ska kunna tillgodose en rating.")
+    {% elif 9 <= course.holes[0] < 18 %}
+        var take_youre_rating = confirm("Du måste gå två rundor för att kunna tillgodose dig rating, vill du göra det?");
+        if (take_youre_rating==true){
+            {% set holes_multi=2 %}
+            {{ holes_multi|to_console }}
+            alert("du klickade ja");}
+        else{
+            alert("du klickade nej");}
+    {% endif %}
+
+    </script>
     <section class="scorecard">
             <!-- Slider main container -->
         <div class="swiper-container">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
-
-                {% for i in range(course.holes[0] + 1) %}
-                    {% if i < course.holes[0] %}
-
-                    <div class="swiper-slide">
+                {% set j=0 %}
+                {% for i in range(course.holes[0] * holes_multi + 1) %}
+                    {% if i < course.holes[0] * holes_multi %}
+                        {% if (i - j) >= course.holes[0] %}
+                            {% set j = course.holes[0] %}
+                        {% endif %}
+                        <div class="swiper-slide">
                         <section class="scorecard">
                             <!--Hole Info-->
                             <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
                                 <div class="container h100 center-content" style="background-color: #23c2ff">
-                                    <div class="small-text font-weight-bold"> Hole {{ i + 1 }}</div>
+                                    <div class="small-text font-weight-bold"> Hole {{ i + 1 }} ({{  i + 1 - j }})</div>
                                 </div>
                                 <div class="container h100 center-content" style="background-color: #eeeeee">
-                                    <div class="small-text font-weight-bold"> Par {{course.holes[i + 1]['Par'] }}</div>
+                                    <div class="small-text font-weight-bold"> Par {{course.holes[i + 1 - j]['Par'] }}</div>
                                 </div>
                                 <div class="container h100 center-content" style="background-color: purple">
-                                    <div class="small-text font-weight-bold"> {{ course.holes[i + 1]['length'] }}m </div>
+                                    <div class="small-text font-weight-bold"> {{ course.holes[i + 1 - j]['length'] }}m </div>
                                 </div>
                             </div>
 
@@ -55,11 +73,11 @@
                                         </div>
                                         <div class="col-4 center-content">
                                             <div class="small-text center-content">
-                                                {{ course.holes[i + 1]['Par']|int + player.hcp[i]["strokes"] }}
+                                                {{ course.holes[i + 1 - j]['Par']|int + player.hcp[i - j]["strokes"] }}
                                             </div>
                                         </div>
                                         <div class="col-4 center-content">
-                                            <input class="form-control form-control-sm throws-input" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ course.holes[i + 1]['Par']}}_{{player.hcp[i]['strokes'] }}">
+                                            <input class="form-control form-control-sm throws-input" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ course.holes[i + 1 - j]['Par']}}_{{player.hcp[i - j]['strokes'] }}">
                                         </div>
                                     </div>
                                 {% endfor %}
