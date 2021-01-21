@@ -10,8 +10,8 @@
             <div class="swiper-wrapper">
                 <!-- Slides -->
 
-                {% for i in range(course.holes[0] + 1) %}
-                    {% if i < course.holes[0] %}
+                {% for i in range(round_summary['course_holes'][0] + 1) %}
+                    {% if i < round_summary['course_holes'][0] %}
 
                     <div class="swiper-slide">
                         <section class="scorecard">
@@ -21,10 +21,10 @@
                                     <div class="small-text font-weight-bold"> Hole {{ i + 1 }}</div>
                                 </div>
                                 <div class="container h100 center-content" style="background-color: #eeeeee">
-                                    <div class="small-text font-weight-bold"> Par {{course.holes[i + 1]['Par'] }}</div>
+                                    <div class="small-text font-weight-bold"> Par {{round_summary['course_holes'][i + 1]['Par'] }}</div>
                                 </div>
                                 <div class="container h100 center-content" style="background-color: purple">
-                                    <div class="small-text font-weight-bold"> {{ course.holes[i + 1]['length'] }}m </div>
+                                    <div class="small-text font-weight-bold"> {{ round_summary['course_holes'][i + 1]['length'] }}m </div>
                                 </div>
                             </div>
 
@@ -46,7 +46,7 @@
 
                             <!--Player information-->
                             <div class="container h85 top-align no-padding" style="background-color: aquamarine">
-                                {% for player in players %}
+                                {% for player in round_summary.players %}
                                     <div class="col-12 h20 center-content-h">
                                         <div class="col-4 center-content">
                                             <div class="small-text center-content">
@@ -55,11 +55,11 @@
                                         </div>
                                         <div class="col-4 center-content">
                                             <div class="small-text center-content">
-                                                {{ course.holes[i + 1]['Par']|int + player.hcp[i]["strokes"] }}
+                                                {{ round_summary['course_holes'][i + 1]['Par']|int + player.hcp[i]["strokes"] }}
                                             </div>
                                         </div>
                                         <div class="col-4 center-content">
-                                            <input class="form-control form-control-sm throws-input" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ course.holes[i + 1]['Par']}}_{{player.hcp[i]['strokes'] }}">
+                                            <input class="form-control form-control-sm throws-input" value="{{ player.stats['hole' ~ (i + 1) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary.course_holes[i + 1]['Par']}}_{{player.hcp[i]['strokes'] }}">
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -79,7 +79,7 @@
                                     </tr>
                                 </thead>
                                 <tbody>
-                                    {% for player in players %}
+                                    {% for player in round_summary.players %}
                                         <tr>
                                             <td scope="row">{{ player.user_name }}</td>
                                             {% for i in range(1, 10) %}
@@ -89,21 +89,21 @@
                                     {% endfor %}
                                 </tbody>
                             </table>
-                            {% if course.holes[0] > 9 %}
+                            {% if round_summary.course_holes[0] > 9 %}
                                 <table class="table table-striped table-sm">
                                     <thead>
                                         <tr>
                                             <th scope="col">Player</th>
-                                            {% for i in range(course.holes[0] - 8, course.holes[0] + 1) %}
+                                            {% for i in range(round_summary.course_holes[0] - 8, round_summary.course_holes[0] + 1) %}
                                                 <th scope="col">{{ i }}</th>
                                             {% endfor %}
                                         </tr>
                                     </thead>
                                     <tbody>
-                                        {% for player in players %}
+                                        {% for player in round_summary.players %}
                                             <tr>
                                                 <td scope="row">{{ player.user_name }}</td>
-                                                {% for i in range(course.holes[0] - 8, course.holes[0] + 1) %}
+                                                {% for i in range(round_summary.course_holes[0] - 8, round_summary.course_holes[0] + 1) %}
                                                     <td id="{{ player.user_name}}{{ i }}">0</td>
                                                 {% endfor %}
                                             </tr>
@@ -121,7 +121,7 @@
                                 </div>
                             </div>
                             <hr>
-                            {% for player in players %}
+                            {% for player in round_summary.players %}
                                 <div class="container w100 center-content-h">
                                     <div class="col-4 center-content-v" style="text-align: left">
                                         <div class="tiny-text" style="padding-left: 10px">{{ player.user_name }}</div>
@@ -152,7 +152,6 @@
     </section>
 
 
-
 {% endblock %}
 
 {% block javascript %}
@@ -161,18 +160,17 @@
     <script src="../static/js/scorecard_play.js"></script>
     <script>
 
-        let player_summary = {};
-        player_summary['Course'] = '{{ course._id }}'
-        {% for player in players %}
-            player_summary["{{ player.user_name }}"] = {
-                {% for i in range(course.holes[0]) %}
-                    "hole{{ i + 1 }}_points": 0,
-                    "hole{{ i + 1 }}_par": 0,
-                    "hole{{ i + 1 }}_throws": 0,
-                {% endfor %}
+        /* let player_summary = {};
+        player_summary['Course'] = '{#{ course._id }}'
+        {# { for player in players %}}
+            player_summary["{#{ player.user_name }}"] = {
+                {#% for i in range(course.holes[0]) %}
+                    "hole{#{ i + 1 }}_points": 0,
+                    "hole{#{ i + 1 }}_par": 0,
+                    "hole{#{ i + 1 }}_throws": 0,
+                {#% endfor %#}
             };
-        {% endfor %}
-
+        {#% endfor %#}*/
 
 
 

@@ -161,10 +161,16 @@ def scorecard_play():
     players = get_users(request.args.get("players").replace("[", "").replace("]", "").replace('"', '').split(","))
     course = get_one_course(request.args.get("course"))
 
-    for player in players:
-        player.hcp = player.player_hcp(course)
+    round_summary = {'course': course.name,
+                     'course_holes': course.holes,
+                     'players': [{'user_name': player.user_name,
+                                  'full_name': player.full_name,
+                                  'hcp': player.player_hcp(course),
+                                  'stats': {f'hole{i+1}{v}': 0 for i in range(course.holes[0])
+                                                   for v in ['_points', '_par', '_throws']}} for player in players]}
 
-    return render_template("scorecard.html", course=course, players=players)
+    print(round_summary)
+    return render_template("scorecard.html", round_summary=round_summary)
 
 
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])
