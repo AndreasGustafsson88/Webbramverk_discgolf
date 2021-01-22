@@ -13,7 +13,7 @@
                 {% for i in range(round_summary['course_holes'][0] + 1) %}
                     {% if i < round_summary['course_holes'][0] %}
 
-                    <div class="swiper-slide">
+                    <div class="swiper-slide" on>
                         <section class="scorecard">
                             <!--Hole Info-->
                             <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
@@ -163,7 +163,8 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
     <script>
-        let player_summary = {{ round_summary|tojson }};
+        let player_summary = {{ round_summary | tojson }};
+        let check_round = JSON.parse(JSON.stringify(player_summary));
 
         var elements=document.getElementsByClassName("throws-input");
         for (let i = 0; i < elements.length; i++ ){elements[i].addEventListener("input", update_result) }
