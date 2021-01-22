@@ -36,7 +36,6 @@ def add_user(user_name, full_name, password, email):
         "password": password,
         "favorite_courses": [],
         "friends": [],
-        "rating": None,
         "history": [],
         "profile_picture": None,
         "Oid_req": []

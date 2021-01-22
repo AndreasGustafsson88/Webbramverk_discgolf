@@ -155,6 +155,24 @@ Att göra till nästkommande möte:
     med till spelarens rating.
 
 
+2021-01-21
+    Närvarande: William Åslund, Andreas Gustafsson, Måns Ewards Öberg, Christoffer Jakonen
+
+Protokollförare: Måns Ewards Öberg
+
+Gjort sen senaste mötet:
+    Andreas, Måns och William har fixat så scorecortet så att data från rundorna loggas i databasen för banorna och spelarna. Baninformation, rating, average uppdateras.
+    ordnat buggar och sett till så att informationen uppdateras korrekt!
+Att göra till nästkommande möte:
+    Vi skall till nästa möte programmera i par och fortsätta utveckla scorekortet.
+
+    Måns och Andreas skall skapa en ny collection för scorekort. För att kunna spara under en längre runda och sparas
+    för varje förändring.
+
+    Christoffer och William skall skriva kriterierna för om ett scorekort skall registreras eller inte.
+Övriga kommentarer:
+
+
 
 
 

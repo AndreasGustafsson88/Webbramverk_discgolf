@@ -45,6 +45,12 @@ def index():
     # ale.rating = {}
     # ale.logged_rounds = 0
     # ale.save()
+    # all_users = User.all()
+    # for i in all_users:
+    #   i.history.append(["2021-01-20", 500, 50, ObjectId('5feb0289df7bbd3185383f52')])
+    #  i.history.append(["2021-01-20", 400, 50, ObjectId('5feb0289df7bbd3185383f52')])
+    # i.history.append(["2021-01-20", 600, 50, ObjectId('5feb0289df7bbd3185383f52')])
+    # print(i.rating)
 
     form = SignInForm()
 
@@ -151,19 +157,17 @@ def scorecard_play():
     for player in players:
         player.hcp = calculate_extra_strokes(player, course)
 
-    round_summary = {
-        'course_id': str(course._id),
-        'course': course.name,
-        'course_holes': course.holes,
-        'players': [{
-            'user_name': player.user_name,
-            'full_name': player.full_name,
-            'hcp': player.hcp,
-            'stats': {
-                f"hole{i + 1}{v}": 0 for i in range(course.holes[0])
-                for v in ['_points', '_par', '_throws']}} for player in players],
-        'status': 'new'
-    }
+    round_summary = {'course_id': str(course._id),
+                     'course': course.name,
+                     'course_holes': course.holes,
+                     'players': [{'user_name': player.user_name,
+                                  'full_name': player.full_name,
+                                  'hcp': player.hcp,
+                                  'stats': {f'hole{i + 1}{v}': 0 for i in range(course.holes[0])
+                                            for v in ['_points', '_par', '_throws']}} for player in players],
+                     'status': 'new'
+                     }
+    print(round_summary)
 
     return render_template("scorecard.html", round_summary=round_summary)
 

@@ -46,7 +46,7 @@
 
                             <!--Player information-->
                             <div class="container h85 top-align no-padding" style="background-color: aquamarine">
-                                {% for player in round_summary['players'] %}
+                                {% for player in round_summary.players %}
                                     <div class="col-12 h20 center-content-h">
                                         <div class="col-4 center-content">
                                             <div class="small-text center-content">
@@ -55,11 +55,12 @@
                                         </div>
                                         <div class="col-4 center-content">
                                             <div class="small-text center-content">
-                                                {{ round_summary.course_holes[i + 1]['Par']|int + player.hcp[i]["strokes"] }}
+
+                                                {{ round_summary['course_holes'][i + 1]['Par']|int + player.hcp[i]["strokes"] }}
                                             </div>
                                         </div>
                                         <div class="col-4 center-content">
-                                            <input class="form-control form-control-sm throws-input" value="{{ player.stats['hole' ~ (i + 1) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary['course_holes'][i + 1]['Par']}}_{{player.hcp[i]['strokes'] }}">
+                                            <input class="form-control form-control-sm throws-input" value="{{ player.stats['hole' ~ (i + 1) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary.course_holes[i + 1]['Par']}}_{{player.hcp[i]['strokes'] }}">
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -155,7 +156,6 @@
     </section>
 
 
-
 {% endblock %}
 
 {% block javascript %}
@@ -163,29 +163,9 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
     <script>
-
         let player_summary = {{ round_summary|tojson }};
 
-        {#player_summary['Course'] = '{{ course._id }}'#}
-        {#{% for player in players %}#}
-        {#    player_summary["{{ player.user_name }}"] = {#}
-        {#        {% for i in range(course.holes[0]) %}#}
-        {#            "hole{{ i + 1 }}_points": 0,#}
-        {#            "hole{{ i + 1 }}_par": 0,#}
-        {#            "hole{{ i + 1 }}_throws": 0,#}
-        {#        {% endfor %}#}
-        {#    };#}
-        {#{% endfor %}#}
-        {##}
-        {#console.log(player_summary)#}
-
-
-
-
-
-
-
-    var elements=document.getElementsByClassName("throws-input");
-    for (let i = 0; i < elements.length; i++ ){elements[i].addEventListener("input", update_result) }
+        var elements=document.getElementsByClassName("throws-input");
+        for (let i = 0; i < elements.length; i++ ){elements[i].addEventListener("input", update_result) }
     </script>
 {% endblock %}
