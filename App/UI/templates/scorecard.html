@@ -19,6 +19,7 @@
                         {% endif %}
                 <div class="swiper-slide">
                     <section class="scorecard">
+
                             <!--Hole Info-->
                             <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
                                 <div class="container h100 center-content" style="background-color: #23c2ff">
@@ -163,7 +164,8 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
     <script>
-        let player_summary = {{ round_summary|tojson }};
+        let player_summary = {{ round_summary | tojson }};
+        let check_round = JSON.parse(JSON.stringify(player_summary));
 
 
        

@@ -8,7 +8,7 @@ class Scorecard(Document):
     def get_scorecard_for_player(cls, username):
         return [cls(item) for item in cls.collection.find({
             "players.user_name": username,
-            "status": "incomplete"
+            "active": True
         })]
 
     def __repr__(self):

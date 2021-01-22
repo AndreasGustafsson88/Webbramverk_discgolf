@@ -1,4 +1,16 @@
 var swiper = new Swiper('.swiper-container', {
+    on: {
+        slideChange: () => {
+            if ((JSON.stringify(check_round['players']) == JSON.stringify(player_summary['players']))) {
+                alert('No change')
+            }
+            else {
+                check_round = JSON.parse(JSON.stringify(player_summary))
+                alert('Change')
+                save_scorecards()
+            }
+        }
+    },
   pagination: {
     el: '.swiper-pagination',
     clickable: true,
@@ -7,6 +19,7 @@ var swiper = new Swiper('.swiper-container', {
     },
   },
 });
+
 
 
 
@@ -31,10 +44,21 @@ function update_result() {
 
           for (let v in player['stats']) {
             if (v.includes("par")) {
-                par_summary += player['stats'][v]
+                if (typeof player['stats'][v] === 'string'){
+                    par_summary += 0
+                }
+                else {
+                    par_summary += player['stats'][v]
+                }
+
                 }
                 else if (v.includes("points")) {
-                    points_summary += player['stats'][v]
+                    if (typeof player['stats'][v] === 'string'){
+                        points_summary += 0
+                    }
+                    else {
+                        points_summary += player['stats'][v]
+                    }
                 }
             }
 
@@ -42,12 +66,10 @@ function update_result() {
           total_points.innerHTML = points_summary;
       }
   }
-  console.log(player_summary)
-
 }
 
 function submit_scorecards() {
-    player_summary['status'] = 'complete'
+    player_summary['active'] = false
 
     $.ajax({
         method: 'post',
@@ -65,7 +87,7 @@ function submit_scorecards() {
 
 function save_scorecards() {
 
-    player_summary['status'] = 'incomplete'
+    player_summary['active'] = true
 
     $.ajax({
     method: 'post',

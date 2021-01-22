@@ -176,15 +176,13 @@ def scorecard_play():
                      'rated': rated,
                      'players': [{'user_name': player.user_name,
                                   'full_name': player.full_name,
-
-                                  'hcp': player.hcp,
+                                  'hcp': player.hcp,                              
                                   'stats': {f'hole{i+1}{v}': 0 for i in range(course.holes[0] * multi)
                                                    for v in ['_points', '_par', '_throws']}} for player in players]}
-
+                     'active': True
+                     }                
     print(round_summary)
     return render_template("scorecard.html", round_summary=round_summary, holes_multi=multi)
-
-
 
 
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])
@@ -262,8 +260,8 @@ def profile_page_update():
 @app.route('/scorecard/incomplete', methods=['GET', 'POST'])
 def scorecard_incomplete():
     if request.method == 'POST':
-        round_summary = get_scorecard(_id=ObjectId(request.form['button']))
-
+        round_summary = vars(get_scorecard(_id=ObjectId(request.form['button'])))
+        del round_summary['_id']
         return render_template('scorecard.html', round_summary=round_summary)
 
     return render_template('scorecard_incomplete.html')
