@@ -17,6 +17,7 @@ from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
 
+
 from App.Data.Models.users import User
 
 app = Flask(__name__,
@@ -141,8 +142,16 @@ def courses():
     return render_template('courses.html', all_courses=json.dumps(all_courses))
 
 
-@app.route('/scorecard')
+@app.route('/scorecard', methods=["POST", "GET"])
 def scorecard():
+    if request.method == 'POST':
+        course = get_one_course(request.form["course"])
+        response = app.response_class(
+            response=json.dumps(course.holes[0]),
+            status=200,
+            mimetype="application/json"
+        )
+        return response
     friends = get_all_friends(current_user)
 
     all_courses = get_all_names()
@@ -166,17 +175,19 @@ def scorecard_play():
 
     players = get_users(request.args.get("players").replace("[", "").replace("]", "").replace('"', '').split(","))
     course = get_one_course(request.args.get("course"))
+    rated = True if request.args.get("rated")=="true" else False
+    multi = int(request.args.get("multi"))
 
     round_summary = {'course': course.name,
                      'course_holes': course.holes,
                      'players': [{'user_name': player.user_name,
                                   'full_name': player.full_name,
                                   'hcp': player.player_hcp(course),
-                                  'stats': {f'hole{i+1}{v}': 0 for i in range(course.holes[0])
+                                  'stats': {f'hole{i+1}{v}': 0 for i in range(course.holes[0] * multi)
                                                    for v in ['_points', '_par', '_throws']}} for player in players]}
 
     print(round_summary)
-    return render_template("scorecard.html", round_summary=round_summary)
+    return render_template("scorecard.html", round_summary=round_summary, rated=rated, holes_multi=multi)
 
 
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])
