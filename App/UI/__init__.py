@@ -176,7 +176,7 @@ def scorecard_play():
                      'rated': rated,
                      'players': [{'user_name': player.user_name,
                                   'full_name': player.full_name,
-                                  'hcp': player.hcp(course),
+                                  'hcp': player.hcp,                              
                                   'stats': {f'hole{i+1}{v}': 0 for i in range(course.holes[0] * multi)
                                                    for v in ['_points', '_par', '_throws']}} for player in players]}
                      'active': True
