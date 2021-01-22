@@ -55,6 +55,7 @@
                                         </div>
                                         <div class="col-4 center-content">
                                             <div class="small-text center-content">
+
                                                 {{ round_summary['course_holes'][i + 1]['Par']|int + player.hcp[i]["strokes"] }}
                                             </div>
                                         </div>
@@ -133,7 +134,10 @@
                             {% endfor %}
                             <div class="container w100 center-content">
                                 <div class="container w70">
-                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="submit_scorecards()" style="margin-top: 30px" role="button">Submit Scorecards</a>
+                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="submit_scorecards()" style="margin-top: 30px" role="button">Submit Scorecard</a>
+                                </div>
+                                <div class="container w70">
+                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="save_scorecards()" style="margin-top: 30px" role="button">Save Scorecard</a>
                                 </div>
                             </div>
                         </section>
@@ -159,25 +163,9 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
     <script>
+        let player_summary = {{ round_summary|tojson }};
 
-        /* let player_summary = {};
-        player_summary['Course'] = '{#{ course._id }}'
-        {# { for player in players %}}
-            player_summary["{#{ player.user_name }}"] = {
-                {#% for i in range(course.holes[0]) %}
-                    "hole{#{ i + 1 }}_points": 0,
-                    "hole{#{ i + 1 }}_par": 0,
-                    "hole{#{ i + 1 }}_throws": 0,
-                {#% endfor %#}
-            };
-        {#% endfor %#}*/
-
-
-
-
-
-
-    var elements=document.getElementsByClassName("throws-input");
-    for (let i = 0; i < elements.length; i++ ){elements[i].addEventListener("input", update_result) }
+        var elements=document.getElementsByClassName("throws-input");
+        for (let i = 0; i < elements.length; i++ ){elements[i].addEventListener("input", update_result) }
     </script>
 {% endblock %}

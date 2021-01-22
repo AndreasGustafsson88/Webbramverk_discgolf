@@ -8,14 +8,16 @@ import json
 from App.Controller.my_encoder import MyEncoder
 from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id
 from App.Controller.my_chart_controller import return_random
+from App.Controller.scorecards_controller import get_scorecard
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
     get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, \
-    delete_friend_request, update_profile, add_round
+    delete_friend_request, update_profile, add_round, calculate_extra_strokes
 from App.Data import db
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 
+from App.Data.Models.scorecards import Scorecard
 from App.Data.Models.users import User
 
 app = Flask(__name__,
@@ -43,19 +45,12 @@ def index():
     # ale.rating = {}
     # ale.logged_rounds = 0
     # ale.save()
-    #all_users = User.all()
-    #for i in all_users:
-     #   i.history.append(["2021-01-20", 500, 50, ObjectId('5feb0289df7bbd3185383f52')])
-      #  i.history.append(["2021-01-20", 400, 50, ObjectId('5feb0289df7bbd3185383f52')])
-       # i.history.append(["2021-01-20", 600, 50, ObjectId('5feb0289df7bbd3185383f52')])
-       # print(i.rating)
-
-
-
-
-
-
-
+    # all_users = User.all()
+    # for i in all_users:
+    #   i.history.append(["2021-01-20", 500, 50, ObjectId('5feb0289df7bbd3185383f52')])
+    #  i.history.append(["2021-01-20", 400, 50, ObjectId('5feb0289df7bbd3185383f52')])
+    # i.history.append(["2021-01-20", 600, 50, ObjectId('5feb0289df7bbd3185383f52')])
+    # print(i.rating)
 
     form = SignInForm()
 
@@ -146,13 +141,11 @@ def scorecard():
 
 @app.route("/scorecard/play", methods=['GET', 'POST'])
 def scorecard_play():
-
     if request.method == 'POST':
-
         player_summary = json.loads(request.form['p_summary'])
-        add_round(player_summary)
+        message = add_round(player_summary)
         response = app.response_class(
-            response=json.dumps('Well played, you getting redirected to you profile page'),
+            response=json.dumps(message),
             status=200,
             mimetype="application/json"
         )
@@ -161,15 +154,21 @@ def scorecard_play():
     players = get_users(request.args.get("players").replace("[", "").replace("]", "").replace('"', '').split(","))
     course = get_one_course(request.args.get("course"))
 
-    round_summary = {'course': course.name,
+    for player in players:
+        player.hcp = calculate_extra_strokes(player, course)
+
+    round_summary = {'course_id': str(course._id),
+                     'course': course.name,
                      'course_holes': course.holes,
                      'players': [{'user_name': player.user_name,
                                   'full_name': player.full_name,
-                                  'hcp': player.player_hcp(course),
-                                  'stats': {f'hole{i+1}{v}': 0 for i in range(course.holes[0])
-                                                   for v in ['_points', '_par', '_throws']}} for player in players]}
-
+                                  'hcp': player.hcp,
+                                  'stats': {f'hole{i + 1}{v}': 0 for i in range(course.holes[0])
+                                            for v in ['_points', '_par', '_throws']}} for player in players],
+                     'status': 'new'
+                     }
     print(round_summary)
+
     return render_template("scorecard.html", round_summary=round_summary)
 
 
@@ -196,7 +195,8 @@ def profile_page(user_name):
     visited_profile = get_user_by_username(user_name)
     visited_profile.history = json.dumps(visited_profile.history, cls=MyEncoder)
     all_users = get_all_users()
-    return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users, form=settings_form)
+    return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users,
+                           form=settings_form)
 
 
 @app.route('/data', methods=["GET", "POST"])
@@ -228,7 +228,6 @@ def profile_page_update():
     if settings_form.validate_on_submit():
 
         if settings_form.profile_picture.data is not None:
-
             file_name = settings_form.user_name.data.strip().replace(' ', '_')
             settings_form.profile_picture.data.save(os.path.join(UPLOAD_FOLDER, f'{file_name}.jpg'))
 
@@ -243,3 +242,13 @@ def profile_page_update():
         update_profile(current_user, settings_form.profile_picture.data, settings_form.user_name.data,
                        settings_form.email.data, generate_password_hash(settings_form.password.data, "sha256"))
         return redirect(url_for('index'))
+
+
+@app.route('/scorecard/incomplete', methods=['GET', 'POST'])
+def scorecard_incomplete():
+    if request.method == 'POST':
+        round_summary = get_scorecard(_id=ObjectId(request.form['button']))
+
+        return render_template('scorecard.html', round_summary=round_summary)
+
+    return render_template('scorecard_incomplete.html')

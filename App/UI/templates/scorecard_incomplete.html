@@ -1,0 +1,13 @@
+{% extends 'base_logged_in.html' %}
+
+{% block content %}
+    <form role="form" method="POST">
+    {% for scorecard in current_user.scorecards %}
+        <button type="submit" name="button" value="{{ scorecard._id }}">{{ scorecard.course }}</button>
+    {% endfor %}
+    </form>
+{% endblock %}
+
+<script>
+
+</script>
