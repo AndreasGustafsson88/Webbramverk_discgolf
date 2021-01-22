@@ -89,7 +89,7 @@ def update_profile(current_user, profile_picture, user_name, email, password):
 
 def add_round(player_summary):
 
-    if player_summary['status'] == 'complete':
+    if not player_summary['active']:
 
         course = cr.get_course_by_id(ObjectId(player_summary['course_id']))
         users = [ur.get_user_by_username(user['user_name']) for user in player_summary['players']]
@@ -124,7 +124,7 @@ def add_round(player_summary):
 
         return "Well played! You will be redirected to the profile page"
 
-    if player_summary['status'] == 'incomplete':
+    if player_summary['active']:
         message = sr.add_scorecard(player_summary)
         return message
 
