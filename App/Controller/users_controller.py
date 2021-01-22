@@ -125,8 +125,9 @@ def add_round(player_summary):
         return "Well played! You will be redirected to the profile page"
 
     if player_summary['active']:
-        message = sr.add_scorecard(player_summary)
-        return message
+        scorecard = sr.get_scorecard({'_id': ObjectId(player_summary['_id'])})
+        sr.update_scorecard(scorecard, player_summary)
+        print(player_summary)
 
 
 def add_strokes(total_throws, hole_average, course):

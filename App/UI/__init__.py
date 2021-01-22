@@ -177,12 +177,16 @@ def scorecard_play():
                      'players': [{'user_name': player.user_name,
                                   'full_name': player.full_name,
                                   'hcp': player.hcp,                              
-                                  'stats': {f'hole{i+1}{v}': 0 for i in range(course.holes[0] * multi)
-                                                   for v in ['_points', '_par', '_throws']}} for player in players]}
-                     'active': True
-                     }                
+                                  'stats': {f'hole{i+1}{v}': "" for i in range(course.holes[0] * multi)
+                                                   for v in ['_points', '_par', '_throws']}} for player in players],
+                     'active': True,
+                     'multi': multi
+                     }
+    scorecard = vars(Scorecard.insert_one(round_summary))
+    scorecard['_id'] = str(scorecard['_id'])
+
     print(round_summary)
-    return render_template("scorecard.html", round_summary=round_summary, holes_multi=multi)
+    return render_template("scorecard.html", round_summary=scorecard)
 
 
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])
