@@ -15,40 +15,40 @@ function update_result() {
   let user_name, hole, par, strokes;
   [user_name, hole, par, strokes] = this.getAttribute("id").split("_");
   let info = document.getElementById(user_name + hole);
-  console.log(user_name, hole, par, strokes);
-  console.log(info);
   info.innerHTML = this.value;
   par_diff = this.value - par;
-  player_summary[user_name]['hole'+ hole + '_par'] = par_diff;
   points = parseInt(par) + parseInt(strokes) - this.value + 2;
-  player_summary[user_name]['hole'+ hole + '_points'] = points;
-  player_summary[user_name]['hole'+ hole + '_throws'] = this.value;
 
-  let total_par = document.getElementById(user_name +"_par")
-  let total_points = document.getElementById(user_name +"_points")
+  for (let player of player_summary['players']) {
+      if (player['user_name'] === user_name) {
+          player['stats']['hole'+ hole + '_par'] = par_diff;
+          player['stats']['hole'+ hole + '_points'] = points;
+          player['stats']['hole'+ hole + '_throws'] = this.value;
 
+          let total_par = document.getElementById(user_name +"_par")
+          let total_points = document.getElementById(user_name +"_points")
+          let [points_summary, par_summary] = [0, 0]
 
-  let [points_summary, par_summary] = [0, 0]
-            for (let v in player_summary[user_name]) {
-                if (v.includes("par")) {
-                    par_summary += player_summary[user_name][v]
+          for (let v in player['stats']) {
+            if (v.includes("par")) {
+                par_summary += player['stats'][v]
                 }
                 else if (v.includes("points")) {
-                    points_summary += player_summary[user_name][v]
+                    points_summary += player['stats'][v]
                 }
             }
 
-
-  total_par.innerHTML = par_summary;
-  total_points.innerHTML = points_summary;
-
-  console.log(total_points)
-
-
+          total_par.innerHTML = par_summary;
+          total_points.innerHTML = points_summary;
+      }
+  }
+  console.log(player_summary)
 
 }
 
 function submit_scorecards() {
+    player_summary['status'] = 'complete'
+
     $.ajax({
         method: 'post',
         url: '/scorecard/play',
@@ -57,8 +57,25 @@ function submit_scorecards() {
         },
         success: (data) => {
             alert(data)
-            location.replace('/scorecard')
+            // location.replace('/scorecard')
     }
     })
 }
 
+
+function save_scorecards() {
+
+    player_summary['status'] = 'incomplete'
+
+    $.ajax({
+    method: 'post',
+    url: '/scorecard/play',
+    data: {
+        p_summary: JSON.stringify(player_summary)
+    },
+    success: (data) => {
+        alert(data)
+        // location.replace('/scorecard')
+    }
+    })
+}

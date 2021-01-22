@@ -4,9 +4,15 @@ from bson import ObjectId
 from statistics import mean
 from ast import literal_eval
 
+from App.Data.Models.scorecards import Scorecard
+
 
 class User(Document, UserMixin):
     collection = db.users
+
+    @property
+    def scorecards(self):
+        return Scorecard.get_scorecard_for_player(self.user_name)
 
     @property
     def friends_list(self):
@@ -27,37 +33,3 @@ class User(Document, UserMixin):
 
     def get_id(self):
         return str(self._id)
-
-    def player_hcp(self, course):
-
-        hole_average = sorted([{"hole": i, "average": "{:.2f}".format(hole["average"] - hole["Par"]), "strokes": 0}
-                               for i, hole in enumerate(course.holes[1:], 1)], key=lambda x: x["average"], reverse=True)
-
-        if self.rating is None or len(course.rating) == 0:
-            return sorted(hole_average, key=lambda x: x['hole'])
-
-        total_throws = 0
-
-        for k, v in course.rating.items():
-            if v == self.rating:
-                total_throws += int(k)
-                break
-
-            elif v >= self.rating:
-                total_throws += int(k) + 1
-                break
-
-        difference = total_throws - course.course_par
-
-        if difference == 0:
-            return sorted(hole_average, key=lambda x: x["hole"])
-
-        elif difference < 0:
-            for i in range(1, difference * -1 + 1):
-                hole_average[-i % course.holes[0]]["strokes"] -= 1
-
-        elif difference > 0:
-            for i in range(difference):
-                hole_average[i % course.holes[0]]["strokes"] += 1
-
-        return sorted(hole_average, key=lambda x: x["hole"])

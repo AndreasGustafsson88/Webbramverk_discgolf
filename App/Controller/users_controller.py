@@ -5,7 +5,7 @@ from bson import ObjectId
 
 from App.Data.Repository import users_repo as ur
 from App.Data.Repository import courses_repo as cr
-
+from App.Data.Repository import scorecards_repo as sr
 
 def get_all_friends(current_user):
     return ur.get_all_friends(current_user)
@@ -88,34 +88,90 @@ def update_profile(current_user, profile_picture, user_name, email, password):
 
 
 def add_round(player_summary):
-    course = cr.get_course_by_id(ObjectId(player_summary['Course']))
-    users = [ur.get_user_by_username(user) for user in player_summary.keys() if isinstance(player_summary[user], dict)]
 
-    for user in users:
-        total_throws = sum([int(player_summary[user.user_name][key]) for key in player_summary[user.user_name].keys() if 'throws' in key])
-        # TODO CHECK VALIDITY OF ROUND, difference not more than 150?!?
-        if len(course.rating) != 0:
-            if str(total_throws) in course.rating:
-                u_round = []
-                rating = course.rating[str(total_throws)]
+    if player_summary['status'] == 'complete':
 
-                u_round.append(time.strftime('%Y-%m-%d'))
-                u_round.append(rating)
-                u_round.append(total_throws)
-                u_round.append(course._id)
+        course = cr.get_course_by_id(ObjectId(player_summary['course_id']))
+        users = [ur.get_user_by_username(user['user_name']) for user in player_summary['players']]
 
-                ur.add_round(user, u_round)
+        for i, user in enumerate(users):
+            throw_per_hole = [int(player_summary['players'][i]['stats'][key]) for key in
+                              player_summary['players'][i]['stats'].keys() if 'throws' in key]
+            total_throws = sum(throw_per_hole)
+            # TODO CHECK VALIDITY OF ROUND, difference not more than 150?!?
+            if len(course.rating) != 0:
+                if str(total_throws) in course.rating:
+                    u_round = []
+                    rating = course.rating[str(total_throws)]
 
-        if user.rating is not None:
-            c_round = []
+                    u_round.append(time.strftime('%Y-%m-%d'))
+                    u_round.append(rating)
+                    u_round.append(total_throws)
+                    u_round.append(course._id)
 
-            c_round.append(time.strftime('%Y-%m-%d'))
-            c_round.append(user.rating)
-            c_round.append(total_throws)
+                    ur.add_round(user, u_round)
 
-            cr.add_round(course, c_round)
+            if user.rating is not None:
+                c_round = []
 
-        throw_per_hole = [int(player_summary[user.user_name][key]) for key in player_summary[user.user_name].keys() if 'throws' in key]
-        cr.add_logged_round_and_average(course, throw_per_hole)
+                c_round.append(time.strftime('%Y-%m-%d'))
+                c_round.append(user.rating)
+                c_round.append(total_throws)
 
-    return True
+                cr.add_round(course, c_round)
+
+            cr.add_logged_round_and_average(course, throw_per_hole)
+
+        return "Well played! You will be redirected to the profile page"
+
+    if player_summary['status'] == 'incomplete':
+        message = sr.add_scorecard(player_summary)
+        return message
+
+
+def add_strokes(total_throws, hole_average, course):
+    difference = total_throws - course.course_par
+
+    if difference == 0:
+        return sorted(hole_average, key=lambda x: x["hole"])
+
+    elif difference < 0:
+        for i in range(1, difference * -1 + 1):
+            hole_average[-i % course.holes[0]]["strokes"] -= 1
+
+    elif difference > 0:
+        for i in range(difference):
+            hole_average[i % course.holes[0]]["strokes"] += 1
+
+
+def find_extra_strokes(player, course):
+    total_throws = 0
+
+    for k, v in course.rating.items():
+        if v == player.rating:
+            total_throws += int(k)
+            return total_throws
+
+        elif v >= player.rating:
+            total_throws += int(k) + 1
+            return total_throws
+
+
+def calculate_extra_strokes(player, course):
+    """
+    Create dict and sort by average to get difficulty / hole. Add or remove extra strokes from
+    hole par depending on extra strokes for each player.
+    """
+    hole_average = sorted([{"hole": i, "average": "{:.2f}".format(hole["average"] - hole["Par"]), "strokes": 0}
+                           for i, hole in enumerate(course.holes[1:], 1)], key=lambda x: x["average"], reverse=True)
+
+    if player.rating is None or len(course.rating) == 0:
+        return sorted(hole_average, key=lambda x: x['hole'])
+
+    total_throws = find_extra_strokes(player, course)
+
+    add_strokes(total_throws, hole_average, course)
+
+    return sorted(hole_average, key=lambda x: x["hole"])
+
+
