@@ -24,7 +24,8 @@ app = Flask(__name__,
 
 app.config["SECRET_KEY"] = "supersecret, don't tell"
 sources_root = os.path.abspath(os.path.dirname('App'))
-UPLOAD_FOLDER = os.path.join(sources_root, '/App/Data/profile_pictures')
+#todo prata i gruppen var vi vill lagra profilbilder.
+UPLOAD_FOLDER = os.path.join(sources_root, '/App/Data/profile_pictures/')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager = LoginManager()
 login_manager.login_view = "index"
@@ -239,11 +240,12 @@ def profile_page_delete(user_name):
 def profile_page_update():
     settings_form = SettingsForm()
     if settings_form.validate_on_submit():
-
+        print(settings_form.profile_picture.data)
         if settings_form.profile_picture.data is not None:
             file_name = settings_form.user_name.data.strip().replace(' ', '_')
             settings_form.profile_picture.data.save(os.path.join(UPLOAD_FOLDER, f'{file_name}.jpg'))
-
+            current_user.profile_picture = UPLOAD_FOLDER + file_name + ".jpg"
+            print("då")
         if get_user(email=settings_form.email.data):
             flash("Email already exists")
             return redirect(url_for('profile_page', user_name=current_user.user_name))

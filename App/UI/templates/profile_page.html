@@ -23,7 +23,11 @@
         	           <div class="profile">
                            <!--Profile picture-->
 	                        <div class="avatar">
+                                {% if visited_profile.profile_picture %}
+                                <img src="{{ visited_profile.profile_picture }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                                {% else %}
 	                            <img src="../static/assets/img/dog.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                                {% endif %}
                             </div>
                             <!--Name on player-->
 	                        <div class="name center-content-h" style="height: 35px;" >
