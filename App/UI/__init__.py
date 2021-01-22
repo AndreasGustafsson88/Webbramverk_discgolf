@@ -4,7 +4,6 @@ from flask import Flask, render_template, make_response, request, redirect, url_
 from werkzeug.security import generate_password_hash, check_password_hash
 from time import time
 import json
-
 from App.Controller.my_encoder import MyEncoder
 from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id
 from App.Controller.my_chart_controller import return_random
@@ -16,7 +15,6 @@ from App.Data import db
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
-
 from App.Data.Models.scorecards import Scorecard
 from App.Data.Models.users import User
 
@@ -31,6 +29,11 @@ app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager = LoginManager()
 login_manager.login_view = "index"
 login_manager.init_app(app)
+
+@app.template_filter("to_console")
+def to_console(text):
+    print(str(text))
+    return ""
 
 
 @login_manager.user_loader
@@ -130,8 +133,16 @@ def courses():
     return render_template('courses.html', all_courses=json.dumps(all_courses))
 
 
-@app.route('/scorecard')
+@app.route('/scorecard', methods=["POST", "GET"])
 def scorecard():
+    if request.method == 'POST':
+        course = get_one_course(request.form["course"])
+        response = app.response_class(
+            response=json.dumps(course.holes[0]),
+            status=200,
+            mimetype="application/json"
+        )
+        return response
     friends = get_all_friends(current_user)
 
     all_courses = get_all_names()
@@ -153,6 +164,8 @@ def scorecard_play():
 
     players = get_users(request.args.get("players").replace("[", "").replace("]", "").replace('"', '').split(","))
     course = get_one_course(request.args.get("course"))
+    rated = True if request.args.get("rated")=="true" else False
+    multi = int(request.args.get("multi"))
 
     for player in players:
         player.hcp = calculate_extra_strokes(player, course)
@@ -160,15 +173,16 @@ def scorecard_play():
     round_summary = {'course_id': str(course._id),
                      'course': course.name,
                      'course_holes': course.holes,
+                     'rated': rated,
                      'players': [{'user_name': player.user_name,
                                   'full_name': player.full_name,
-                                  'hcp': player.hcp,
-                                  'stats': {f'hole{i + 1}{v}': "" for i in range(course.holes[0])
-                                            for v in ['_points', '_par', '_throws']}} for player in players],
+                                  'hcp': player.hcp(course),
+                                  'stats': {f'hole{i+1}{v}': 0 for i in range(course.holes[0] * multi)
+                                                   for v in ['_points', '_par', '_throws']}} for player in players]}
                      'active': True
-                     }
-
-    return render_template("scorecard.html", round_summary=round_summary)
+                     }                
+    print(round_summary)
+    return render_template("scorecard.html", round_summary=round_summary, holes_multi=multi)
 
 
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])
