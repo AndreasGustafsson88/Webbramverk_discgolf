@@ -2,6 +2,26 @@ function create_scorecard() {
     let course = document.getElementById("Course");
     if(course.innerHTML !=="No course selected"){
 
+    get_course_length(course.innerHTML).done((r) => {
+        var holes_multi = 1;
+        var rated = false;
+
+        if (r < 9){
+            alert("Den här banan har för få hål för att du ska kunna tillgodose en rating.")}
+        else if(r < 18){
+            var x = confirm("Du måste gå två rundor för att kunna tillgodose dig rating, vill du göra det?")
+            if (x === true){
+                holes_multi = 2;
+                rated = true;
+                console.log(rated);
+                alert("Du svarade ja")
+            }
+            else {alert("Du svarade nej")}
+        }
+        else {rated = true;}
+
+
+
 
     let players = document.getElementById("player_content_div");
     let player_list = [];
@@ -16,17 +36,29 @@ function create_scorecard() {
 
     let new_url = "/scorecard/play" + "?" + "course=" + course.innerHTML;
     new_url += "&players=" + j_players;
+    new_url += "&rated=" + JSON.stringify(rated);
+    new_url += "&multi=" + JSON.stringify(holes_multi);
+    console.log(new_url)
+
 
     window.location.href = new_url;
+    })
 
 }
+
     else{
         alert("Please select a Course")
     }
 }
 
 
-
+function get_course_length(course){
+    return $.post(
+        "/scorecard",
+        {course: course},
+        (response) => {console.log(response)},
+        "json");
+}
 
 function delete_player(id) {
 
