@@ -180,6 +180,7 @@ def scorecard_play():
 
     round_summary = {'course': course.name,
                      'course_holes': course.holes,
+                     'rated': rated,
                      'players': [{'user_name': player.user_name,
                                   'full_name': player.full_name,
                                   'hcp': player.player_hcp(course),
@@ -187,7 +188,7 @@ def scorecard_play():
                                                    for v in ['_points', '_par', '_throws']}} for player in players]}
 
     print(round_summary)
-    return render_template("scorecard.html", round_summary=round_summary, rated=rated, holes_multi=multi)
+    return render_template("scorecard.html", round_summary=round_summary, holes_multi=multi)
 
 
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])

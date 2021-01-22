@@ -19,7 +19,7 @@ function create_scorecard() {
             else {alert("Du svarade nej")}
         }
         else {rated = true;}
-        console.log(rated)
+
 
 
 
