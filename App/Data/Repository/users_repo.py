@@ -100,3 +100,18 @@ def update_profile(current_user, profile_picture, user_name, email, password):
 def add_round(user, user_round):
     user.history.append(user_round)
     user.save()
+
+
+def add_complete_scorecard(user, id):
+    user.c_score_Oid.append(id)
+    user.save()
+
+
+def add_incomplete_scorecard(user, scorecard):
+    user.i_score_Oid.append(scorecard._id)
+    user.save()
+
+
+def remove_incomplete_scorecard(user, id):
+    user.i_score_Oid.remove(id)
+    user.save()

@@ -38,7 +38,9 @@ def add_user(user_name, full_name, password, email):
         "friends": [],
         "history": [],
         "profile_picture": None,
-        "Oid_req": []
+        "Oid_req": [],
+        "c_score_Oid": [],
+        "i_score_Oid": []
     }
     ur.add_user(insert_dict)
 
@@ -90,16 +92,21 @@ def update_profile(current_user, profile_picture, user_name, email, password):
 def add_round(player_summary):
 
     if not player_summary['active']:
+        scorecard = sr.get_scorecard({'_id': ObjectId(player_summary['_id'])})
+        sr.save_scorecard(scorecard)
 
         course = cr.get_course_by_id(ObjectId(player_summary['course_id']))
         users = [ur.get_user_by_username(user['user_name']) for user in player_summary['players']]
 
         for i, user in enumerate(users):
+            ur.add_complete_scorecard(user, player_summary['_id'])
+            ur.remove_incomplete_scorecard(user, ObjectId(player_summary['_id']))
+
             throw_per_hole = [int(player_summary['players'][i]['stats'][key]) for key in
                               player_summary['players'][i]['stats'].keys() if 'throws' in key]
             total_throws = sum(throw_per_hole)
             # TODO CHECK VALIDITY OF ROUND, difference not more than 150?!?
-            if len(course.rating) != 0:
+            if len(course.history) > 50:
                 if str(total_throws) in course.rating:
                     u_round = []
                     rating = course.rating[str(total_throws)]
@@ -111,7 +118,7 @@ def add_round(player_summary):
 
                     ur.add_round(user, u_round)
 
-            if user.rating is not None:
+            if len(user.history) > 5:
                 c_round = []
 
                 c_round.append(time.strftime('%Y-%m-%d'))
@@ -127,7 +134,8 @@ def add_round(player_summary):
     if player_summary['active']:
         scorecard = sr.get_scorecard({'_id': ObjectId(player_summary['_id'])})
         sr.update_scorecard(scorecard, player_summary)
-        print(player_summary)
+
+        return 'Round saved!'
 
 
 def add_strokes(total_throws, hole_average, course):
@@ -176,3 +184,13 @@ def calculate_extra_strokes(player, course):
     return sorted(hole_average, key=lambda x: x["hole"])
 
 
+def add_incomplete_scorecard(scorecard, players):
+    for player in players:
+        ur.add_incomplete_scorecard(player, scorecard)
+
+
+def remove_incomplete_scorecard(scorecard):
+    users = ur.get_users([player['user_name'] for player in scorecard.players])
+
+    for user in users:
+        ur.remove_incomplete_scorecard(user, scorecard._id)

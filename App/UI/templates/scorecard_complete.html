@@ -2,7 +2,7 @@
 
 {% block content %}
     <form role="form" method="POST">
-    {% for scorecard in current_user.incomplete_scorecards %}
+    {% for scorecard in current_user.complete_scorecards %}
         <button type="submit" name="button" value="{{ scorecard._id }}">{{ scorecard.course }}</button>
     {% endfor %}
     </form>

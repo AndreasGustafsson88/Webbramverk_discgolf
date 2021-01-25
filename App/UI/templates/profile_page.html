@@ -275,6 +275,7 @@
     <script src="../static/js/create_scorecard.js"></script>
 
     <script>
+        autocomplete(document.getElementById("user_search"), all_users, course=false, all_users=true );
 
         let player_history = {{ visited_profile.history|safe }}
         player_history = player_history.slice(Math.max(player_history.length - 20, 0));

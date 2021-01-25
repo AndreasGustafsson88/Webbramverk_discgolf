@@ -64,7 +64,7 @@
                                             </div>
                                         </div>
                                         <div class="col-4 center-content">
-                                            <input class="form-control form-control-sm throws-input" value="{{ player.stats['hole' ~ (i + 1 - j) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary.course_holes[i + 1 - j]['Par']}}_{{player.hcp[i - j]['strokes'] }}">
+                                            <input class="form-control form-control-sm throws-input" {% if not round_summary.active %} disabled="disabled" {% endif %} value="{{ player.stats['hole' ~ (i + 1 - j) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary.course_holes[i + 1 - j]['Par']}}_{{player.hcp[i - j]['strokes'] }}">
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -137,14 +137,19 @@
                                 </div>
                                 <hr>
                             {% endfor %}
-                            <div class="container w100 center-content">
-                                <div class="container w70">
-                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="submit_scorecards()" style="margin-top: 15px" role="button">Submit Scorecard</a>
+                            {% if round_summary.active %}
+                                <div class="container w100 center-content">
+                                    <div class="container w70">
+                                        <a class="btn btn-primary btn-m w-100 button-text scorecard_buttons shadow" id="submit_button" onclick="submit_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Submit Scorecard</a>
+                                    </div>
+                                    <div class="container w70">
+                                        <a class="btn btn-primary btn-m w-100 button-text shadow" id="save_button" onclick="save_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Save Scorecard</a>
+                                    </div>
+                                    <div class="container w70">
+                                        <a class="btn btn-primary btn-m w-100 button-text shadow" id="delete_button" onclick="delete_scorecards()" style="margin-top: 15px; margin-bottom: 75px; border: 0; background-color:#FF9999; color: black" role="button">Delete Scorecard</a>
+                                    </div>
                                 </div>
-                                <div class="container w70">
-                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="save_scorecards()" style="margin-top: 15px; margin-bottom: 75px" role="button">Save Scorecard</a>
-                                </div>
-                            </div>
+                            {% endif %}
                         </section>
                     </div>
                     {% endif %}
@@ -164,21 +169,18 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
     <script>
-        let player_summary = {{ round_summary | tojson }};
+
+    let redirect_url = '/profile_page/{{ current_user.user_name }}'
+        console.log(redirect_url)
+        let player_summary = {{ round_summary | json_decode | safe }};
         let check_round = JSON.parse(JSON.stringify(player_summary));
+        console.log(player_summary)
+        var elements = document.getElementsByClassName("throws-input");
+        for (let i = 0; i < elements.length; i++ ){
+            elements[i].addEventListener("input", update_result)
+            load_summary(elements[i])
+        }
 
-
-       
-
-
-
-
-
-
-    var elements=document.getElementsByClassName("throws-input");
-    for (let i = 0; i < elements.length; i++ ){elements[i].addEventListener("input", update_result) }
-
-       
 
     </script>
 {% endblock %}
