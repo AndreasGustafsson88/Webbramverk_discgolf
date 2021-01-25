@@ -17,3 +17,5 @@ def update_favorite_courses(course_name, current_user):
 def get_course_by_id(course_id):
     return co.get_course_by_id(course_id)
 
+def get_all_courses():
+    return co.get_all_courses()

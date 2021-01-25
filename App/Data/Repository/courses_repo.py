@@ -41,3 +41,6 @@ def add_logged_round_and_average(course, throw_per_hole):
     course.average_per_hole(throw_per_hole)
 
     course.save()
+
+def get_all_courses():
+    return Course.all()

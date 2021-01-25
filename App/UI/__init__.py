@@ -5,7 +5,8 @@ from werkzeug.security import generate_password_hash, check_password_hash
 from time import time
 import json
 from App.Controller.my_encoder import MyEncoder
-from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id
+from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id, \
+    get_all_courses
 from App.Controller.my_chart_controller import return_random
 from App.Controller.scorecards_controller import get_scorecard
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
@@ -132,7 +133,8 @@ def courses():
             )
             return response
 
-    all_courses = get_all_names()
+    all_courses = [[course.name, course.logged_rounds] for course in get_all_courses()]
+
     return render_template('courses.html', all_courses=json.dumps(all_courses))
 
 
