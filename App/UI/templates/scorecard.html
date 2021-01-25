@@ -12,8 +12,8 @@
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 {% set j=0 %}
-                {% for i in range(round_summary['course_holes'][0] * holes_multi + 1) %}
-                    {% if i < round_summary['course_holes'][0] * holes_multi %}
+                {% for i in range(round_summary['course_holes'][0] * round_summary.multi + 1) %}
+                    {% if i < round_summary['course_holes'][0] * round_summary.multi %}
                         {% if (i - j) >= round_summary['course_holes'][0] %}
                             {% set j = round_summary['course_holes'][0] %}
                         {% endif %}
@@ -74,7 +74,7 @@
                     {% else %}
                          <div class="swiper-slide">
                         <section class="summary">
-                           {% set holes_amount = round_summary["course_holes"][0] * holes_multi %}
+                           {% set holes_amount = round_summary["course_holes"][0] * round_summary.multi %}
                             {% for i in range(holes_amount//9) %}
                                 <table class="table table-striped table-sm">
                                     <thead>
