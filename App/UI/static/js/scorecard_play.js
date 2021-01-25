@@ -3,10 +3,12 @@ var swiper = new Swiper('.swiper-container', {
         slideChange: () => {
             if ((JSON.stringify(check_round['players']) == JSON.stringify(player_summary['players']))) {
                 alert('No change')
+                console.log(player_summary['stats'])
             }
             else {
                 check_round = JSON.parse(JSON.stringify(player_summary))
                 alert('Change')
+                console.log(player_summary)
                 save_scorecards()
             }
         }
