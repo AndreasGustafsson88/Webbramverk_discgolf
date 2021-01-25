@@ -18,14 +18,16 @@ from flask_login import LoginManager, login_user, current_user, login_required, 
 from App.Data.Models.scorecards import Scorecard
 from App.Data.Models.users import User
 
+
 app = Flask(__name__,
             static_url_path="",
             static_folder="")
 
+
 app.config["SECRET_KEY"] = "supersecret, don't tell"
 sources_root = os.path.abspath(os.path.dirname('App'))
 #todo prata i gruppen var vi vill lagra profilbilder.
-UPLOAD_FOLDER = os.path.join(sources_root, '/App/Data/profile_pictures/')
+UPLOAD_FOLDER = os.path.join(sources_root, 'App/UI/static/assets/img/profile_pictures/')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager = LoginManager()
 login_manager.login_view = "index"
@@ -209,8 +211,9 @@ def profile_page(user_name):
     visited_profile = get_user_by_username(user_name)
     visited_profile.history = json.dumps(visited_profile.history, cls=MyEncoder)
     all_users = get_all_users()
+    favorite_courses = [get_course_by_id(course_id).name for course_id in visited_profile.favourite_courses]
     return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users,
-                           form=settings_form)
+                           form=settings_form, favorite_courses=favorite_courses)
 
 
 @app.route('/data', methods=["GET", "POST"])
@@ -240,12 +243,12 @@ def profile_page_delete(user_name):
 def profile_page_update():
     settings_form = SettingsForm()
     if settings_form.validate_on_submit():
-        print(settings_form.profile_picture.data)
         if settings_form.profile_picture.data is not None:
             file_name = settings_form.user_name.data.strip().replace(' ', '_')
             settings_form.profile_picture.data.save(os.path.join(UPLOAD_FOLDER, f'{file_name}.jpg'))
-            current_user.profile_picture = UPLOAD_FOLDER + file_name + ".jpg"
-            print("då")
+            current_user.profile_picture = "../static/assets/img/profile_pictures/" + file_name + ".jpg"
+            current_user.save()
+
         if get_user(email=settings_form.email.data):
             flash("Email already exists")
             return redirect(url_for('profile_page', user_name=current_user.user_name))

@@ -117,7 +117,7 @@
              {% if visited_profile.user_name == current_user.user_name %}
             <div class="tab-pane text-center gallery" id="settings"style="display: none" >
                 <div class="panel-body">
-			    		<form action="{{ url_for('profile_page_update') }}" role="form" method="POST">
+			    		<form action="{{ url_for('profile_page_update') }}" role="form" method="POST" enctype="multipart/form-data">
                             {{ form.csrf_token }}
 			    			<div class="row">
 			    				<div class="col-xs-6 col-sm-6 col-md-6">

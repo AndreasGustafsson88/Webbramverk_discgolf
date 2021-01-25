@@ -107,5 +107,5 @@ class SettingsForm(FlaskForm):
         render_kw={"value": "Update"}
     )
 
-#todo fixa att filer inte tas emot som none
+
 
