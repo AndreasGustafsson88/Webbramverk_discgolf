@@ -314,3 +314,17 @@ hr {
     max-height: 1px;
     opacity: 0.1;
 }
+
+.table-sm {
+    width: 100%;
+    text-align: center;
+}
+
+.table-sm td {
+    width: 2000px;
+}
+
+.summary {
+    background-color: #eeeeee;
+    min-height: 84vh;
+}

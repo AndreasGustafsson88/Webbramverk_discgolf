@@ -2,15 +2,14 @@ var swiper = new Swiper('.swiper-container', {
     on: {
         slideChange: () => {
             if ((JSON.stringify(check_round['players']) == JSON.stringify(player_summary['players']))) {
-                alert('No change')
             }
             else {
                 check_round = JSON.parse(JSON.stringify(player_summary))
-                alert('Change')
                 save_scorecards()
             }
         }
     },
+    autoHeight: true,
   pagination: {
     el: '.swiper-pagination',
     clickable: true,
@@ -21,7 +20,29 @@ var swiper = new Swiper('.swiper-container', {
 });
 
 
-
+function set_info_bg_color(info, par_diff) {
+    if (par_diff === -1){
+        info.style.backgroundColor = '#CCFF99'
+    }
+    else if (par_diff === -2){
+        info.style.backgroundColor = '#80FF00'
+    }
+    else if (par_diff < -2){
+        info.style.backgroundColor = '#FFFF66'
+    }
+    else if (par_diff === 0){
+        info.style.backgroundColor = ''
+    }
+    else if (par_diff === 1){
+        info.style.backgroundColor = '#FF9999'
+    }
+    else if (par_diff === 2){
+        info.style.backgroundColor = '#FF6666'
+    }
+    else if (par_diff > 2) {
+        info.style.backgroundColor = '#FF3333'
+    }
+}
 
 function update_result() {
   let par_diff, points;
@@ -30,6 +51,7 @@ function update_result() {
   let info = document.getElementById(user_name + hole);
   info.innerHTML = this.value;
   par_diff = this.value - par;
+  set_info_bg_color(info, par_diff)
   points = parseInt(par) + parseInt(strokes) - this.value + 2;
 
   for (let player of player_summary['players']) {

@@ -36,6 +36,19 @@ def to_console(text):
     return ""
 
 
+# @app.template_filter('json_decode')
+# def json_decode(o):
+#     if isinstance(o, Scorecard):
+#         b = vars(o)
+#         b['_id'] = str(b['_id'])
+#         return json.dumps(b)
+#     else:
+#         for history in o:
+#             history[3] = str(history[3])
+#         return json.dumps(o)
+#
+# app.jinja_env.filters['json_decode'] = json_decode
+
 @login_manager.user_loader
 def load_user(_id):
     return find_unique(_id=ObjectId(_id))

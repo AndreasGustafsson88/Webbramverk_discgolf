@@ -79,7 +79,7 @@ def delete_friend_request(user, ob_id):
 
 
 def add_friend_request(current_user, visited_user):
-    if current_user not in visited_user.friends_list:
+    if current_user._id not in visited_user.friends:
         return ur.add_friend_request(current_user, visited_user)
 
 

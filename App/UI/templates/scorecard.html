@@ -7,7 +7,7 @@
 
     <section class="scorecard">
             <!-- Slider main container -->
-        <div class="swiper-container">
+        <div class="swiper-container" style="height: fit-content">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
@@ -23,7 +23,7 @@
                             <!--Hole Info-->
                             <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
                                 <div class="container h100 center-content" style="background-color: #23c2ff">
-                                    <div class="small-text font-weight-bold"> Hole {{ i + 1 }} ({{  i + 1 - j }})</div>
+                                    <div class="small-text font-weight-bold"> Hole {{ i + 1 }} {% if holes_multi == 2 %} ({{  i + 1 - j }}) {% endif %}</div>
                                 </div>
                                 <div class="container h100 center-content" style="background-color: #eeeeee">
                                     <div class="small-text font-weight-bold"> Par {{round_summary['course_holes'][i + 1 - j]['Par'] }}</div>
@@ -73,7 +73,7 @@
                     </div>
                     {% else %}
                          <div class="swiper-slide">
-                        <section class="scorecard">
+                        <section class="summary">
                            {% set holes_amount = round_summary["course_holes"][0] * holes_multi %}
                             {% for i in range(holes_amount//9) %}
                                 <table class="table table-striped table-sm">
@@ -139,10 +139,10 @@
                             {% endfor %}
                             <div class="container w100 center-content">
                                 <div class="container w70">
-                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="submit_scorecards()" style="margin-top: 30px" role="button">Submit Scorecard</a>
+                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="submit_scorecards()" style="margin-top: 15px" role="button">Submit Scorecard</a>
                                 </div>
                                 <div class="container w70">
-                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="save_scorecards()" style="margin-top: 30px" role="button">Save Scorecard</a>
+                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="save_scorecards()" style="margin-top: 15px; margin-bottom: 75px" role="button">Save Scorecard</a>
                                 </div>
                             </div>
                         </section>
