@@ -23,19 +23,20 @@
 
 #courses-search {
     width: 100%;
-    height: 10%;
+    height: 15%;
     background-color: #00b7ff;
     padding: 15px;
     border: #6e6e6e 1px solid;
-
-
-
-
+}
+#courses-search-input{
+    border: #6e6e6e 1px solid;
+    border-radius: 5px;
+    outline: none;
 }
 
 #courses-list {
     width: 100%;
-    height: 90%;
+    height: 85%;
     background-color: #86fdfb;
     overflow-y: auto;
 }
@@ -75,5 +76,12 @@
     display: inherit;
     align-items: center;
     justify-content: center;
+
+}
+
+#help-text {
+    width: 100%;
+    padding-top: 5px;
+    font-size: small;
 
 }

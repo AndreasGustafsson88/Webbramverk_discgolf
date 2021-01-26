@@ -47,11 +47,11 @@ def load_user(_id):
 
 @app.route('/', methods=["POST", "GET"])
 def index():
-    # ale = Course.find(_id=ObjectId('5feb2c28258a4c696c956955')).first_or_none()
-    # ale.history = []
-    # ale.rating = {}
-    # ale.logged_rounds = 0
-    # ale.save()
+    #ale = Course.find(_id=ObjectId('5feb2c28258a4c696c956955')).first_or_none()
+    #ale.history = []
+    #ale.rating = {}
+    #ale.logged_rounds = 0
+    #ale.save()
     # all_users = User.all()
     # for i in all_users:
     #   i.history.append(["2021-01-20", 500, 50, ObjectId('5feb0289df7bbd3185383f52')])
@@ -133,9 +133,11 @@ def courses():
             )
             return response
 
-    all_courses = [[course.name, course.logged_rounds] for course in get_all_courses()]
+    all_courses = [[course.name, len(course.history)] for course in get_all_courses()]
+    print()
 
     return render_template('courses.html', all_courses=json.dumps(all_courses))
+
 
 
 @app.route('/scorecard', methods=["POST", "GET"])

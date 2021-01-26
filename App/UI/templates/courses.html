@@ -9,7 +9,10 @@
     <!-- Search form -->
     <div id="courses-container">
         <div id="courses-search">
-            <input id="courses-search-input" type="text"placeholder="Search" style="border: #6e6e6e 1px solid; border-radius: 5px; outline: none;">
+            <input id="courses-search-input" type="text"placeholder="Search">
+            <div id="help-text">
+                <span>*You can't get a rating on a course that has less than 50 logged rounds. Click on a pin on the map to get information about the course.</span>
+            </div>
         </div>
         <div id="courses-list">
         </div>
@@ -107,8 +110,12 @@ function getAllCourses(arr) {
         course.appendChild(loggedRoundsDiv);
 
         if(arr[i][1] >= 50){
-            loggedRounds = document.createElement("span");
-            loggedRounds.innerHTML = "Done"; //todo en done bock
+            loggedRounds = document.createElement("img");
+            loggedRounds.setAttribute("src", "../static/assets/img/checkmark.svg");
+            loggedRounds.setAttribute("alt", "fav");
+            loggedRounds.setAttribute("width", "30px");
+            loggedRounds.setAttribute("height", "30px");
+            loggedRounds.setAttribute("style", "margin: 10px");
         }
         else{
             loggedRounds = document.createElement("span");
@@ -168,8 +175,12 @@ function autocomplete(inp, arr) {
                 course.appendChild(loggedRoundsDiv);
 
                 if(arr[i][1] >= 50){
-                    loggedRounds = document.createElement("span");
-                    loggedRounds.innerHTML = "Done"; //todo en done bock
+                    loggedRounds = document.createElement("img");
+                    loggedRounds.setAttribute("src", "../static/assets/img/checkmark.svg");
+                    loggedRounds.setAttribute("alt", "fav");
+                    loggedRounds.setAttribute("width", "30px");
+                    loggedRounds.setAttribute("height", "30px");
+                    loggedRounds.setAttribute("style", "margin: 10px");
                 }
                 else{
                     loggedRounds = document.createElement("span");
