@@ -76,6 +76,7 @@
     display: inherit;
     align-items: center;
     justify-content: center;
+    min-width: 50px;
 
 }
 
@@ -84,4 +85,14 @@
     padding-top: 5px;
     font-size: small;
 
+}
+
+@media screen and (min-width: 0px) and (max-width: 599px) {
+    .hide-on-small { display: none;}
+    #courses-container{width: 100%;}
+    #map-container{width: 100%;}
+}
+
+@media screen and (min-width: 600px) {
+    .hide-on-large { display: none;}
 }

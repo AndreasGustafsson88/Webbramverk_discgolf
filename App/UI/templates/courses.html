@@ -4,6 +4,7 @@
 {% endblock %}
 
 {% block content %}
+    <button class="hide-on-large" type="button" onclick="toggleMap()" style="width: 100%;">toggle-map</button>
 
 <div id="courses-page">
     <!-- Search form -->
@@ -19,7 +20,7 @@
     </div>
 
     <!--Google map-->
-    <div id="map-container">
+    <div id="map-container" class="hide-on-small">
         <div id="map-frame" >
             <iframe src="https://www.google.com/maps/d/embed?mid=1RSNpkC9B1obQtxhlzwhrNJX3trMBLBw8" width="100%" height="98.5%"></iframe>
         </div>
@@ -112,7 +113,7 @@ function getAllCourses(arr) {
         if(arr[i][1] >= 50){
             loggedRounds = document.createElement("img");
             loggedRounds.setAttribute("src", "../static/assets/img/checkmark.svg");
-            loggedRounds.setAttribute("alt", "fav");
+            loggedRounds.setAttribute("alt", "active");
             loggedRounds.setAttribute("width", "30px");
             loggedRounds.setAttribute("height", "30px");
             loggedRounds.setAttribute("style", "margin: 10px");
@@ -120,6 +121,7 @@ function getAllCourses(arr) {
         else{
             loggedRounds = document.createElement("span");
             loggedRounds.innerHTML = arr[i][1] + " / 50";
+            loggedRounds.setAttribute("style", "white-space: nowrap;");
         }
         loggedRoundsDiv.appendChild(loggedRounds);
     }
@@ -177,7 +179,7 @@ function autocomplete(inp, arr) {
                 if(arr[i][1] >= 50){
                     loggedRounds = document.createElement("img");
                     loggedRounds.setAttribute("src", "../static/assets/img/checkmark.svg");
-                    loggedRounds.setAttribute("alt", "fav");
+                    loggedRounds.setAttribute("alt", "active");
                     loggedRounds.setAttribute("width", "30px");
                     loggedRounds.setAttribute("height", "30px");
                     loggedRounds.setAttribute("style", "margin: 10px");
@@ -185,6 +187,8 @@ function autocomplete(inp, arr) {
                 else{
                     loggedRounds = document.createElement("span");
                     loggedRounds.innerHTML = arr[i][1] + " / 50";
+                    loggedRounds.setAttribute("style", "white-space: nowrap;");
+
                 }
                 loggedRoundsDiv.appendChild(loggedRounds);
             }
@@ -209,5 +213,15 @@ function updateFavorite(){
     });
 }
 {% endif %}
+function toggleMap(){
+    if($("#map-container").hasClass("hide-on-small")){
+        $("#courses-container").addClass("hide-on-small");
+        $("#map-container").removeClass("hide-on-small");
+    }
+    else {
+        $("#map-container").addClass("hide-on-small");
+        $("#courses-container").removeClass("hide-on-small");
+    }
+}
 </script>
 {% endblock %}
