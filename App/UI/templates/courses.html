@@ -4,21 +4,25 @@
 {% endblock %}
 
 {% block content %}
+    <button class="hide-on-large" type="button" onclick="toggleMap()" style="width: 100%;">toggle-map</button>
 
 <div id="courses-page">
     <!-- Search form -->
     <div id="courses-container">
         <div id="courses-search">
-            <input id="courses-search-input" type="text"placeholder="Search" style="border: #6e6e6e 1px solid; border-radius: 5px; outline: none;">
+            <input id="courses-search-input" type="text"placeholder="Search">
+            <div id="help-text">
+                <span>*You can't get a rating on a course that has less than 50 logged rounds. Click on a pin on the map to get information about the course.</span>
+            </div>
         </div>
         <div id="courses-list">
         </div>
     </div>
 
     <!--Google map-->
-    <div id="map-container">
+    <div id="map-container" class="hide-on-small">
         <div id="map-frame" >
-            <iframe src="https://www.google.com/maps/d/embed?mid=1BKnIaG_SE17mmhzPZcj_ZUvZ7Oo" width="100%" height="98.5%"></iframe>
+            <iframe src="https://www.google.com/maps/d/embed?mid=1RSNpkC9B1obQtxhlzwhrNJX3trMBLBw8" width="100%" height="98.5%"></iframe>
         </div>
 
     </div>
@@ -32,7 +36,7 @@
 {% block javascript %}
 <script>
 var all_courses = {{ all_courses|safe }}
-all_courses.sort((a, b) => {a.toUpperCase();b.toUpperCase();return a > b ? 1 : a < b ? -1 : 0;});
+all_courses.sort((a, b) => {a[0].toUpperCase();b[0].toUpperCase();return a[0] > b[0] ? 1 : a[0] < b[0] ? -1 : 0;});
 var favorites;
 
 function getFavorites(){
@@ -61,7 +65,7 @@ autocomplete(document.getElementById("courses-search-input"), all_courses);
 getAllCourses(all_courses);
 {% endif %}
 function getAllCourses(arr) {
-    var course, icon, courseText, courseName, i;
+    var course, icon, courseText, courseName, i, loggedRounds, loggedRoundsDiv;
     var list = document.getElementById("courses-list")
     /*close any already open lists of autocompleted values*/
     emptyCourseList();
@@ -75,7 +79,7 @@ function getAllCourses(arr) {
 
         {% if not current_user.is_anonymous %}
         icon = document.createElement("img");
-        if (favorites.includes(arr[i])){
+        if (favorites.includes(arr[i][0])){
             icon.setAttribute("src", "../static/assets/img/star_filled.svg")}
         else {
             icon.setAttribute("src", "../static/assets/img/star_empty.svg")}
@@ -91,15 +95,35 @@ function getAllCourses(arr) {
         courseText.setAttribute("class", "course-text");
         course.appendChild(courseText);
 
-        courseName = document.createElement("h4");
-        courseName.innerHTML = arr[i];
+
+        courseName = document.createElement("h6");
+        courseName.innerHTML = arr[i][0];
         /*insert a input field that will hold the current array item's value:*/
-        courseName.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+        courseName.innerHTML += "<input type='hidden' value='" + arr[i][0] + "'>";
         /*execute a function when someone clicks on the item value (DIV element):*/
         courseName.addEventListener("click", function (e) {
             inp.value = this.getElementsByTagName("input")[0].value;
         });
         courseText.appendChild(courseName);
+
+        loggedRoundsDiv = document.createElement("DIV");
+        loggedRoundsDiv.setAttribute("class", "logged-rounds-div");
+        course.appendChild(loggedRoundsDiv);
+
+        if(arr[i][1] >= 50){
+            loggedRounds = document.createElement("img");
+            loggedRounds.setAttribute("src", "../static/assets/img/checkmark.svg");
+            loggedRounds.setAttribute("alt", "active");
+            loggedRounds.setAttribute("width", "30px");
+            loggedRounds.setAttribute("height", "30px");
+            loggedRounds.setAttribute("style", "margin: 10px");
+        }
+        else{
+            loggedRounds = document.createElement("span");
+            loggedRounds.innerHTML = arr[i][1] + " / 50";
+            loggedRounds.setAttribute("style", "white-space: nowrap;");
+        }
+        loggedRoundsDiv.appendChild(loggedRounds);
     }
 }
 
@@ -116,14 +140,14 @@ function autocomplete(inp, arr) {
         /*for each item in the array...*/
         for (i = 0; i < arr.length; i++) {
             /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i].toUpperCase().match(regex)){
+            if (arr[i][0].toUpperCase().match(regex)){
                 /*create a DIV element for each matching element:*/
                 course = document.createElement("div");
                 course.setAttribute("class", "course");
                 list.appendChild(course);
                 {% if not current_user.is_anonymous %}
                 icon = document.createElement("img");
-                if (favorites.includes(arr[i])){
+                if (favorites.includes(arr[i][0])){
                     icon.setAttribute("src", "../static/assets/img/star_filled.svg");}
                 else {
                     icon.setAttribute("src", "../static/assets/img/star_empty.svg");}
@@ -138,16 +162,35 @@ function autocomplete(inp, arr) {
                 courseText.setAttribute("class", "course-text");
                 course.appendChild(courseText);
 
-                courseName = document.createElement("h4");
+                courseName = document.createElement("h6");
 
-                courseName.innerHTML = arr[i];
+                courseName.innerHTML = arr[i][0];
                 /*insert a input field that will hold the current array item's value:*/
-                courseName.innerHTML += "<input type='hidden' value='" + arr[i] + "'>";
+                courseName.innerHTML += "<input type='hidden' value='" + arr[i][0] + "'>";
                 /*execute a function when someone clicks on the item value (DIV element):*/
                 courseName.addEventListener("click", function (e) {
                     inp.value = this.getElementsByTagName("input")[0].value;
                 });
                 courseText.appendChild(courseName);
+                loggedRoundsDiv = document.createElement("DIV");
+                loggedRoundsDiv.setAttribute("class", "logged-rounds-div");
+                course.appendChild(loggedRoundsDiv);
+
+                if(arr[i][1] >= 50){
+                    loggedRounds = document.createElement("img");
+                    loggedRounds.setAttribute("src", "../static/assets/img/checkmark.svg");
+                    loggedRounds.setAttribute("alt", "active");
+                    loggedRounds.setAttribute("width", "30px");
+                    loggedRounds.setAttribute("height", "30px");
+                    loggedRounds.setAttribute("style", "margin: 10px");
+                }
+                else{
+                    loggedRounds = document.createElement("span");
+                    loggedRounds.innerHTML = arr[i][1] + " / 50";
+                    loggedRounds.setAttribute("style", "white-space: nowrap;");
+
+                }
+                loggedRoundsDiv.appendChild(loggedRounds);
             }
         }
     });
@@ -170,5 +213,15 @@ function updateFavorite(){
     });
 }
 {% endif %}
+function toggleMap(){
+    if($("#map-container").hasClass("hide-on-small")){
+        $("#courses-container").addClass("hide-on-small");
+        $("#map-container").removeClass("hide-on-small");
+    }
+    else {
+        $("#map-container").addClass("hide-on-small");
+        $("#courses-container").removeClass("hide-on-small");
+    }
+}
 </script>
 {% endblock %}

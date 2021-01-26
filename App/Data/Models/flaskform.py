@@ -5,6 +5,7 @@ from wtforms.fields.html5 import EmailField
 from wtforms.validators import DataRequired, InputRequired, EqualTo
 
 
+
 class SignInForm(FlaskForm):
     username = StringField(
         "username",
@@ -69,8 +70,9 @@ class SignUpForm(FlaskForm):
 
 
 class SettingsForm(FlaskForm):
-    profile_picture = FileField(".jpg", validators=[
-        FileAllowed(["jpg"], message=".jpg files only!")
+    IMAGES = list('jpg jpe jpeg png gif svg bmp'.split())
+    profile_picture = FileField("images", validators=[
+        FileAllowed(IMAGES, message="img files only!")
     ],
         render_kw={
             "placeholder": "Profile Picture"
@@ -104,3 +106,6 @@ class SettingsForm(FlaskForm):
         "submit",
         render_kw={"value": "Update"}
     )
+
+
+
