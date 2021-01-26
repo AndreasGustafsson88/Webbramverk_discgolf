@@ -7,10 +7,11 @@ import json
 from App.Controller.my_encoder import MyEncoder
 from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id
 from App.Controller.my_chart_controller import return_random
-from App.Controller.scorecards_controller import get_scorecard
+from App.Controller.scorecards_controller import get_scorecard, delete_scorecard
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
     get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, \
-    delete_friend_request, update_profile, add_round, calculate_extra_strokes
+    delete_friend_request, update_profile, add_round, calculate_extra_strokes, add_incomplete_scorecard, \
+    remove_incomplete_scorecard
 from App.Data import db
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
@@ -36,6 +37,19 @@ def to_console(text):
     return ""
 
 
+@app.template_filter('json_decode')
+def json_decode(o):
+    if isinstance(o, Scorecard):
+        b = vars(o)
+        b['_id'] = str(b['_id'])
+        return json.dumps(b)
+    else:
+        for history in o:
+            history[3] = str(history[3])
+        return json.dumps(o)
+
+app.jinja_env.filters['json_decode'] = json_decode
+
 @login_manager.user_loader
 def load_user(_id):
     return find_unique(_id=ObjectId(_id))
@@ -50,10 +64,9 @@ def index():
     # ale.save()
     # all_users = User.all()
     # for i in all_users:
-    #   i.history.append(["2021-01-20", 500, 50, ObjectId('5feb0289df7bbd3185383f52')])
-    #  i.history.append(["2021-01-20", 400, 50, ObjectId('5feb0289df7bbd3185383f52')])
-    # i.history.append(["2021-01-20", 600, 50, ObjectId('5feb0289df7bbd3185383f52')])
-    # print(i.rating)
+    #     i.c_score_Oid = []
+    #     i.i_score_Oid = []
+    #     i.save()
 
     form = SignInForm()
 
@@ -182,10 +195,10 @@ def scorecard_play():
                      'active': True,
                      'multi': multi
                      }
-    scorecard = vars(Scorecard.insert_one(round_summary))
-    scorecard['_id'] = str(scorecard['_id'])
+    scorecard = Scorecard.insert_one(round_summary)
 
-    print(round_summary)
+    add_incomplete_scorecard(scorecard, players)
+
     return render_template("scorecard.html", round_summary=scorecard)
 
 
@@ -261,11 +274,30 @@ def profile_page_update():
         return redirect(url_for('index'))
 
 
-@app.route('/scorecard/incomplete', methods=['GET', 'POST'])
+@app.route('/scorecard/incomplete', methods=['GET', 'POST', 'DELETE'])
 def scorecard_incomplete():
     if request.method == 'POST':
-        round_summary = vars(get_scorecard(_id=ObjectId(request.form['button'])))
-        del round_summary['_id']
-        return render_template('scorecard.html', round_summary=round_summary)
+        scorecard = get_scorecard(_id=ObjectId(request.form['button']))
+
+        return render_template('scorecard.html', round_summary=scorecard)
+
+    if request.method == 'DELETE':
+
+        scorecard = get_scorecard(_id=ObjectId(json.loads(request.form['p_summary'])['_id']))
+
+        remove_incomplete_scorecard(scorecard)
+        delete_scorecard(scorecard)
+
+        return 'Scorecard deleted'
 
     return render_template('scorecard_incomplete.html')
+
+
+@app.route('/scorecard/complete', methods=['GET', 'POST'])
+def scorecard_complete():
+    if request.method == 'POST':
+        scorecard = get_scorecard(_id=ObjectId(request.form['button']))
+
+        return render_template('scorecard.html', round_summary=scorecard)
+
+    return render_template('scorecard_complete.html')

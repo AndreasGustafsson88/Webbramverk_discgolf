@@ -21,3 +21,12 @@ def update_scorecard(mongo_object, player_summary):
     for e, player in enumerate(mongo_object.players):
         player['stats'] = player_summary['players'][e]['stats']
         mongo_object.save()
+
+
+def save_scorecard(scorecard):
+    scorecard.active = False
+    scorecard.save()
+
+
+def delete_scorecard(scorecard):
+    Scorecard.delete_one(_id=scorecard._id)
