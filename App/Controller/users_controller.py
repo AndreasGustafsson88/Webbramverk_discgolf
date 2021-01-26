@@ -105,11 +105,11 @@ def add_round(player_summary):
             throw_per_hole = [int(player_summary['players'][i]['stats'][key]) for key in
                               player_summary['players'][i]['stats'].keys() if 'throws' in key]
             total_throws = sum(throw_per_hole)
+            rating = course.rating[str(total_throws)]
             # TODO CHECK VALIDITY OF ROUND, difference not more than 150?!?
             if len(course.history) > 50:
                 if str(total_throws) in course.rating:
                     u_round = []
-                    rating = course.rating[str(total_throws)]
 
                     u_round.append(time.strftime('%Y-%m-%d'))
                     u_round.append(rating)
@@ -118,7 +118,7 @@ def add_round(player_summary):
 
                     ur.add_round(user, u_round)
 
-            if len(user.history) > 5:
+            if len(user.history) > 5 and -151 < user.rating - rating < 151:
                 c_round = []
 
                 c_round.append(time.strftime('%Y-%m-%d'))

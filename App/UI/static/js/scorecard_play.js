@@ -215,13 +215,14 @@ function load_summary(element) {
 function delete_scorecards() {
     $.ajax({
         method: 'delete',
-        url: '/scorecard/incomplete',
+        url: '/scorecard/play',
         data: {
-            p_summary: JSON.stringify(player_summary)
+            p_summary: JSON.stringify(player_summary),
+            action: 'delete_scorecard'
         },
         success: (data) => {
             alert(data)
-            location.replace('/scorecard/incomplete')
+            location.replace(redirect_url)
         }
     });
 }

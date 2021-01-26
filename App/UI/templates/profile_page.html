@@ -7,176 +7,189 @@
 
 
 
+
 <section class="profile-page">
-
- <!--       <div class="container">
-            <div class="collapse navbar-collapse">
-                Keeps the icon bar in place
-                <div class="dropdown-menu dropdown-with-icons">
-                </div>
-            </div>
-        </div> -->
-        <div class="p-content">
-            <div class="container profile">
-                <div class="row">
-	                <div class="col-md-6 ml-auto mr-auto">
-        	           <div class="profile">
-                           <!--Profile picture-->
-	                        <div class="avatar">
-	                            <img src="../static/assets/img/dog.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
-                            </div>
-                            <!--Name on player-->
-	                        <div class="name center-content-h" style="height: 35px;" >
-                                {% if visited_profile._id|string not in current_user.friends|string and visited_profile.user_name != current_user.user_name %}
-                                    <div style="width: 35px">
-                                        <input type="image" class="post add_friend" id="img1" src="../static/assets/img/add_friend.png" style="height: 100%; padding: 0; "/>
-                                    </div>
-                                {% endif %}
-	                            <h3 class="title">{{ visited_profile.user_name }}</h3>
-	                        </div>
-	                    </div>
-    	            </div>
-                </div>
-                <!--Descprition player-->
-                <div class="description text-center">
-                   <p> {% if visited_profile.rating %}
-                       Rating:
-                        {{ visited_profile.rating }}
-                        {% else  %}
-                        NO Rating Calculated
-                        {% endif %}
-                    </p>
-                </div>
-                <!--Row for tablink (settings, friends, fav course)-->
-				<div class="row" style="display: -ms-flexbox;">
-					<div class="col-sm-12 ml-auto mr-auto">
-                        <div class="profile-tabs">
-                          <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist" >
-							  <li class="nav-item">
-                                <a class="nav-link active" data-target="#my_stats" role="tab" data-toggle="tab" onclick="show_tab('my_stats')" >
-                                  <i class="material-icons"><img src="../static/assets/img/baseline_insights_black_24dp.png" ></i>
-                                    My Stats
-                                </a>
-                            </li>
-                              {% if visited_profile.user_name == current_user.user_name %}
-
-                            <li class="nav-item">
-                                <a class="nav-link" data-target="#settings" role="tab" data-toggle="tab" onclick="show_tab('settings')" >
-                                  <i class="material-icons"><img src="../static/assets/img/baseline_settings_black_24dp.png"> </i>
-                                  Settings
-                                </a>
-                            </li>
-                            {% endif %}
-                            <li class="nav-item">
-                                <a class="nav-link" data-target="#friends" role="tab" data-toggle="tab" onclick="show_tab('friends')" >
-                                  <i class="material-icons"><img src="../static/assets/img/baseline_people_alt_black_24dp.png" id="friend_logo_image" style="height: 48px;"></i>
-                                    Friends
-                                </a>
-                            </li>
-                            <li class="nav-item">
-                                <a class="nav-link" data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
-                                  <i class="material-icons"><img src="../static/assets/img/baseline_favorite_black_24dp.png"></i>
-                                    Favorite Courses
-                                </a>
-                            </li>
-                          </ul>
-                        </div>
-    	    	</div>
-            </div>
-                <div class="tab-content tab-space" id="profile_content">
-			  <!--Put content when pressed my_stats-->
-			  <div class="tab-pane active text-center gallery" id="my_stats" style="padding-top: 20px;">
-                      <div class="container-fluid">
-                    <!-- Example row of columns -->
-                    <div class="row">
-                        <figure class="highcharts-figure" style="width: 100vw;">
-                            <div id="container">
-
-                            </div>
-                        </figure>
-                    </div>
-                </div>
-                  <div class="cont w100 center-content-h" style="margin-bottom: 2.5rem">
-                      <div class="cont" style="width: 33%">
-                          <button class="rounds" value="5">5</button>
-                      </div>
-                      <div class="cont" style="width: 33%">
-                          <button class="rounds" value="20">20</button>
-                      </div>
-                      <div class="cont" style="width: 33%">
-                          <button class="rounds" value="50">50</button>
-                      </div>
+<!--       <div class="container">
+   <div class="collapse navbar-collapse">
+       Keeps the icon bar in place
+       <div class="dropdown-menu dropdown-with-icons">
+       </div>
+   </div>
+   </div> -->
+<div class="p-content">
+   <div class="container profile">
+      <div class="row">
+         <div class="col-md-6 ml-auto mr-auto">
+            <div class="profile">
+               <!--Profile picture-->
+               <div class="avatar">
+                  <img src="../static/assets/img/dog.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+               </div>
+               <!--Name on player-->
+               <div class="name center-content-h" style="height: 35px;" >
+                  {% if visited_profile._id|string not in current_user.friends|string and visited_profile.user_name != current_user.user_name %}
+                  <div style="width: 35px">
+                     <input type="image" class="post add_friend" id="img1" src="../static/assets/img/add_friend.png" style="height: 100%; padding: 0; "/>
                   </div>
-      			</div>
-
-				  <!--Put content when pressed settings-->
-             {% if visited_profile.user_name == current_user.user_name %}
-            <div class="tab-pane text-center gallery" id="settings"style="display: none" >
-                <div class="panel-body">
-			    		<form action="{{ url_for('profile_page_update') }}" role="form" method="POST">
-                            {{ form.csrf_token }}
-			    			<div class="row">
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-                                    {{ form.profile_picture }}
-			    				</div>
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-                                        {{ form.user_name }}
-			    					</div>
-			    				</div>
-			    			</div>
-
-			    			<div class="form-group">
-			    				{{ form.email }}
-			    			</div>
-
-			    			<div class="row">
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-			    						{{ form.password }}
-			    					</div>
-			    				</div>
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-			    						{{ form.confirm_password }}
-			    					</div>
-			    				</div>
-			    			</div>
-                            {{ form.submit }}
-			    		</form>
-			    	</div>
+                  {% endif %}
+                  <h3 class="title">{{ visited_profile.user_name }}</h3>
+               </div>
             </div>
-                {% endif %}
-            <!--Put content when pressed friends-->
-            <div class="tab-pane text-center gallery" id="friends" >
-
-                <div class="col-search-form">
-                    <form class="form-inline active-cyan-3 active-cyan-4 center-content" autocomplete="off" style="width: 100%; max-width: 500px">
-                        <div class=autocomplete aria-hidden="true" style="width: 100%">
-                            <input class="form-control form-control-m w-100" id="user_search" type="text" placeholder="Search Players" aria-label="Search" style="margin-bottom: 10px;">
+         </div>
+      </div>
+      <!--Descprition player-->
+      <div class="description text-center">
+         <p> {% if visited_profile.rating %}
+            Rating:
+            {{ visited_profile.rating }}
+            {% else  %}
+            NO Rating Calculated
+            {% endif %}
+         </p>
+      </div>
+      <!--Row for tablink (settings, friends, fav course)-->
+      <div class="row" style="display: -ms-flexbox;">
+         <div class="col-sm-12 ml-auto mr-auto">
+            <div class="profile-tabs">
+               <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist" >
+                  <li class="nav-item">
+                     <a class="nav-link active" data-target="#my_stats" role="tab" data-toggle="tab" onclick="show_tab('my_stats')" >
+                     <i class="material-icons"><img src="../static/assets/img/baseline_insights_black_24dp.png" ></i>
+                     My Stats
+                     </a>
+                  </li>
+                  {% if visited_profile.user_name == current_user.user_name %}
+                  <li class="nav-item">
+                     <a class="nav-link" data-target="#settings" role="tab" data-toggle="tab" onclick="show_tab('settings')" >
+                     <i class="material-icons"><img src="../static/assets/img/baseline_settings_black_24dp.png"> </i>
+                     Settings
+                     </a>
+                  </li>
+                  {% endif %}
+                  <li class="nav-item">
+                     <a class="nav-link" data-target="#friends" role="tab" data-toggle="tab" onclick="show_tab('friends')" >
+                     <i class="material-icons"><img src="../static/assets/img/baseline_people_alt_black_24dp.png" id="friend_logo_image" style="height: 48px;"></i>
+                     Friends
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
+                     <i class="material-icons"><img src="../static/assets/img/baseline_favorite_black_24dp.png"></i>
+                     Favorite Courses
+                     </a>
+                  </li>
+                  <li class="nav-item">
+                     <a class="nav-link" data-target="#scorecards" role="tab" data-toggle="tab" onclick="show_tab('scorecards')" >
+                     <i class="material-icons"><img src="../static/assets/img/scorecard_img.png" id="scorecard_logo_image" style="height: 48px;"></i>
+                     Scorecards
+                     </a>
+                  </li>
+               </ul>
+            </div>
+         </div>
+      </div>
+      <div class="tab-content tab-space" id="profile_content">
+         <!--Put content when pressed my_stats-->
+         <div class="tab-pane active text-center gallery" id="my_stats" style="padding-top: 20px;">
+            <div class="container-fluid">
+               <!-- Example row of columns -->
+               <div class="row">
+                  <figure class="highcharts-figure" style="width: 100vw;">
+                     <div id="container">
+                     </div>
+                  </figure>
+               </div>
+            </div>
+            <div class="cont w100 center-content-h" style="margin-bottom: 2.5rem">
+               <div class="cont" style="width: 33%">
+                  <button class="rounds" value="5">5</button>
+               </div>
+               <div class="cont" style="width: 33%">
+                  <button class="rounds" value="20">20</button>
+               </div>
+               <div class="cont" style="width: 33%">
+                  <button class="rounds" value="50">50</button>
+               </div>
+            </div>
+         </div>
+         <!--Put content when pressed settings-->
+         {% if visited_profile.user_name == current_user.user_name %}
+         <div class="tab-pane text-center gallery" id="settings"style="display: none" >
+            <div class="panel-body">
+               <form action="{{ url_for('profile_page_update') }}" role="form" method="POST">
+                  {{ form.csrf_token }}
+                  <div class="row">
+                     <div class="col-xs-6 col-sm-6 col-md-6">
+                        {{ form.profile_picture }}
+                     </div>
+                     <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                           {{ form.user_name }}
                         </div>
-                    </form>
-                </div>
-
-      			<div class="row" id="friends_id">
-
-
-
-              </div>
+                     </div>
+                  </div>
+                  <div class="form-group">
+                     {{ form.email }}
+                  </div>
+                  <div class="row">
+                     <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                           {{ form.password }}
+                        </div>
+                     </div>
+                     <div class="col-xs-6 col-sm-6 col-md-6">
+                        <div class="form-group">
+                           {{ form.confirm_password }}
+                        </div>
+                     </div>
+                  </div>
+                  {{ form.submit }}
+               </form>
             </div>
-            <!--Put content when pressed favorite course-->
-            <div class="tab-pane text-center gallery" id="favorite_courses">
-                <p>Gå till courses för att lägga till bana</p>
-                <div id="favorite-courses-list" >
-                    {% for course in favorite_courses %}
-                        <h3>{{ course }}</h3>
-                    {% endfor %}
-                </div>
-
-      		</div>
+         </div>
+         {% endif %}
+         <!--Put content when pressed friends-->
+         <div class="tab-pane text-center gallery" id="friends" >
+            <div class="col-search-form">
+               <form class="form-inline active-cyan-3 active-cyan-4 center-content" autocomplete="off" style="width: 100%; max-width: 500px">
+                  <div class=autocomplete aria-hidden="true" style="width: 100%">
+                     <input class="form-control form-control-m w-100" id="user_search" type="text" placeholder="Search Players" aria-label="Search" style="margin-bottom: 10px;">
+                  </div>
+               </form>
             </div>
+            <div class="row" id="friends_id">
             </div>
-        </div>
+         </div>
+         <!--Put content when pressed favorite course-->
+         <div class="tab-pane text-center gallery" id="favorite_courses">
+            <p>Gå till courses för att lägga till bana</p>
+            <div id="favorite-courses-list" >
+               {% for course in favorite_courses %}
+               <h3>{{ course }}</h3>
+               {% endfor %}
+            </div>
+         </div>
+         <div class="tab-pane text-center gallery" id="scorecards" >
+         {% if visited_profile.user_name == current_user.user_name %}
+            <div class="incomplete_scorecards">
+               <form role="form" method="POST">
+                  {% for scorecard in current_user.incomplete_scorecards %}
+                  <button class="btn btn-primary btn-m w-100 button-text score_buttons" type="submit" style="margin-top: 15px; background-color: #FF9999; color: black; border: 0;" name="button" value="{{ scorecard._id }}">{{ scorecard.course }}</button>
+                  {% endfor %}
+               </form>
+            </div>
+         {% endif %}
+            <div class="complete_scorecards">
+                <form role="form" method="POST">
+                {% for scorecard in visited_profile.complete_scorecards %}
+                    <button class="btn btn-primary btn-m w-100 button-text score_buttons" type="submit" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" name="button" value="{{ scorecard._id }}">{{ scorecard.course }}</button>
+                {% endfor %}
+                </form>
+            </div>
+         </div>
+      </div>
+   </div>
+</div>
 
 </section>
 {% endblock %}
