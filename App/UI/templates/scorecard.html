@@ -23,7 +23,7 @@
                             <!--Hole Info-->
                             <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
                                 <div class="container h100 center-content" style="background-color: #23c2ff">
-                                    <div class="small-text font-weight-bold"> Hole {{ i + 1 }} {% if holes_multi == 2 %} ({{  i + 1 - j }}) {% endif %}</div>
+                                    <div class="small-text font-weight-bold"> Hole {{ i + 1 }} {% if round_summary.multi == 2 %} ({{  i + 1 - j }}) {% endif %}</div>
                                 </div>
                                 <div class="container h100 center-content" style="background-color: #eeeeee">
                                     <div class="small-text font-weight-bold"> Par {{round_summary['course_holes'][i + 1 - j]['Par'] }}</div>
@@ -140,13 +140,13 @@
                             {% if round_summary.active %}
                                 <div class="container w100 center-content">
                                     <div class="container w70">
-                                        <a class="btn btn-primary btn-m w-100 button-text scorecard_buttons shadow" id="submit_button" onclick="submit_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Submit Scorecard</a>
+                                        <a class="btn btn-primary btn-m w-100 button-text score_buttons" id="submit_button" onclick="submit_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Submit Scorecard</a>
                                     </div>
                                     <div class="container w70">
-                                        <a class="btn btn-primary btn-m w-100 button-text shadow" id="save_button" onclick="save_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Save Scorecard</a>
+                                        <a class="btn btn-primary btn-m w-100 button-text score_buttons" id="save_button" onclick="save_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Save Scorecard</a>
                                     </div>
                                     <div class="container w70">
-                                        <a class="btn btn-primary btn-m w-100 button-text shadow" id="delete_button" onclick="delete_scorecards()" style="margin-top: 15px; margin-bottom: 75px; border: 0; background-color:#FF9999; color: black" role="button">Delete Scorecard</a>
+                                        <a class="btn btn-primary btn-m w-100 button-text score_buttons" id="delete_button" onclick="delete_scorecards()" style="margin-top: 15px; margin-bottom: 75px; border: 0; background-color:#FF9999; color: black" role="button">Delete Scorecard</a>
                                     </div>
                                 </div>
                             {% endif %}
@@ -165,14 +165,13 @@
 {% endblock %}
 
 {% block javascript %}
-
+    <script>let player_summary = {{ round_summary | json_decode | safe }};</script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
     <script>
 
     let redirect_url = '/profile_page/{{ current_user.user_name }}'
         console.log(redirect_url)
-        let player_summary = {{ round_summary | json_decode | safe }};
         let check_round = JSON.parse(JSON.stringify(player_summary));
         console.log(player_summary)
         var elements = document.getElementsByClassName("throws-input");
@@ -180,7 +179,6 @@
             elements[i].addEventListener("input", update_result)
             load_summary(elements[i])
         }
-
 
     </script>
 {% endblock %}

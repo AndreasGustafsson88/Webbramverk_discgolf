@@ -328,3 +328,15 @@ hr {
     background-color: #eeeeee;
     min-height: 84vh;
 }
+
+.score_buttons {
+    box-shadow: 2px 2px 3px #515151;
+}
+
+.score_buttons:active {
+    margin: 1px 1px 0;
+    box-shadow: -1px -1px 1px #515151;
+    background-color: green;
+    filter: drop-shadow(0 0 0 #515151);
+    transition: filter 0s;
+}

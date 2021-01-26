@@ -17,7 +17,16 @@ var swiper = new Swiper('.swiper-container', {
     el: '.swiper-pagination',
     clickable: true,
     renderBullet: function (index, className) {
-      return '<span class="' + className + '">' + (index + 1) + '</span>';
+        if (player_summary['multi'] === 1 && index === player_summary['course_holes'][0]){
+            return '<span class="' + className + '">' + 'S' + '</span>';
+        }
+        else if (player_summary['multi'] === 2 && index === (player_summary['course_holes'][0] * 2)) {
+            return '<span class="' + className + '">' + 'S' + '</span>';
+        }
+        else {
+            return '<span class="' + className + '">' + (index + 1) + '</span>';
+        }
+
     },
   },
 });
@@ -96,7 +105,7 @@ function update_result() {
 function complete_round() {
     for (let player of player_summary['players']){
         for (let key in player['stats']) {
-            if (typeof player['stats'][key] === "string" && key.includes('par')) {
+            if (player['stats'][key] === "" && key.includes('throws') || player['stats'][key] === "0" && key.includes('throws')) {
                 return false;
             }
         }
