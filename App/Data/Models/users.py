@@ -11,8 +11,12 @@ class User(Document, UserMixin):
     collection = db.users
 
     @property
-    def scorecards(self):
-        return Scorecard.get_scorecard_for_player(self.user_name)
+    def incomplete_scorecards(self):
+        return [Scorecard.find(_id=ObjectId(scorecard)).first_or_none() for scorecard in self.i_score_Oid]
+
+    @property
+    def complete_scorecards(self):
+        return [Scorecard.find(_id=ObjectId(scorecard)).first_or_none() for scorecard in self.c_score_Oid]
 
     @property
     def friends_list(self):

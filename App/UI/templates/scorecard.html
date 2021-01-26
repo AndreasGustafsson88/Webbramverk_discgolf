@@ -7,13 +7,13 @@
 
     <section class="scorecard">
             <!-- Slider main container -->
-        <div class="swiper-container">
+        <div class="swiper-container" style="height: fit-content">
             <!-- Additional required wrapper -->
             <div class="swiper-wrapper">
                 <!-- Slides -->
                 {% set j=0 %}
-                {% for i in range(round_summary['course_holes'][0] * holes_multi + 1) %}
-                    {% if i < round_summary['course_holes'][0] * holes_multi %}
+                {% for i in range(round_summary['course_holes'][0] * round_summary.multi + 1) %}
+                    {% if i < round_summary['course_holes'][0] * round_summary.multi %}
                         {% if (i - j) >= round_summary['course_holes'][0] %}
                             {% set j = round_summary['course_holes'][0] %}
                         {% endif %}
@@ -23,7 +23,7 @@
                             <!--Hole Info-->
                             <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
                                 <div class="container h100 center-content" style="background-color: #23c2ff">
-                                    <div class="small-text font-weight-bold"> Hole {{ i + 1 }} ({{  i + 1 - j }})</div>
+                                    <div class="small-text font-weight-bold"> Hole {{ i + 1 }} {% if round_summary.multi == 2 %} ({{  i + 1 - j }}) {% endif %}</div>
                                 </div>
                                 <div class="container h100 center-content" style="background-color: #eeeeee">
                                     <div class="small-text font-weight-bold"> Par {{round_summary['course_holes'][i + 1 - j]['Par'] }}</div>
@@ -64,7 +64,7 @@
                                             </div>
                                         </div>
                                         <div class="col-4 center-content">
-                                            <input class="form-control form-control-sm throws-input" value="{{ player.stats['hole' ~ (i + 1 - j) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary.course_holes[i + 1 - j]['Par']}}_{{player.hcp[i - j]['strokes'] }}">
+                                            <input class="form-control form-control-sm throws-input" {% if not round_summary.active %} disabled="disabled" {% endif %} value="{{ player.stats['hole' ~ (i + 1 - j) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary.course_holes[i + 1 - j]['Par']}}_{{player.hcp[i - j]['strokes'] }}">
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -73,8 +73,8 @@
                     </div>
                     {% else %}
                          <div class="swiper-slide">
-                        <section class="scorecard">
-                           {% set holes_amount = round_summary["course_holes"][0] * holes_multi %}
+                        <section class="summary">
+                           {% set holes_amount = round_summary["course_holes"][0] * round_summary.multi %}
                             {% for i in range(holes_amount//9) %}
                                 <table class="table table-striped table-sm">
                                     <thead>
@@ -137,14 +137,19 @@
                                 </div>
                                 <hr>
                             {% endfor %}
-                            <div class="container w100 center-content">
-                                <div class="container w70">
-                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="submit_scorecards()" style="margin-top: 30px" role="button">Submit Scorecard</a>
+                            {% if round_summary.active %}
+                                <div class="container w100 center-content">
+                                    <div class="container w70">
+                                        <a class="btn btn-primary btn-m w-100 button-text score_buttons" id="submit_button" onclick="submit_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Submit Scorecard</a>
+                                    </div>
+                                    <div class="container w70">
+                                        <a class="btn btn-primary btn-m w-100 button-text score_buttons" id="save_button" onclick="save_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Save Scorecard</a>
+                                    </div>
+                                    <div class="container w70">
+                                        <a class="btn btn-primary btn-m w-100 button-text score_buttons" id="delete_button" onclick="delete_scorecards()" style="margin-top: 15px; margin-bottom: 75px; border: 0; background-color:#FF9999; color: black" role="button">Delete Scorecard</a>
+                                    </div>
                                 </div>
-                                <div class="container w70">
-                                    <a class="btn btn-primary btn-m w-100 button-text" onclick="save_scorecards()" style="margin-top: 30px" role="button">Save Scorecard</a>
-                                </div>
-                            </div>
+                            {% endif %}
                         </section>
                     </div>
                     {% endif %}
@@ -160,25 +165,20 @@
 {% endblock %}
 
 {% block javascript %}
-
+    <script>let player_summary = {{ round_summary | json_decode | safe }};</script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
     <script>
-        let player_summary = {{ round_summary | tojson }};
+
+    let redirect_url = '/profile_page/{{ current_user.user_name }}'
+        console.log(redirect_url)
         let check_round = JSON.parse(JSON.stringify(player_summary));
-
-
-       
-
-
-
-
-
-
-    var elements=document.getElementsByClassName("throws-input");
-    for (let i = 0; i < elements.length; i++ ){elements[i].addEventListener("input", update_result) }
-
-       
+        console.log(player_summary)
+        var elements = document.getElementsByClassName("throws-input");
+        for (let i = 0; i < elements.length; i++ ){
+            elements[i].addEventListener("input", update_result)
+            load_summary(elements[i])
+        }
 
     </script>
 {% endblock %}

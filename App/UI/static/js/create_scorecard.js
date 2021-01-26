@@ -101,8 +101,6 @@ function get_player() {
 
 }
 
-autocomplete(document.getElementById("user_search"), all_users, course=false, all_users=true );
-
         function autocomplete(inp, arr, course=false, all_user=false) {
           /*the autocomplete function takes two arguments,
           the text field element and an array of possible autocompleted values:*/

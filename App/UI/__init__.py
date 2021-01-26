@@ -8,10 +8,11 @@ from App.Controller.my_encoder import MyEncoder
 from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id, \
     get_all_courses
 from App.Controller.my_chart_controller import return_random
-from App.Controller.scorecards_controller import get_scorecard
+from App.Controller.scorecards_controller import get_scorecard, delete_scorecard
 from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
     get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, \
-    delete_friend_request, update_profile, add_round, calculate_extra_strokes
+    delete_friend_request, update_profile, add_round, calculate_extra_strokes, add_incomplete_scorecard, \
+    remove_incomplete_scorecard
 from App.Data import db
 from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
@@ -40,6 +41,19 @@ def to_console(text):
     return ""
 
 
+@app.template_filter('json_decode')
+def json_decode(o):
+    if isinstance(o, Scorecard):
+        b = vars(o)
+        b['_id'] = str(b['_id'])
+        return json.dumps(b)
+    else:
+        for history in o:
+            history[3] = str(history[3])
+        return json.dumps(o)
+
+app.jinja_env.filters['json_decode'] = json_decode
+
 @login_manager.user_loader
 def load_user(_id):
     return find_unique(_id=ObjectId(_id))
@@ -47,17 +61,16 @@ def load_user(_id):
 
 @app.route('/', methods=["POST", "GET"])
 def index():
-    #ale = Course.find(_id=ObjectId('5feb2c28258a4c696c956955')).first_or_none()
-    #ale.history = []
-    #ale.rating = {}
-    #ale.logged_rounds = 0
-    #ale.save()
-    # all_users = User.all()
-    # for i in all_users:
-    #   i.history.append(["2021-01-20", 500, 50, ObjectId('5feb0289df7bbd3185383f52')])
-    #  i.history.append(["2021-01-20", 400, 50, ObjectId('5feb0289df7bbd3185383f52')])
-    # i.history.append(["2021-01-20", 600, 50, ObjectId('5feb0289df7bbd3185383f52')])
-    # print(i.rating)
+
+    
+   
+    #all_users = User.all()
+    #for i in all_users:
+    #    i.c_score_Oid = []
+    #   i.i_score_Oid = []
+    #  i.save()
+
+
 
     form = SignInForm()
 
@@ -182,18 +195,28 @@ def scorecard_play():
                      'players': [{'user_name': player.user_name,
                                   'full_name': player.full_name,
                                   'hcp': player.hcp,                              
-                                  'stats': {f'hole{i+1}{v}': 0 for i in range(course.holes[0] * multi)
+                                  'stats': {f'hole{i+1}{v}': "" for i in range(course.holes[0] * multi)
                                                    for v in ['_points', '_par', '_throws']}} for player in players],
-                     'active': True
+                     'active': True,
+                     'multi': multi
                      }
-    print(round_summary)
-    return render_template("scorecard.html", round_summary=round_summary, holes_multi=multi)
+    scorecard = Scorecard.insert_one(round_summary)
+
+    add_incomplete_scorecard(scorecard, players)
+
+    return render_template("scorecard.html", round_summary=scorecard)
+
 
 
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])
 @login_required
 def profile_page(user_name):
     if request.method == "POST":
+
+        if 'button' in request.form:
+            scorecard = get_scorecard(_id=ObjectId(request.form['button']))
+            return redirect(url_for('scorecard_history', scorecard_id=scorecard._id))
+
         visited_user_id = request.form['id']
 
         if request.form['action'] == 'post accept_request':
@@ -231,6 +254,7 @@ def profile_page_delete(user_name):
     if request.method == "DELETE":
         friend = get_user(user_name=request.form['username'])
 
+
         if request.form['action'] == "action remove":
             message = delete_friend(current_user, friend._id)
             response = app.response_class(**message)
@@ -264,11 +288,22 @@ def profile_page_update():
         return redirect(url_for('index'))
 
 
-@app.route('/scorecard/incomplete', methods=['GET', 'POST'])
-def scorecard_incomplete():
-    if request.method == 'POST':
-        round_summary = vars(get_scorecard(_id=ObjectId(request.form['button'])))
-        del round_summary['_id']
-        return render_template('scorecard.html', round_summary=round_summary)
+@app.route('/scorecard/<scorecard_id>', methods=['GET', 'POST', 'DELETE'])
+def scorecard_history(scorecard_id):
 
-    return render_template('scorecard_incomplete.html')
+    if request.method == 'POST':
+        scorecard = get_scorecard(_id=ObjectId(request.form['button']))
+
+        return render_template('scorecard.html', round_summary=scorecard)
+
+    if request.method == 'DELETE':
+
+        scorecard = get_scorecard(_id=ObjectId(json.loads(request.form['p_summary'])['_id']))
+
+        remove_incomplete_scorecard(scorecard)
+        delete_scorecard(scorecard)
+
+        return 'Scorecard deleted'
+    scorecard = get_scorecard(_id=ObjectId(scorecard_id))
+    return render_template('scorecard.html', round_summary=scorecard)
+
