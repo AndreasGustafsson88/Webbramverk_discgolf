@@ -134,8 +134,6 @@ def courses():
             return response
 
     all_courses = [[course.name, len(course.history)] for course in get_all_courses()]
-    print()
-
     return render_template('courses.html', all_courses=json.dumps(all_courses))
 
 
