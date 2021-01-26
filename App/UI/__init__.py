@@ -62,11 +62,12 @@ def index():
     # ale.rating = {}
     # ale.logged_rounds = 0
     # ale.save()
-    # all_users = User.all()
-    # for i in all_users:
-    #     i.c_score_Oid = []
-    #     i.i_score_Oid = []
-    #     i.save()
+    #all_users = User.all()
+    #for i in all_users:
+    #    i.c_score_Oid = []
+    #   i.i_score_Oid = []
+    #  i.save()
+
 
     form = SignInForm()
 
@@ -206,6 +207,11 @@ def scorecard_play():
 @login_required
 def profile_page(user_name):
     if request.method == "POST":
+
+        if 'button' in request.form:
+            scorecard = get_scorecard(_id=ObjectId(request.form['button']))
+            return redirect(url_for('scorecard_history', scorecard_id=scorecard._id))
+
         visited_user_id = request.form['id']
 
         if request.form['action'] == 'post accept_request':
@@ -242,6 +248,7 @@ def profile_page_delete(user_name):
     if request.method == "DELETE":
         friend = get_user(user_name=request.form['username'])
 
+
         if request.form['action'] == "action remove":
             message = delete_friend(current_user, friend._id)
             response = app.response_class(**message)
@@ -274,8 +281,9 @@ def profile_page_update():
         return redirect(url_for('index'))
 
 
-@app.route('/scorecard/incomplete', methods=['GET', 'POST', 'DELETE'])
-def scorecard_incomplete():
+@app.route('/scorecard/<scorecard_id>', methods=['GET', 'POST', 'DELETE'])
+def scorecard_history(scorecard_id):
+
     if request.method == 'POST':
         scorecard = get_scorecard(_id=ObjectId(request.form['button']))
 
@@ -289,15 +297,6 @@ def scorecard_incomplete():
         delete_scorecard(scorecard)
 
         return 'Scorecard deleted'
+    scorecard = get_scorecard(_id=ObjectId(scorecard_id))
+    return render_template('scorecard.html', round_summary=scorecard)
 
-    return render_template('scorecard_incomplete.html')
-
-
-@app.route('/scorecard/complete', methods=['GET', 'POST'])
-def scorecard_complete():
-    if request.method == 'POST':
-        scorecard = get_scorecard(_id=ObjectId(request.form['button']))
-
-        return render_template('scorecard.html', round_summary=scorecard)
-
-    return render_template('scorecard_complete.html')
