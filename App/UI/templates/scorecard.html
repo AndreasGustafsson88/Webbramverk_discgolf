@@ -165,20 +165,8 @@
 {% endblock %}
 
 {% block javascript %}
-    <script>let player_summary = {{ round_summary | json_decode | safe }};</script>
+    <script>let player_summary = {{ round_summary | json_decode | safe }};
+            let redirect_url = '/profile_page/{{ current_user.user_name }}';</script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="../static/js/scorecard_play.js"></script>
-    <script>
-
-    let redirect_url = '/profile_page/{{ current_user.user_name }}'
-        console.log(redirect_url)
-        let check_round = JSON.parse(JSON.stringify(player_summary));
-        console.log(player_summary)
-        var elements = document.getElementsByClassName("throws-input");
-        for (let i = 0; i < elements.length; i++ ){
-            elements[i].addEventListener("input", update_result)
-            load_summary(elements[i])
-        }
-
-    </script>
 {% endblock %}
