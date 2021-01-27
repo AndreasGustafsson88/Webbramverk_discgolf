@@ -72,17 +72,17 @@ function delete_player(id) {
 
 function get_player() {
 
-
     let player_name = document.getElementById("player_search").value;
+    const divIds = $.map($('#player_content_div > div'), div => div.id);
 
-    if (player_name && friends.includes(player_name)) {
+    if (player_name && friends.includes(player_name) && divIds.indexOf(player_name) === -1) {
+        if (divIds.length < 4) {
         let container_block = document.getElementById("player_content_div");
-        let player_amount = $('#player_content_div > div').length
 
         let block_to_insert = document.createElement("div");
         block_to_insert.setAttribute("id", player_name)
         block_to_insert.className = "player-text";
-        block_to_insert.innerHTML = "Player " + (player_amount + 1) + ": " + player_name;
+        block_to_insert.innerHTML = "Player " + (divIds.length + 1) + ": " + player_name;
 
         let delete_button = document.createElement("button");
         delete_button.setAttribute("class", "btn btn-danger btn-sm");
@@ -97,10 +97,12 @@ function get_player() {
 
         let player_element = document.getElementById("player_search");
         player_element.value = null;
+        }
+            else {
+        alert('to many players')
     }
-
+  }
 }
-
         function autocomplete(inp, arr, course=false, all_user=false) {
           /*the autocomplete function takes two arguments,
           the text field element and an array of possible autocompleted values:*/
