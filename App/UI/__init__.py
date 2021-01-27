@@ -23,6 +23,7 @@ from App.Data.Models.scorecards import Scorecard
 from App.Data.Models.users import User
 
 
+
 app = Flask(__name__,
             static_url_path="",
             static_folder="")
@@ -30,7 +31,6 @@ app = Flask(__name__,
 
 app.config["SECRET_KEY"] = "supersecret, don't tell"
 sources_root = os.path.abspath(os.path.dirname('App'))
-#todo prata i gruppen var vi vill lagra profilbilder.
 UPLOAD_FOLDER = os.path.join(sources_root, 'App/UI/static/assets/img/profile_pictures/')
 app.config['UPLOAD_FOLDER'] = UPLOAD_FOLDER
 login_manager = LoginManager()
@@ -271,23 +271,44 @@ def profile_page_delete(user_name):
 def profile_page_update():
     settings_form = SettingsForm()
     if settings_form.validate_on_submit():
-        if settings_form.profile_picture.data is not None:
+        if not check_password_hash(current_user.password, settings_form.current_password.data):
+            flash("Wrong password")
+            return redirect(url_for('profile_page', user_name=current_user.user_name))
+
+        update = {}
+
+        if settings_form.profile_picture_input.data:
             file_name = settings_form.user_name.data.strip().replace(' ', '_')
-            settings_form.profile_picture.data.save(os.path.join(UPLOAD_FOLDER, f'{file_name}.jpg'))
-            current_user.profile_picture = "../static/assets/img/profile_pictures/" + file_name + ".jpg"
-            current_user.save()
+            settings_form.profile_picture_input.data.save(os.path.join(UPLOAD_FOLDER, f'{file_name}.jpg'))
+            update["profile_picture"] = "../static/assets/img/profile_pictures/" + file_name + ".jpg"
 
-        if get_user(email=settings_form.email.data):
-            flash("Email already exists")
-            return redirect(url_for('profile_page', user_name=current_user.user_name))
+        if settings_form.email.data:
+            if get_user(email=settings_form.email.data):
+                flash("Email already exists")
+                return redirect(url_for('profile_page', user_name=current_user.user_name))
+            update["email"] = settings_form.email.data
 
-        if get_user(user_name=settings_form.user_name.data):
-            flash("Username already exists")
-            return redirect(url_for('profile_page', user_name=current_user.user_name))
+        if settings_form.user_name.data:
+            if get_user(user_name=settings_form.user_name.data):
+                flash("Username already exists")
+                return redirect(url_for('profile_page', user_name=current_user.user_name))
+            update["user_name"] = settings_form.user_name.data
 
-        update_profile(current_user, settings_form.profile_picture.data, settings_form.user_name.data,
-                       settings_form.email.data, generate_password_hash(settings_form.password.data, "sha256"))
+        if settings_form.password.data:
+            update["password"] = generate_password_hash(settings_form.password.data, "sha256")
+
+        update_profile(current_user, update)
         return redirect(url_for('index'))
+
+    visited_profile = get_user_by_username(current_user.user_name)
+    visited_profile.history = json.dumps(visited_profile.history, cls=MyEncoder)
+    all_users = get_all_users()
+    favorite_courses = [get_course_by_id(course_id).name for course_id in visited_profile.favourite_courses]
+    return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users,
+                           form=settings_form, favorite_courses=favorite_courses)
+
+
+
 
 
 @app.route('/scorecard/<scorecard_id>', methods=['GET', 'POST', 'DELETE'])

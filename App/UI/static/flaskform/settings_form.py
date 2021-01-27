@@ -5,38 +5,42 @@ from wtforms.validators import DataRequired, EqualTo
 
 class SettingsForm(FlaskForm):
     IMAGES = list('jpg jpe jpeg png gif svg bmp'.split())
-    profile_picture = FileField("images", validators=[
+    profile_picture_input = FileField("images", validators=[
         FileAllowed(IMAGES, message="img files only!")
     ],
         render_kw={
-            "placeholder": "Profile Picture"
+            "placeholder": "Profile Picture",
         }
     )
     user_name = StringField(
         "user_name",
-        [DataRequired()],
         render_kw={
             "placeholder": "New username (Optional)"
         })
     email = StringField(
         "email",
-        [DataRequired()],
         render_kw={
-            "placeholder": "New email (Optional)"
-        })
+            "placeholder": "New email (Optional)",
+            })
     password = PasswordField(
         'password',
-        [DataRequired()],
         render_kw={
             "placeholder": "New password (Optional)"
         })
     confirm_password = PasswordField(
         "conform_password",
-        validators=[DataRequired(), EqualTo('password')],
+        validators=[EqualTo('password')],
         render_kw={
             "placeholder": "Repeat password"
+        })
+    current_password = PasswordField(
+        "current_password",
+        validators=[DataRequired()],
+        render_kw={
+            "placeholder": "Current password"
         })
     submit = SubmitField(
         "submit",
         render_kw={"value": "Update"}
     )
+

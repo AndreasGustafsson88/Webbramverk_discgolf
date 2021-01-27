@@ -93,8 +93,17 @@ def delete_friend_request(user, ob_id):
         }
 
 
-def update_profile(current_user, profile_picture, user_name, email, password):
-    pass
+def update_profile(current_user, update):
+    if "profile_picture" in update:
+        current_user.profile_picture = update["profile_picture"]
+    if "email" in update:
+        current_user.email = update["email"]
+    if "user_name" in update:
+        current_user.user_name = update["user_name"]
+    if "password" in update:
+        current_user.password = update["password"]
+    current_user.save()
+    return True
 
 
 def add_round(user, user_round):
