@@ -1,16 +1,16 @@
 {% extends "base_logged_in.html" %}
 {% block css %}
-<link rel="stylesheet" type="text/css" href="../static/css/courses.css"/>
+<link rel="stylesheet" type="text/css" href="../static/css/courses.css" />
 {% endblock %}
 
 {% block content %}
-    <button class="hide-on-large" type="button" onclick="toggleMap()" style="width: 100%;">toggle-map</button>
+<button class="hide-on-large" type="button" onclick="toggleMap()" style="width: 100%;">toggle-map</button>
 
 <div id="courses-page">
     <!-- Search form -->
     <div id="courses-container">
         <div id="courses-search">
-            <input id="courses-search-input" type="text"placeholder="Search">
+            <input id="courses-search-input" type="text" placeholder="Search">
             <div id="help-text">
                 <span>*You can't get a rating on a course that has less than 50 logged rounds. Click on a pin on the map to get information about the course.</span>
             </div>
@@ -18,19 +18,13 @@
         <div id="courses-list">
         </div>
     </div>
-
     <!--Google map-->
     <div id="map-container" class="hide-on-small">
-        <div id="map-frame" >
+        <div id="map-frame">
             <iframe src="https://www.google.com/maps/d/embed?mid=1RSNpkC9B1obQtxhlzwhrNJX3trMBLBw8" width="100%" height="98.5%"></iframe>
         </div>
-
     </div>
-
-
 </div>
-
-
 
 {% endblock %}
 {% block javascript %}
