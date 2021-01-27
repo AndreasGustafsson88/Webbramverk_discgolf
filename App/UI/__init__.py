@@ -15,7 +15,9 @@ from App.Controller.users_controller import get_all_friends, get_users, get_user
     remove_incomplete_scorecard
 from App.Data import db
 from App.Data.Models.courses import Course
-from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
+from App.UI.static.flaskform.settings_form import SettingsForm
+from App.UI.static.flaskform.sign_in_form import SignInForm
+from App.UI.static.flaskform.sign_up_form import SignUpForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from App.Data.Models.scorecards import Scorecard
 from App.Data.Models.users import User
@@ -66,9 +68,9 @@ def index():
    
     #all_users = User.all()
     #for i in all_users:
-    #    i.c_score_Oid = []
-    #   i.i_score_Oid = []
-    #  i.save()
+        #i.c_score_Oid = []
+        #i.i_score_Oid = []
+        #i.save()
 
 
 

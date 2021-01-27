@@ -93,3 +93,37 @@
   border: #161515 2px solid;
   margin-bottom: 10px;
 }
+
+.panel-body {
+  background-color: #23c2ff;
+}
+
+#settings-profile-picture {
+  background-color: #f87019;
+}
+
+#settings-profile-picture input {
+  width: 10%;
+}
+
+#settings-user-name {
+  background-color: red;
+  width: 30%;
+}
+
+#settings-email {
+  background-color: yellow;
+  width: 30%;
+}
+
+#settings-password {
+  background-color: green;
+}
+
+#settings-submit {
+  background-color: brown;
+}
+
+.settings-panel {
+  background-color: blueviolet;
+}
