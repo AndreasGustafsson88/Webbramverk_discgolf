@@ -41,7 +41,7 @@
     <!--JS source-->
     <script>let all_courses = {{ all_courses|tojson|safe }}; let friends = {{friends|tojson|safe}};
     </script>
-    <script src="../static/js/create_scorecard.js"></script>
+    <script src="{{ url_for('static', filename='/js/create_scorecard.js') }}"></script>
     <script>autocomplete(document.getElementById("course_search"), all_courses, course=true);
      autocomplete(document.getElementById("player_search"),friends);
     </script>

@@ -21,7 +21,7 @@ function show_friends(){
         remove_button.setAttribute("type", "image");
         remove_button.setAttribute("id", key);
         remove_button.setAttribute("class", "action remove");
-        remove_button.setAttribute("src", "../static/assets/img/delete.png");
+        remove_button.setAttribute("src", "/assets/img/delete.png");
         remove_button.style.height="100%"
         block_to_insert.setAttribute("class", "col-container w100 center-content-h");
         block_to_insert.style.height="50px"

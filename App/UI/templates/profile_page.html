@@ -1,6 +1,6 @@
 {% extends "base_logged_in.html" %}
 {% block css %}
-<link rel="stylesheet" type="text/css" href="../static/css/profile_page.css"/>
+<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/profile_page.css') }}"/>
 {% endblock %}
 {% block content %}
 
@@ -26,14 +26,14 @@
                    {% if visited_profile.profile_picture %}
                       <img src="{{ visited_profile.profile_picture }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                       {% else %}
-                    <img src="../static/assets/img/dog.jpg" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                    <img src="{{ url_for('static', filename='/assets/img/dog.jpg') }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                       {% endif %}                  
                </div>
                <!--Name on player-->
                <div class="name center-content-h" style="height: 35px;" >
                   {% if visited_profile._id|string not in current_user.friends|string and visited_profile.user_name != current_user.user_name %}
                   <div style="width: 35px">
-                     <input type="image" class="post add_friend" id="img1" src="../static/assets/img/add_friend.png" style="height: 100%; padding: 0; "/>
+                     <input type="image" class="post add_friend" id="img1" src="{{ url_for('static', filename='/assets/img/add_friend.png') }}" style="height: 100%; padding: 0; "/>
                   </div>
                   {% endif %}
                   <h3 class="title">{{ visited_profile.user_name }}</h3>
@@ -58,33 +58,33 @@
                <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist" >
                   <li class="nav-item">
                      <a class="nav-link active" data-target="#my_stats" role="tab" data-toggle="tab" onclick="show_tab('my_stats')" >
-                     <i class="material-icons"><img src="../static/assets/img/baseline_insights_black_24dp.png" ></i>
+                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_insights_black_24dp.png') }}" ></i>
                      My Stats
                      </a>
                   </li>
                   {% if visited_profile.user_name == current_user.user_name %}
                   <li class="nav-item">
                      <a class="nav-link" data-target="#settings" role="tab" data-toggle="tab" onclick="show_tab('settings')" >
-                     <i class="material-icons"><img src="../static/assets/img/baseline_settings_black_24dp.png"> </i>
+                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_settings_black_24dp.png') }}"> </i>
                      Settings
                      </a>
                   </li>
                   {% endif %}
                   <li class="nav-item">
                      <a class="nav-link" data-target="#friends" role="tab" data-toggle="tab" onclick="show_tab('friends')" >
-                     <i class="material-icons"><img src="../static/assets/img/baseline_people_alt_black_24dp.png" id="friend_logo_image" style="height: 48px;"></i>
+                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_people_alt_black_24dp.png') }}" id="friend_logo_image" style="height: 48px;"></i>
                      Friends
                      </a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link" data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
-                     <i class="material-icons"><img src="../static/assets/img/baseline_favorite_black_24dp.png"></i>
+                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_favorite_black_24dp.png') }}"></i>
                      Favorite Courses
                      </a>
                   </li>
                   <li class="nav-item">
                      <a class="nav-link" data-target="#scorecards" role="tab" data-toggle="tab" onclick="show_tab('scorecards')" >
-                     <i class="material-icons"><img src="../static/assets/img/scorecard_img.png" id="scorecard_logo_image" style="height: 48px;"></i>
+                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/scorecard_img.png') }}" id="scorecard_logo_image" style="height: 48px;"></i>
                      Scorecards
                      </a>
                   </li>
@@ -121,7 +121,7 @@
          {% if visited_profile.user_name == current_user.user_name %}
          <div class="tab-pane text-center gallery" id="settings"style="display: none" >
             <div class="panel-body">
-               <form action="{{ url_for('profile_page_update') }}" role="form" method="POST" enctype="multipart/form-data">
+               <form action="{{ url_for('profile.profile_page_update') }}" role="form" method="POST" enctype="multipart/form-data">
                   {{ form.csrf_token }}
                   <div class="row">
                      <div class="col-xs-6 col-sm-6 col-md-6">
@@ -205,7 +205,7 @@
     <script src="http://code.highcharts.com/highcharts.js"></script>
     <script src="http://code.highcharts.com/highcharts-more.js"></script>
     <script src="http://code.highcharts.com/modules/exporting.js"></script>
-    <script src="../static/js/profile_page.js"></script>
+    <script src="{{ url_for('static', filename='/js/profile_page.js') }}"></script>
     <script>
     console.log({{ favorite_courses|safe }})
         let request_list = {}
@@ -216,7 +216,7 @@
 
 
         if (!jQuery.isEmptyObject(request_list)) {
-            $('#friend_logo_image')[0].src = "../static/assets/img/friend_request.png"
+            $('#friend_logo_image')[0].src = "{{ url_for('static', filename='/assets/img/friend_request.png') }}"
             for (let username in request_list) {
 
                 let parent = document.getElementById('friends_id')
@@ -234,14 +234,14 @@
                 accept_request.setAttribute("type", "image");
                 accept_request.setAttribute("id", username);
                 accept_request.setAttribute("class", "post accept_request");
-                accept_request.setAttribute("src", "../static/assets/img/check_mark.png");
+                accept_request.setAttribute("src", "{{ url_for('static', filename='/assets/img/check_mark.png') }}");
                 accept_request.style.height="100%"
 
                 let decline_request = document.createElement("input");
                 decline_request.setAttribute("type", "image");
                 decline_request.setAttribute("id", username);
                 decline_request.setAttribute("class", "action decline_request");
-                decline_request.setAttribute("src", "../static/assets/img/red_cross.jpg");
+                decline_request.setAttribute("src", "{{ url_for('static', filename='/assets/img/red_cross.jpg') }}");
                 decline_request.style.height="100%"
 
                 block_to_insert.appendChild(friend_link)
@@ -281,7 +281,7 @@
                     delete request_list[this.id]
 
                     if (jQuery.isEmptyObject(request_list)) {
-                            $('#friend_logo_image')[0].src = "../static/assets/img/baseline_people_alt_black_24dp.png"
+                            $('#friend_logo_image')[0].src = "{{ url_for('static', filename='/assets/img/baseline_people_alt_black_24dp.png') }}"
                         }
                 },
             })
@@ -291,8 +291,8 @@
 
 
     </script>
-    <script src="../static/js/mystats_chart.js"></script>
-    <script src="../static/js/create_scorecard.js"></script>
+    <script src="{{ url_for('static', filename='/js/mystats_chart.js') }}"></script>
+    <script src="{{ url_for('static', filename='/js/create_scorecard.js') }}"></script>
 
     <script>
         autocomplete(document.getElementById("user_search"), all_users, course=false, all_users=true );
@@ -320,7 +320,7 @@
                         show_friends()
 
                         if (jQuery.isEmptyObject(request_list)) {
-                            $('#friend_logo_image')[0].src = "../static/assets/img/baseline_people_alt_black_24dp.png"
+                            $('#friend_logo_image')[0].src = "{{ url_for('static', filename='/assets/img/baseline_people_alt_black_24dp.png') }}"
                         }
                     }
                     else {
