@@ -18,24 +18,24 @@
                             {% set j = round_summary['course_holes'][0] %}
                         {% endif %}
                 <div class="swiper-slide">
-                    <section class="scorecard">
+                    <section class="scorecard-players">
 
                             <!--Hole Info-->
-                            <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
-                                <div class="container h100 center-content" style="background-color: #23c2ff">
+                            <div class="container h10 w-100 center-content-h shadow" style="background-color: #9FEDD7">
+                                <div class="container h100 center-content">
                                     <div class="small-text font-weight-bold"> Hole {{ i + 1 }} {% if round_summary.multi == 2 %} ({{  i + 1 - j }}) {% endif %}</div>
                                 </div>
-                                <div class="container h100 center-content" style="background-color: #eeeeee">
+                                <div class="container h100 center-content">
                                     <div class="small-text font-weight-bold"> Par {{round_summary['course_holes'][i + 1 - j]['Par'] }}</div>
                                 </div>
-                                <div class="container h100 center-content" style="background-color: purple">
+                                <div class="container h100 center-content">
                                     <div class="small-text font-weight-bold"> {{ round_summary['course_holes'][i + 1 - j]['length'] }}m </div>
                                 </div>
                             </div>
 
                             <!--Net & Throws-->
-                            <div class="container h05 center-content" style="margin-top: 5px">
-                                <div class="col-12 center-content-left">
+                            <div class="container h05 center-content" style="margin-top: 10px; margin-bottom: 5px">
+                                <div class="col-12 center-content-left no-padding">
                                     <div class="col-4 center-content">
                                         <div class="tiny-text center-content">
                                             Expected Throws
@@ -50,21 +50,21 @@
                             </div>
 
                             <!--Player information-->
-                            <div class="container h85 top-align no-padding" style="background-color: aquamarine">
+                            <div class="container h75 top-align no-padding" style="background-color: #EDEAE5; width: 95vw;">
                                 {% for player in round_summary.players %}
-                                    <div class="col-12 h20 center-content-h">
-                                        <div class="col-4 center-content">
+                                    <div class="col-12 center-content-h no-padding" style="height: 25%;">
+                                        <div class="col-4 center-content" style="padding-left: 10px">
                                             <div class="small-text center-content">
                                                 {{ player.full_name }}
                                             </div>
                                         </div>
-                                        <div class="col-4 center-content">
+                                        <div class="col-4 center-content no-padding">
                                             <div class="small-text center-content">
                                                 {{ round_summary['course_holes'][i + 1 - j]['Par']|int + player.hcp[i - j]["strokes"] }}
                                             </div>
                                         </div>
-                                        <div class="col-4 center-content">
-                                            <input class="form-control form-control-sm throws-input" {% if not round_summary.active %} disabled="disabled" {% endif %} value="{{ player.stats['hole' ~ (i + 1 - j) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary.course_holes[i + 1 - j]['Par']}}_{{player.hcp[i - j]['strokes'] }}">
+                                        <div class="col-4 center-content no-padding">
+                                            <input class="form-control form-control-sm throws-input" {% if not round_summary.active %} disabled="disabled" {% endif %} value="{{ player.stats['hole' ~ (i + 1 - j) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center; max-width: 50px " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary.course_holes[i + 1 - j]['Par']}}_{{player.hcp[i - j]['strokes'] }}">
                                         </div>
                                     </div>
                                 {% endfor %}
@@ -73,15 +73,15 @@
                     </div>
                     {% else %}
                          <div class="swiper-slide">
-                        <section class="summary">
+                        <section class="summary" style="background-color: #EDEAE5">
                            {% set holes_amount = round_summary["course_holes"][0] * round_summary.multi %}
                             {% for i in range(holes_amount//9) %}
                                 <table class="table table-striped table-sm">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Player</th>
+                                            <th class="table-heading" scope="col">Player</th>
                                             {% for j in range(9) %}
-                                                <th scope="col">{{ j + i * 9 + 1 }}</th>
+                                                <th class="table-heading" scope="col">{{ j + i * 9 + 1 }}</th>
                                             {% endfor %}
                                         </tr>
                                     </thead>
@@ -97,26 +97,29 @@
                                     </tbody>
                                 </table>
                             {% endfor %}
-                            <table class="table table-striped table-sm">
-                                <thead>
-                                    <tr>
-                                        <th scope="col">Player</th>
-                                        {% for i in range(holes_amount%9) %}
-                                            <th scope="col">{{ (i + 1 + 9 * (holes_amount // 9 )) }}</th>
-                                        {% endfor %}
-                                    </tr>
-                                </thead>
-                                <tbody>
-                                    {% for player in round_summary.players %}
+                            {% if round_summary.multi == 2 and round_summary.course_holes[0] > 9%}
+                                <table class="table table-striped table-sm">
+                                    <thead>
                                         <tr>
-                                            <td scope="row">{{ player.user_name }}</td>
+                                            <th scope="col">Player</th>
                                             {% for i in range(holes_amount%9) %}
-                                                <td id="{{ player.user_name}}{{ (i + 1 + 9 * (holes_amount // 9)) }}">0</td>
+                                                <th scope="col">{{ (i + 1 + 9 * (holes_amount // 9 )) }}</th>
                                             {% endfor %}
                                         </tr>
-                                    {% endfor %}
-                                </tbody>
-                            </table>
+                                    </thead>
+                                    <tbody>
+                                        {% for player in round_summary.players %}
+                                            <tr>
+                                                <td scope="row">{{ player.user_name }}</td>
+                                                {% for i in range(holes_amount%9) %}
+                                                    <td id="{{ player.user_name}}{{ (i + 1 + 9 * (holes_amount // 9)) }}">0</td>
+                                                {% endfor %}
+                                            </tr>
+                                        {% endfor %}
+                                    </tbody>
+                                </table>
+                            {% endif %}
+                            <div class="container center-content" style="width: 95vw;">
                             <div class="container w100 center-content-h">
                                 <div class="col-4"></div>
                                 <div class="col-4">
@@ -126,27 +129,30 @@
                                     <div class="tiny-text">Par</div>
                                 </div>
                             </div>
+                            </div>
+                            <div class="container center-content inside-shadow" style="background-color: #fff9e1; width: 95vw; padding-top: 5px; padding-bottom: 5px; border-radius: 2%">
                             <hr>
-                            {% for player in round_summary.players %}
-                                <div class="container w100 center-content-h">
-                                    <div class="col-4 center-content-v" style="text-align: left">
-                                        <div class="tiny-text" style="padding-left: 10px">{{ player.user_name }}</div>
+                                {% for player in round_summary.players %}
+                                    <div class="container w100 center-content-h">
+                                        <div class="col-4 center-content-v" style="text-align: left">
+                                            <div class="tiny-text" style="padding-left: 10px">{{ player.user_name }}</div>
+                                        </div>
+                                        <div class="col-4 tiny-text no-padding" id="{{ player.user_name }}_points">0</div>
+                                        <div class="col-4 tiny-text no-padding" id="{{ player.user_name }}_par">0</div>
                                     </div>
-                                    <div class="col-4 tiny-text" id="{{ player.user_name }}_points">0</div>
-                                    <div class="col-4 tiny-text" id="{{ player.user_name }}_par">0</div>
-                                </div>
-                                <hr>
-                            {% endfor %}
+                                    <hr>
+                                {% endfor %}
+                            </div>
                             {% if round_summary.active %}
                                 <div class="container w100 center-content">
                                     <div class="container w70">
-                                        <a class="btn btn-primary btn-m w-100 button-text score_buttons" id="submit_button" onclick="submit_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Submit Scorecard</a>
+                                        <a class="btn btn-mint btn-m w-100 button-text score_buttons" id="submit_button" onclick="submit_scorecards()" style="margin-top: 15px; color: black; border: 0;" role="button">Submit Scorecard</a>
                                     </div>
                                     <div class="container w70">
-                                        <a class="btn btn-primary btn-m w-100 button-text score_buttons" id="save_button" onclick="save_scorecards()" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" role="button">Save Scorecard</a>
+                                        <a class="btn btn-mint btn-m w-100 button-text score_buttons" id="save_button" onclick="save_scorecards()" style="margin-top: 15px; color: black; border: 0;" role="button">Save Scorecard</a>
                                     </div>
                                     <div class="container w70">
-                                        <a class="btn btn-primary btn-m w-100 button-text score_buttons" id="delete_button" onclick="delete_scorecards()" style="margin-top: 15px; margin-bottom: 75px; border: 0; background-color:#FF9999; color: black" role="button">Delete Scorecard</a>
+                                        <a class="btn btn-darkmint btn-m w-100 button-text score_buttons" id="delete_button" onclick="delete_scorecards()" style="margin-top: 15px; margin-bottom: 75px; border: 0; color: white" role="button">Delete Scorecard</a>
                                     </div>
                                 </div>
                             {% endif %}
@@ -170,16 +176,10 @@
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="{{ url_for('static', filename='/js/scorecard_play.js') }}"></script>
     <script>
-
-    let redirect_url = '/profile_page/{{ current_user.user_name }}'
-        console.log(redirect_url)
-        let check_round = JSON.parse(JSON.stringify(player_summary));
-        console.log(player_summary)
         var elements = document.getElementsByClassName("throws-input");
         for (let i = 0; i < elements.length; i++ ){
             elements[i].addEventListener("input", update_result)
             load_summary(elements[i])
         }
-
     </script>
 {% endblock %}
