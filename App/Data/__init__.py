@@ -1,9 +1,8 @@
-from App.Data.DB_SETTINGS import LOCALHOST, USER, PASSWORD
+from App.Data.DB_SETTINGS import LOCALHOST, USER, PASSWORD, DB_NAME
 from pymongo import MongoClient
 from abc import ABC
 
-
-client = MongoClient(f'mongodb://{USER}:{PASSWORD}@localhost:{LOCALHOST}')
+client = MongoClient(f'mongodb+srv://{USER}:{PASSWORD}@cluster0.f9uyc.mongodb.net/{DB_NAME}?retryWrites=true&w=majority')
 db = client.discgolf
 
 
