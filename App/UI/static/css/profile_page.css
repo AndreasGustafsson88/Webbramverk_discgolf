@@ -81,8 +81,71 @@
 }
 
 #favorite-courses-list {
-    background-color: #23c2ff;
-    border-radius: 10px;
-    border: #161515 2px solid;
-    margin-bottom: 10px;
+
+  background-color: #23c2ff;
+  border-radius: 10px ;
+  border: #161515 2px solid;
+  margin-bottom: 10px;
+}
+
+.panel-body {
+  background-color: #23c2ff;
+}
+
+#settings-profile-picture {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #f87019;
+}
+
+#profile_picture_input {
+  display: none;
+}
+
+#settings-profile-picture-button {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 5px;
+  background-color: #8ebf42;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+}
+
+#settings-profile-picture-button:hover {
+  cursor: pointer;
+}
+
+#settings-profile-picture-button:active {
+  background-color: #709834;
+}
+
+#settings-profile-picture-filename {
+  height: 100%;
+  padding: 5px 5px;
+  overflow: hidden;
+}
+
+#settings-user-name {
+  background-color: red;
+  width: 30%;
+}
+
+#settings-email {
+  background-color: yellow;
+
+}
+
+#settings-password {
+  background-color: green;
+}
+
+#settings-submit {
+  background-color: brown;
+}
+
+.settings-panel {
+  background-color: blueviolet;
+
 }

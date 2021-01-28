@@ -37,8 +37,21 @@ function show_friends(){
 
 }
 
-function add_friend(){
 
+$('#profile_picture_input').change(() => {
+  var file = $('#profile_picture_input').val().split('/').pop().split('\\').pop();
+  if (file) {
+    $('#settings-profile-picture-filename').text(truncate(file, 10));}
+  else {
+    $('#settings-profile-picture-filename').text("No file choosen");}
+});
+
+function truncate(string, maxChars) {
+  if (string.length <= maxChars) {
+    return string}
+  else {
+    var regex = new RegExp("^(.{" + Math.floor((maxChars / 3) * 2).toString() + "}).*(.{" + Math.floor(maxChars / 3).toString() + "}\\..*)$", 'm')
+    return string.replace(regex, "$1 ... $2")}
 }
 
 
