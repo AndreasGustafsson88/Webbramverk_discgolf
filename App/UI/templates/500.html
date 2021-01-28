@@ -1,0 +1,6 @@
+{% extends 'base_logged_in.html' %}
+
+{% block content %}
+    <h1>This is an internal server error</h1>
+    <p><a href="{{ url_for("logged_out.index") }}">Back</a></p>
+{% endblock %}

@@ -1,6 +1,6 @@
 {% extends "base_logged_in.html" %}
 {% block css %}
-<link rel="stylesheet" type="text/css" href="../static/css/courses.css" />
+<link rel="stylesheet" type="text/css" href="{{url_for('static', filename='/css/courses.css')}}"/>
 {% endblock %}
 
 {% block content %}
@@ -74,9 +74,9 @@ function getAllCourses(arr) {
         {% if not current_user.is_anonymous %}
         icon = document.createElement("img");
         if (favorites.includes(arr[i][0])){
-            icon.setAttribute("src", "../static/assets/img/star_filled.svg")}
+            icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_filled.svg') }}")}
         else {
-            icon.setAttribute("src", "../static/assets/img/star_empty.svg")}
+            icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_empty.svg') }}")}
         icon.setAttribute("alt", "fav");
         icon.setAttribute("width", "30px");
         icon.setAttribute("height", "30px");
@@ -106,7 +106,7 @@ function getAllCourses(arr) {
 
         if(arr[i][1] >= 50){
             loggedRounds = document.createElement("img");
-            loggedRounds.setAttribute("src", "../static/assets/img/checkmark.svg");
+            loggedRounds.setAttribute("src", "{{ url_for('static', filename='/assets/img/checkmark.svg') }}");
             loggedRounds.setAttribute("alt", "active");
             loggedRounds.setAttribute("width", "30px");
             loggedRounds.setAttribute("height", "30px");
@@ -142,9 +142,9 @@ function autocomplete(inp, arr) {
                 {% if not current_user.is_anonymous %}
                 icon = document.createElement("img");
                 if (favorites.includes(arr[i][0])){
-                    icon.setAttribute("src", "../static/assets/img/star_filled.svg");}
+                    icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_filled.svg') }}");}
                 else {
-                    icon.setAttribute("src", "../static/assets/img/star_empty.svg");}
+                    icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_empty.svg') }}");}
                 icon.setAttribute("alt", "fav");
                 icon.setAttribute("width", "30px");
                 icon.setAttribute("height", "30px");
@@ -172,7 +172,7 @@ function autocomplete(inp, arr) {
 
                 if(arr[i][1] >= 50){
                     loggedRounds = document.createElement("img");
-                    loggedRounds.setAttribute("src", "../static/assets/img/checkmark.svg");
+                    loggedRounds.setAttribute("src", "{{ url_for('static', filename='/assets/img/checkmark.svg') }}");
                     loggedRounds.setAttribute("alt", "active");
                     loggedRounds.setAttribute("width", "30px");
                     loggedRounds.setAttribute("height", "30px");
@@ -201,8 +201,8 @@ function updateFavorite(){
     setFavorite(course).done((r1) => {
         getFavorites().done((r2) => {
             favorites = r2["favorites"];
-            if (favorites.includes(course)){this.setAttribute("src", "../static/assets/img/star_filled.svg");}
-            else{this.setAttribute("src", "../static/assets/img/star_empty.svg");}
+            if (favorites.includes(course)){this.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_filled.svg') }}");}
+            else{this.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_empty.svg') }}");}
         });
     });
 }

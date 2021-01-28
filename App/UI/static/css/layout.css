@@ -380,3 +380,7 @@ hr {
     filter: drop-shadow(0 0 0 #515151);
     transition: filter 0s;
 }
+
+.signup-body {
+    background-image: url("../assets/img/bgdg.png");
+}

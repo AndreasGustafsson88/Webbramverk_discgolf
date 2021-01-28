@@ -7,6 +7,7 @@ from App.Data.Repository import users_repo as ur
 from App.Data.Repository import courses_repo as cr
 from App.Data.Repository import scorecards_repo as sr
 
+
 def get_all_friends(current_user):
     return ur.get_all_friends(current_user)
 

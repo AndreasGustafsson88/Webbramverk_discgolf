@@ -3,8 +3,8 @@
 
 <head>
     <!-- Required meta tags -->
-    <link rel="stylesheet" type="text/css" href="../static/css/layout.css" />
-    <meta charset="utf-8">
+      <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='css/layout.css') }}"/>
+      <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
     <!-- Bootstrap CSS -->
@@ -17,28 +17,28 @@
 
     <!-- NAVBAR -->
     <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
-        <a class="navbar-brand" href="{{ url_for("index") }}">
-            <img src="../static/assets/img/UDisc_Logo_Full_White.svg" alt="" height="30rem">
+        <a class="navbar-brand" href="{{ url_for("logged_out.index") }}">
+            <img src="{{ url_for('static', filename='/assets/img/UDisc_Logo_Full_White.svg') }}" alt="" height="30rem">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
-            <span class="navbar-toggler-icon"></span>
-        </button>
-        <div class="collapse navbar-collapse" id="navbarSupportedContent">
-            <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="#" {{ url_for("index") }}>Login <span class="sr-only">(current)</span></a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for("signup") }}">Sign-up</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for("courses") }}">Courses</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">get rich now</a>
-                </li>
-            </ul>
-        </div>
+      <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <span class="navbar-toggler-icon"></span>
+      </button>
+      <div class="collapse navbar-collapse" id="navbarSupportedContent">
+        <ul class="navbar-nav ml-auto">
+          <li class="nav-item active">
+            <a class="nav-link" href="{{ url_for("logged_out.index") }}">Login <span class="sr-only">(current)</span></a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for("logged_out.signup") }}">Sign-up</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link" href="{{ url_for("courses_bp.courses") }}">Courses</a>
+          </li>
+          <li class="nav-item">
+            <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">get rich now</a>
+          </li>
+        </ul>
+      </div>
     </nav>
 
     <!-- Content -->
@@ -46,7 +46,7 @@
 
     <nav class="navbar fixed-bottom navbar-dark bg-dark">
         <a class="footer Fixed bottom">
-            <img src="../static/assets/img/UDisc_Logo_Full_White.svg" alt="" height="30rem">
+            <img src="{{ url_for('static', filename='/assets/img/UDisc_Logo_Full_White.svg') }}" alt="" height="30rem">
         </a>
     </nav>
     <!-- Option 1: jQuery and Bootstrap Bundle (includes Popper) -->
