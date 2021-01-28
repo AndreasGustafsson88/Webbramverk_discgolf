@@ -162,8 +162,8 @@ def find_extra_strokes(player, course):
             total_throws += int(k)
             return total_throws
 
-        elif v >= player.rating:
-            total_throws += int(k) + 1
+        elif v <= player.rating:
+            total_throws += int(k)
             return total_throws
 
 
