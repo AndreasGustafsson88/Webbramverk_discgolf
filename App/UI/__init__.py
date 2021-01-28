@@ -1,26 +1,21 @@
 import os
 from bson import ObjectId
-from flask import Flask, render_template, make_response, request, redirect, url_for, flash
+from flask import Flask, render_template, request, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
-from time import time
 import json
 from App.Controller.my_encoder import MyEncoder
-from App.Controller.courses_controller import get_all_names, get_one_course, update_favorite_courses, get_course_by_id, \
-    get_all_courses
-from App.Controller.my_chart_controller import return_random
-from App.Controller.scorecards_controller import get_scorecard, delete_scorecard
-from App.Controller.users_controller import get_all_friends, get_users, get_user_by_email, get_user_by_username, \
-    get_user, add_user, find_unique, add_friend, get_all_users, delete_friend, add_friend_request, \
-    delete_friend_request, update_profile, add_round, calculate_extra_strokes, add_incomplete_scorecard, \
-    remove_incomplete_scorecard
+
 from App.Data import db
 from App.Data.Models.courses import Course
 from App.UI.static.flaskform.settings_form import SettingsForm
 from App.UI.static.flaskform.sign_in_form import SignInForm
 from App.UI.static.flaskform.sign_up_form import SignUpForm
+from App.Controller import courses_controller as cc
+from App.Controller import scorecards_controller as sc
+from App.Controller import users_controller as uc
+from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from App.Data.Models.scorecards import Scorecard
-from App.Data.Models.users import User
 
 
 
@@ -58,21 +53,11 @@ app.jinja_env.filters['json_decode'] = json_decode
 
 @login_manager.user_loader
 def load_user(_id):
-    return find_unique(_id=ObjectId(_id))
+    return uc.find_unique(_id=ObjectId(_id))
 
 
 @app.route('/', methods=["POST", "GET"])
 def index():
-
-    
-   
-    #all_users = User.all()
-    #for i in all_users:
-        #i.c_score_Oid = []
-        #i.i_score_Oid = []
-        #i.save()
-
-
 
     form = SignInForm()
 
@@ -80,7 +65,7 @@ def index():
         username = form.username.data
         password = form.password.data
 
-        user = find_unique(user_name=username)
+        user = uc.find_unique(user_name=username)
 
         if user:
             if check_password_hash(user.password, password):
@@ -102,15 +87,15 @@ def signup():
             flash("password are not the same")
             return redirect(url_for("signup"))
 
-        if get_user(email=form.email.data):
+        if uc.get_user(email=form.email.data):
             flash("Email already exists")
             return redirect(url_for("signup"))
 
-        if get_user(user_name=form.user_name.data):
+        if uc.get_user(user_name=form.user_name.data):
             flash("Username already exists")
             return redirect(url_for("signup"))
 
-        add_user(full_name=form.full_name.data, user_name=form.user_name.data,
+        uc.add_user(full_name=form.full_name.data, user_name=form.user_name.data,
                  password=generate_password_hash(form.password.data, "sha256", ), email=form.email.data)
 
         return redirect(url_for("index"))
@@ -128,7 +113,7 @@ def courses():
     if request.method == "POST":
 
         if "loading" in request.form:
-            favorites = [get_course_by_id(course).name for course in current_user.favourite_courses]
+            favorites = [cc.get_course_by_id(course).name for course in current_user.favourite_courses]
             response = app.response_class(
                 response=json.dumps({"favorites": favorites}),
                 status=200,
@@ -137,7 +122,7 @@ def courses():
             return response
         if "course" in request.form:
             course_name = request.form["course"]
-            if update_favorite_courses(course_name, current_user):
+            if cc.update_favorite_courses(course_name, current_user):
                 message = "Course added to favorites"
             else:
                 message = "Course removed from favorites"
@@ -148,24 +133,23 @@ def courses():
             )
             return response
 
-    all_courses = [[course.name, len(course.history)] for course in get_all_courses()]
+    all_courses = [[course.name, len(course.history)] for course in cc.get_all_courses()]
     return render_template('courses.html', all_courses=json.dumps(all_courses))
-
 
 
 @app.route('/scorecard', methods=["POST", "GET"])
 def scorecard():
     if request.method == 'POST':
-        course = get_one_course(request.form["course"])
+        course = cc.get_one_course(request.form["course"])
         response = app.response_class(
             response=json.dumps(course.holes[0]),
             status=200,
             mimetype="application/json"
         )
         return response
-    friends = get_all_friends(current_user)
+    friends = uc.get_all_friends(current_user)
 
-    all_courses = get_all_names()
+    all_courses = cc.get_all_names()
 
     return render_template("create_scorecard.html", all_courses=all_courses, friends=friends, current_user=current_user)
 
@@ -174,7 +158,7 @@ def scorecard():
 def scorecard_play():
     if request.method == 'POST':
         player_summary = json.loads(request.form['p_summary'])
-        message = add_round(player_summary)
+        message = uc.add_round(player_summary)
         response = app.response_class(
             response=json.dumps(message),
             status=200,
@@ -182,32 +166,18 @@ def scorecard_play():
         )
         return response
 
-    players = get_users(request.args.get("players").replace("[", "").replace("]", "").replace('"', '').split(","))
-    course = get_one_course(request.args.get("course"))
+    players = uc.get_users(request.args.get("players").replace("[", "").replace("]", "").replace('"', '').split(","))
+    course = cc.get_one_course(request.args.get("course"))
     rated = True if request.args.get("rated")=="true" else False
     multi = int(request.args.get("multi"))
 
     for player in players:
-        player.hcp = calculate_extra_strokes(player, course)
+        player.hcp = uc.calculate_extra_strokes(player, course)
 
-    round_summary = {'course_id': str(course._id),
-                     'course': course.name,
-                     'course_holes': course.holes,
-                     'rated': rated,
-                     'players': [{'user_name': player.user_name,
-                                  'full_name': player.full_name,
-                                  'hcp': player.hcp,                              
-                                  'stats': {f'hole{i+1}{v}': "" for i in range(course.holes[0] * multi)
-                                                   for v in ['_points', '_par', '_throws']}} for player in players],
-                     'active': True,
-                     'multi': multi
-                     }
-    scorecard = Scorecard.insert_one(round_summary)
-
-    add_incomplete_scorecard(scorecard, players)
+    sc.create_scorecard(course, players, multi, rated)
+    uc.add_incomplete_scorecard(scorecard, players)
 
     return render_template("scorecard.html", round_summary=scorecard)
-
 
 
 @app.route('/profile_page/<user_name>', methods=["GET", "POST"])
@@ -216,54 +186,46 @@ def profile_page(user_name):
     if request.method == "POST":
 
         if 'button' in request.form:
-            scorecard = get_scorecard(_id=ObjectId(request.form['button']))
+            scorecard = sc.get_scorecard(_id=ObjectId(request.form['button']))
             return redirect(url_for('scorecard_history', scorecard_id=scorecard._id))
 
         visited_user_id = request.form['id']
 
         if request.form['action'] == 'post accept_request':
-            request_user = get_user(user_name=request.form['request_username'])
-            message = add_friend(current_user, request_user._id, from_request=True)
+            request_user = uc.get_user(user_name=request.form['request_username'])
+            message = uc.add_friend(current_user, request_user._id, from_request=True)
             return app.response_class(**message)
 
         if request.form['action'] == 'post add_friend':
-            visited_user = get_user(_id=ObjectId(visited_user_id))
+            visited_user = uc.get_user(_id=ObjectId(visited_user_id))
 
-            message = add_friend(current_user, visited_user_id)
-            add_friend_request(current_user, visited_user)
+            message = uc.add_friend(current_user, visited_user_id)
+            uc.add_friend_request(current_user, visited_user)
 
             response = app.response_class(**message)
             return response
     settings_form = SettingsForm()
-    visited_profile = get_user_by_username(user_name)
+    visited_profile = uc.get_user_by_username(user_name)
     visited_profile.history = json.dumps(visited_profile.history, cls=MyEncoder)
-    all_users = get_all_users()
-    favorite_courses = [get_course_by_id(course_id).name for course_id in visited_profile.favourite_courses]
+    all_users = uc.get_all_users()
+    favorite_courses = [cc.get_course_by_id(course_id).name for course_id in visited_profile.favourite_courses]
     return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users,
                            form=settings_form, favorite_courses=favorite_courses)
-
-
-@app.route('/data', methods=["GET", "POST"])
-def data():
-    data = [time() * 1000, return_random()]
-    response = make_response(json.dumps(data))
-    response.content_type = 'application/json'
-    return response
 
 
 @app.route('/profile_page/<user_name>', methods=["DELETE"])
 def profile_page_delete(user_name):
     if request.method == "DELETE":
-        friend = get_user(user_name=request.form['username'])
+        friend = uc.get_user(user_name=request.form['username'])
 
 
         if request.form['action'] == "action remove":
-            message = delete_friend(current_user, friend._id)
+            message = uc.delete_friend(current_user, friend._id)
             response = app.response_class(**message)
             return response
 
         if request.form['action'] == 'action decline_request':
-            message = delete_friend_request(current_user, friend._id)
+            message = uc.delete_friend_request(current_user, friend._id)
             return app.response_class(**message)
 
 
@@ -282,14 +244,15 @@ def profile_page_update():
             settings_form.profile_picture_input.data.save(os.path.join(UPLOAD_FOLDER, f'{file_name}.jpg'))
             update["profile_picture"] = "../static/assets/img/profile_pictures/" + file_name + ".jpg"
 
+
         if settings_form.email.data:
-            if get_user(email=settings_form.email.data):
+            if uc.get_user(email=settings_form.email.data):
                 flash("Email already exists")
                 return redirect(url_for('profile_page', user_name=current_user.user_name))
             update["email"] = settings_form.email.data
 
         if settings_form.user_name.data:
-            if get_user(user_name=settings_form.user_name.data):
+            if uc.get_user(user_name=settings_form.user_name.data):
                 flash("Username already exists")
                 return redirect(url_for('profile_page', user_name=current_user.user_name))
             update["user_name"] = settings_form.user_name.data
@@ -297,7 +260,9 @@ def profile_page_update():
         if settings_form.password.data:
             update["password"] = generate_password_hash(settings_form.password.data, "sha256")
 
-        update_profile(current_user, update)
+        uc.update_profile(current_user, update)
+
+      
         return redirect(url_for('index'))
 
     visited_profile = get_user_by_username(current_user.user_name)
@@ -315,18 +280,18 @@ def profile_page_update():
 def scorecard_history(scorecard_id):
 
     if request.method == 'POST':
-        scorecard = get_scorecard(_id=ObjectId(request.form['button']))
+        scorecard = sc.get_scorecard(_id=ObjectId(request.form['button']))
 
         return render_template('scorecard.html', round_summary=scorecard)
 
     if request.method == 'DELETE':
 
-        scorecard = get_scorecard(_id=ObjectId(json.loads(request.form['p_summary'])['_id']))
+        scorecard = sc.get_scorecard(_id=ObjectId(json.loads(request.form['p_summary'])['_id']))
 
-        remove_incomplete_scorecard(scorecard)
-        delete_scorecard(scorecard)
+        uc.remove_incomplete_scorecard(scorecard)
+        sc.delete_scorecard(scorecard)
 
         return 'Scorecard deleted'
-    scorecard = get_scorecard(_id=ObjectId(scorecard_id))
+    scorecard = sc.get_scorecard(_id=ObjectId(scorecard_id))
     return render_template('scorecard.html', round_summary=scorecard)
 

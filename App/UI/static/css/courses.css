@@ -28,7 +28,8 @@
     padding: 15px;
     border: #6e6e6e 1px solid;
 }
-#courses-search-input{
+
+#courses-search-input {
     border: #6e6e6e 1px solid;
     border-radius: 5px;
     outline: none;
@@ -69,7 +70,7 @@
     overflow: hidden;
 }
 
-.logged-rounds-div{
+.logged-rounds-div {
     float: right;
     height: 50px;
     width: 50px;
@@ -88,11 +89,21 @@
 }
 
 @media screen and (min-width: 0px) and (max-width: 599px) {
-    .hide-on-small { display: none;}
-    #courses-container{width: 100%;}
-    #map-container{width: 100%;}
+    .hide-on-small {
+        display: none;
+    }
+
+    #courses-container {
+        width: 100%;
+    }
+
+    #map-container {
+        width: 100%;
+    }
 }
 
 @media screen and (min-width: 600px) {
-    .hide-on-large { display: none;}
+    .hide-on-large {
+        display: none;
+    }
 }

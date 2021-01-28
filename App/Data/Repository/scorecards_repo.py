@@ -30,3 +30,7 @@ def save_scorecard(scorecard):
 
 def delete_scorecard(scorecard):
     Scorecard.delete_one(_id=scorecard._id)
+
+
+def create_scorecard(round_summary):
+    return Scorecard.insert_one(round_summary)

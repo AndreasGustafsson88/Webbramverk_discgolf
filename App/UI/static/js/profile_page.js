@@ -54,3 +54,4 @@ function truncate(string, maxChars) {
     return string.replace(regex, "$1 ... $2")}
 }
 
+
