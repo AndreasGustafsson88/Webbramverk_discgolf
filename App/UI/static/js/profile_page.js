@@ -21,16 +21,20 @@ function show_friends(){
         remove_button.setAttribute("type", "image");
         remove_button.setAttribute("id", key);
         remove_button.setAttribute("class", "action remove");
-        remove_button.setAttribute("src", "/assets/img/delete.png");
+        remove_button.setAttribute("src", "/assets/img/baseline_delete_black_24dp.png");
         remove_button.style.height="100%"
-        block_to_insert.setAttribute("class", "col-container w100 center-content-h");
+        block_to_insert.setAttribute("class", "col-container w100 center-content-h friend_column");
         block_to_insert.style.height="50px"
-        block_to_insert.innerHTML = friends[key];
+        var friend_name = document.createElement('p');
+        friend_name.setAttribute('id', 'friend_name_id')
+        friend_name.innerHTML = friends[key];
         var friend_link = document.createElement("a");
         friend_link.setAttribute("href","/profile_page/" + key);
+        friend_link.setAttribute('id', 'friend_link_id')
         friend_link.innerHTML = key;
-        block_to_insert.appendChild(remove_button);
+        block_to_insert.appendChild(friend_name)
         block_to_insert.appendChild(friend_link);
+        block_to_insert.appendChild(remove_button);
         show_friends.appendChild(block_to_insert);
 
     }
