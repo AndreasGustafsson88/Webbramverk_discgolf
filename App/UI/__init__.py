@@ -13,10 +13,9 @@ from App.UI.static.flaskform.sign_up_form import SignUpForm
 from App.Controller import courses_controller as cc
 from App.Controller import scorecards_controller as sc
 from App.Controller import users_controller as uc
-from App.Data.Models.flaskform import SignInForm, SignUpForm, SettingsForm
+from App.UI.static.flaskform import *
 from flask_login import LoginManager, login_user, current_user, login_required, logout_user
 from App.Data.Models.scorecards import Scorecard
-
 
 
 app = Flask(__name__,
@@ -174,7 +173,7 @@ def scorecard_play():
     for player in players:
         player.hcp = uc.calculate_extra_strokes(player, course)
 
-    sc.create_scorecard(course, players, multi, rated)
+    scorecard = sc.create_scorecard(course, players, multi, rated)
     uc.add_incomplete_scorecard(scorecard, players)
 
     return render_template("scorecard.html", round_summary=scorecard)
