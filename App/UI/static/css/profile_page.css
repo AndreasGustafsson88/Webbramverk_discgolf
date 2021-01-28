@@ -1,95 +1,151 @@
-
-.profile-page{
-  background-image: url("../assets/img/bgdg.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  margin: auto;
-
+.profile-page {
+    background-image: url("../assets/img/bgdg.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    margin: auto;
 
 }
 
 .container {
-  background-color: #eeeeee;
-  width: 80%;
-  border-collapse: collapse;
-  border-radius: 20px;
-  border: #434242 1px solid;
-  margin: auto;
-  display: inline-block;
-  vertical-align: bottom;
+    background-color: #eeeeee;
+    width: 80%;
+    border-collapse: collapse;
+    border-radius: 20px;
+    border: #434242 1px solid;
+    margin: auto;
+    display: inline-block;
+    vertical-align: bottom;
 
 }
 
 .profile {
-  padding-top: 2%;
+    padding-top: 2%;
 }
 
 .avatar {
-  height: 50%;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-
-
-
-
-
+    height: 50%;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
 .name {
-  text-align: center;
+    text-align: center;
 }
 
 .rounded-circle {
-  border: #434242 2px solid;
+    border: #434242 2px solid;
 }
 
 .row_names {
-  padding-top: 10px;
-  padding-right: 20%;
-  padding-left: 20%;
+    padding-top: 10px;
+    padding-right: 20%;
+    padding-left: 20%;
 
 }
 
 .mail_bar {
-  padding-right: 20%;
-  padding-left: 20%;
+    padding-right: 20%;
+    padding-left: 20%;
 
 }
 
 .row_password {
-  padding-right: 20%;
-  padding-left: 20%;
+    padding-right: 20%;
+    padding-left: 20%;
 
 }
 
 .btn-info {
-  padding-right: 20%;
-  padding-left: 20%;
+    padding-right: 20%;
+    padding-left: 20%;
 }
 
 .btn {
-  padding: 6px 12px;
+    padding: 6px 12px;
 }
 
 .card {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  margin: auto;
-  border-radius: 20px;
-  border: #161515 2px solid;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    border-radius: 20px;
+    border: #161515 2px solid;
 }
 
 #favorite-courses-list {
+
   background-color: #23c2ff;
   border-radius: 10px ;
   border: #161515 2px solid;
   margin-bottom: 10px;
+}
+
+.panel-body {
+  background-color: #23c2ff;
+}
+
+#settings-profile-picture {
+  position: relative;
+  display: flex;
+  align-items: center;
+  background-color: #f87019;
+}
+
+#profile_picture_input {
+  display: none;
+}
+
+#settings-profile-picture-button {
+  display: inline-block;
+  padding: 12px 18px;
+  border-radius: 5px;
+  background-color: #8ebf42;
+  font-size: 16px;
+  font-weight: bold;
+  color: #000000;
+}
+
+#settings-profile-picture-button:hover {
+  cursor: pointer;
+}
+
+#settings-profile-picture-button:active {
+  background-color: #709834;
+}
+
+#settings-profile-picture-filename {
+  height: 100%;
+  padding: 5px 5px;
+  overflow: hidden;
+}
+
+#settings-user-name {
+  background-color: red;
+  width: 30%;
+}
+
+#settings-email {
+  background-color: yellow;
+
+}
+
+#settings-password {
+  background-color: green;
+}
+
+#settings-submit {
+  background-color: brown;
+}
+
+.settings-panel {
+  background-color: blueviolet;
+
 }

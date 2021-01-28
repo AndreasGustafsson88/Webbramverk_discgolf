@@ -1,59 +1,56 @@
 {% extends "base_logged_out.html" %}
 
 {%block content %}
-<body style="background-image: url('../static/assets/img/bgdg.png'); background-repeat: no-repeat; background-attachment: fixed; background-size: cover; height: 100%; width: 100%; margin: 0 auto; ">
 
-<div class="container-fluid">
-        <div class="row centered-form" style= "display: flex; justify-content: center; padding-top: 10vh;">
-        <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-2" style="background-color: #23c2ff; border-radius: 20px; padding-bottom: 20px;">
-        	<div class="panel panel-default">
-        		<div class="panel-heading" style="text-align: center; color: black">
-                    {% with messages = get_flashed_messages() %}
+<body class="signup-body" style="background-repeat: no-repeat; background-attachment: fixed; background-size: cover; height: 100%; width: 100%; margin: 0 auto; ">
+
+    <div class="container-fluid">
+        <div class="row centered-form" style="display: flex; justify-content: center; padding-top: 10vh;">
+            <div class="col-xs-12 col-sm-8 col-md-4 col-sm-offset-2 col-md-offset-2" style="background-color: #23c2ff; border-radius: 20px; padding-bottom: 20px;">
+                <div class="panel panel-default">
+                    <div class="panel-heading" style="text-align: center; color: black">
+                        {% with messages = get_flashed_messages() %}
                         {% if messages %}
-                            {% for message in messages %}
-                                <p>{{ message }}</p>
-                            {% endfor %}
+                        {% for message in messages %}
+                        <p>{{ message }}</p>
+                        {% endfor %}
                         {% endif %}
-                    {% endwith %}
-			    		<h3 class="panel-title">Please sign up to get access</h3>
-			 			</div>
-			 			<div class="panel-body">
-			    		<form action="/signup" role="form" method="POST">
+                        {% endwith %}
+                        <h3 class="panel-title">Please sign up to get access</h3>
+                    </div>
+                    <div class="panel-body">
+                        <form action="/signup" role="form" method="POST">
                             {{ form.csrf_token }}
-			    			<div class="row">
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
                                     {{ form.full_name }}
-			    				</div>
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
                                         {{ form.user_name }}
-			    					</div>
-			    				</div>
-			    			</div>
-
-			    			<div class="form-group">
-			    				{{ form.email }}
-			    			</div>
-
-			    			<div class="row">
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-			    						{{ form.password }}
-			    					</div>
-			    				</div>
-			    				<div class="col-xs-6 col-sm-6 col-md-6">
-			    					<div class="form-group">
-			    						{{ form.confirm_password }}
-			    					</div>
-			    				</div>
-			    			</div>
+                                    </div>
+                                </div>
+                            </div>
+                            <div class="form-group">
+                                {{ form.email }}
+                            </div>
+                            <div class="row">
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        {{ form.password }}
+                                    </div>
+                                </div>
+                                <div class="col-xs-6 col-sm-6 col-md-6">
+                                    <div class="form-group">
+                                        {{ form.confirm_password }}
+                                    </div>
+                                </div>
+                            </div>
                             {{ form.submit }}
-			    		</form>
-			    	</div>
-	    		</div>
-    		</div>
-    	</div>
+                        </form>
+                    </div>
+                </div>
+            </div>
+        </div>
     </div>
-
-
-{% endblock %}
+    {% endblock %}

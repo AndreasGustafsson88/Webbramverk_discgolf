@@ -165,7 +165,8 @@
 {% endblock %}
 
 {% block javascript %}
-    <script>let player_summary = {{ round_summary | json_decode | safe }};</script>
+    <script>let player_summary = {{ round_summary | json_decode | safe }};
+            let redirect_url = '/profile_page/{{ current_user.user_name }}';</script>
     <script src="https://unpkg.com/swiper/swiper-bundle.min.js"></script>
     <script src="{{ url_for('static', filename='/js/scorecard_play.js') }}"></script>
     <script>

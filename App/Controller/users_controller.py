@@ -86,8 +86,8 @@ def add_friend_request(current_user, visited_user):
         return ur.add_friend_request(current_user, visited_user)
 
 
-def update_profile(current_user, profile_picture, user_name, email, password):
-    return ur.update_profile(current_user, profile_picture, user_name, email, password)
+def update_profile(current_user, update):
+    return ur.update_profile(current_user, update)
 
 
 def add_round(player_summary):

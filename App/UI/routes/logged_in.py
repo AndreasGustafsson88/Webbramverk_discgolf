@@ -9,10 +9,3 @@ logged_in = Blueprint('logged_in', __name__)
 def log_out():
     logout_user()
     return redirect(url_for("logged_out.index"))
-
-
-
-
-
-
-

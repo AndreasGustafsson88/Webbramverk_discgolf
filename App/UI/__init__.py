@@ -1,8 +1,11 @@
-from flask import Flask
-from flask_login import LoginManager
 from App.UI.routes.jinja2_filters import json_decode
 from config import Config
 import os
+from flask import Flask
+from App.UI.static.flaskform.settings_form import SettingsForm
+from App.UI.static.flaskform.sign_in_form import SignInForm
+from App.UI.static.flaskform.sign_up_form import SignUpForm
+from flask_login import LoginManager
 
 
 # Globally accessible libraries
