@@ -3,8 +3,11 @@ from bson import ObjectId
 from flask import render_template, redirect, url_for, flash
 from werkzeug.security import generate_password_hash, check_password_hash
 from App.Controller.users_controller import get_user, add_user, find_unique
+from App.Data.Models.courses import Course
 from App.Data.Models.flaskform import SignInForm, SignUpForm
 from flask_login import login_user, current_user
+
+from App.Data.Models.users import User
 from App.UI import login
 
 logged_out = Blueprint("logged_out", __name__)
@@ -17,6 +20,19 @@ def load_user(_id):
 
 @logged_out.route('/', methods=["POST", "GET"])
 def index():
+    # måns = User.find(user_name='MansMcMan').first_or_none()
+    # wily = User.find(user_name='WillyMcDrive').first_or_none()
+    # c = User.find(user_name='CMcCrush').first_or_none()
+    # andy = User.find(user_name='Mcbeast').first_or_none()
+    # måns.history = []
+    # wily.history = []
+    # c.history = []
+    # andy.history = []
+    #
+    # måns.save()
+    # wily.save()
+    # c.save()
+    # andy.save()
 
     form = SignInForm()
 
