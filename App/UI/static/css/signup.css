@@ -65,3 +65,7 @@
     border-radius: 5px;
     background-color: #026670;
 }
+
+@media screen and (min-width: 0px) and (max-width: 799px) {
+    .form-panel{width: 90%}
+}
