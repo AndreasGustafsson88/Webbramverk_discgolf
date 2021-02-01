@@ -102,7 +102,13 @@ section {
 }
 
 .scorecard {
-    background-color: #eeeeee;
+    background-color: #EDEAE5;
+    height: 84vh;
+    width: 100vw;
+}
+
+.scorecard-players {
+    background-color: #EDEAE5;
     height: 84vh;
     width: 100vw;
 }
@@ -196,7 +202,7 @@ section {
 }
 
 .shadow {
-    box-shadow: #161515;
+    box-shadow: 0 4px 2px -2px gray;
 }
 
 .h85 {
@@ -259,12 +265,12 @@ body {
     font-size: 12px;
     color: #000;
     opacity: 1;
-    background: rgba(0, 0, 0, 0.2);
+    background: #9FEDD7;
 }
 
 .swiper-pagination-bullet-active {
     color: #fff;
-    background: #007aff;
+    background: #026670;
 }
 
 * {
@@ -383,4 +389,87 @@ hr {
 
 .signup-body {
     background-image: url("../assets/img/bgdg.png");
+}
+
+.btn-darkmint {
+
+background-color: #026670;
+color: #EDEAE5;
+border-color: #9FEDD7;
+
+}
+
+.btn-darkmint:hover, .btn-darkmint:focus, .btn-darkmint:active, .btn-darkmint.active, .open .dropdown-toggle.btn-darkmint {
+
+background-color: #014f56;
+color:#EDEAE5;
+border-color: #9FEDD7;
+
+}
+
+.btn-red {
+
+background-color: #ed9f9f;
+color: #700202;
+border-color: #700202;
+
+}
+
+.btn-red:hover, .btn-red:focus, .btn-red:active, .btn-red.active, .open .dropdown-toggle.btn-red {
+
+background-color: #700202;
+color: #ed9f9f;
+border-color: #700202;
+
+}
+
+.btn-mint {
+
+background-color: #9FEDD7;
+color: #014f56;
+border-color: #014f56;
+
+}
+
+.btn-mint:hover, .btn-mint:focus, .btn-mint:active, .btn-mint.active, .open .dropdown-toggle.btn-mint {
+
+background-color: #014f56;
+color: #014f56;
+border-color: #9FEDD7;
+
+}
+
+.btn-lively {
+
+background-color: #FEF9C7;
+color: black;
+border-color: #FCE181;
+
+}
+
+.btn-lively:hover, .btn-lively:focus, .btn-lively:active, .btn-lively.active, .open .dropdown-toggle.btn-lively {
+
+background-color: #FCE181;
+color: black;
+border-color: #FEF9C7;
+
+}
+
+.form-control:focus {
+  border-color: #014f56;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #014f56;
+}
+
+.h75 {
+    height: 60vh;
+}
+
+.table-heading {
+    background-color: #9FEDD7;
+}
+
+.inside-shadow {
+   -moz-box-shadow:    inset 0 0 5px #676767;
+   -webkit-box-shadow: inset 0 0 5px #676767;
+   box-shadow:         inset 0 0 5px #676767;
 }

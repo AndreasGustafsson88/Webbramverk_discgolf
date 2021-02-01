@@ -2,7 +2,6 @@ var swiper = new Swiper('.swiper-container', {
     on: {
         slideChange: () => {
             if (player_summary['active']) {
-                console.log(player_summary['active'])
                 if ((JSON.stringify(check_round['players']) === JSON.stringify(player_summary['players']))) {} else {
                     check_round = JSON.parse(JSON.stringify(player_summary))
                     swipe_save()
@@ -28,21 +27,23 @@ var swiper = new Swiper('.swiper-container', {
 });
 
 
-function set_info_bg_color(info, par_diff) {
+function set_info_bg_color(info, par_diff, value) {
     if (par_diff === -1) {
-        info.style.backgroundColor = '#CCFF99'
+        info.style.backgroundColor = '#c7fdbc'
+    } else if (parseInt(value) === 1) {
+        info.style.backgroundColor = '#ffe870'
     } else if (par_diff === -2) {
-        info.style.backgroundColor = '#80FF00'
+        info.style.backgroundColor = '#98fc81'
     } else if (par_diff < -2) {
-        info.style.backgroundColor = '#FFFF66'
+        info.style.backgroundColor = '#75ff70'
     } else if (par_diff === 0) {
         info.style.backgroundColor = ''
     } else if (par_diff === 1) {
-        info.style.backgroundColor = '#FF9999'
+        info.style.backgroundColor = '#f8a3a3'
     } else if (par_diff === 2) {
-        info.style.backgroundColor = '#FF6666'
+        info.style.backgroundColor = '#f66a6a'
     } else if (par_diff > 2) {
-        info.style.backgroundColor = '#FF3333'
+        info.style.backgroundColor = '#f84444'
     }
 }
 
@@ -53,7 +54,7 @@ function update_result() {
     let info = document.getElementById(user_name + hole);
     info.innerHTML = this.value;
     par_diff = this.value - par;
-    set_info_bg_color(info, par_diff)
+    set_info_bg_color(info, par_diff, this.value)
     points = parseInt(par) + parseInt(strokes) - this.value + 2;
 
     for (let player of player_summary['players']) {
@@ -212,9 +213,7 @@ function delete_scorecards() {
     });
 }
 
-console.log(redirect_url)
 let check_round = JSON.parse(JSON.stringify(player_summary));
-console.log(player_summary)
 var elements = document.getElementsByClassName("throws-input");
 for (let i = 0; i < elements.length; i++) {
     elements[i].addEventListener("input", update_result)

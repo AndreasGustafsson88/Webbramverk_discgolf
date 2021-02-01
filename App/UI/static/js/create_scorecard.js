@@ -88,7 +88,7 @@ function get_player() {
             block_to_insert.innerHTML = "Player " + (divIds.length + 1) + ": " + player_name;
 
             let delete_button = document.createElement("button");
-            delete_button.setAttribute("class", "btn btn-danger btn-sm");
+            delete_button.setAttribute("class", "btn btn-lively btn-sm");
             delete_button.setAttribute("type", "button");
             delete_button.setAttribute("style", "float: right");
             delete_button.setAttribute("id", player_name + "button");
