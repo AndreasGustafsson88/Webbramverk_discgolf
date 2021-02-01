@@ -1,10 +1,7 @@
 <link rel="stylesheet" href="https://unpkg.com/swiper/swiper-bundle.min.css">
-
-{% extends "base_logged_in.html" %}
+{% extends "layout.html" %}
 
 {% block content %}
-
-
     <section class="scorecard">
             <!-- Slider main container -->
         <div class="swiper-container" style="height: fit-content">
@@ -19,7 +16,6 @@
                         {% endif %}
                 <div class="swiper-slide">
                     <section class="scorecard">
-
                             <!--Hole Info-->
                             <div class="container h10 w-100 center-content-h shadow" style="background-color: aqua">
                                 <div class="container h100 center-content" style="background-color: #23c2ff">
@@ -32,7 +28,6 @@
                                     <div class="small-text font-weight-bold"> {{ round_summary['course_holes'][i + 1 - j]['length'] }}m </div>
                                 </div>
                             </div>
-
                             <!--Net & Throws-->
                             <div class="container h05 center-content" style="margin-top: 5px">
                                 <div class="col-12 center-content-left">
@@ -48,7 +43,6 @@
                                     </div>
                                 </div>
                             </div>
-
                             <!--Player information-->
                             <div class="container h85 top-align no-padding" style="background-color: aquamarine">
                                 {% for player in round_summary.players %}

@@ -1,11 +1,10 @@
-{% extends "base_logged_in.html" %}
+{% extends "layout.html" %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{url_for('static', filename='/css/courses.css')}}"/>
 {% endblock %}
 
 {% block content %}
 <button class="hide-on-large" type="button" onclick="toggleMap()" style="width: 100%;">toggle-map</button>
-
 <div id="courses-page">
     <!-- Search form -->
     <div id="courses-container">
@@ -25,7 +24,6 @@
         </div>
     </div>
 </div>
-
 {% endblock %}
 {% block javascript %}
 <script>
