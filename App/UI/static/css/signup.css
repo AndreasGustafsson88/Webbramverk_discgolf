@@ -1,0 +1,71 @@
+.signup-body{
+    background-image: url("../assets/img/bgdg.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: cover;
+    height: 100%;
+    width: 100%;
+    position: relative;
+}
+
+.form-panel{
+    width: 35%;
+    padding: 20px;
+    position: absolute;
+    top: 40%;
+    left: 50%;
+    transform: translate(-50%, -50%);
+    background-color: #9FEDD7;
+    border: #026670 2px solid;
+    border-radius: 20px;
+}
+
+#form-header{
+    text-align: center;
+    color: black
+}
+
+#form-body{
+    width: 100%;
+    display:flex;
+    justify-content: center;
+}
+
+.text-input-single{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.text-input-single>input{
+    width: 90%;
+    border: #026670 1px solid;
+    border-radius: 5px;
+}
+
+.text-input-double{
+    margin-bottom: 10px;
+    display: flex;
+    justify-content: center;
+}
+
+.text-input-double>input{
+    width: 43%;
+    border: #026670 1px solid;
+    border-radius: 5px;
+}
+
+.submit-centered{
+    display: flex;
+    justify-content: center;
+}
+
+.submit-centered>input{
+    width: 30%;
+    border-radius: 5px;
+    background-color: #026670;
+}
+
+@media screen and (min-width: 0px) and (max-width: 799px) {
+    .form-panel{width: 90%}
+}

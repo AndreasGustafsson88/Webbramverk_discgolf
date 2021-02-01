@@ -2,16 +2,11 @@
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/profile_page.css') }}"/>
 {% endblock %}
-{% block content %}
 
+{% block title %}{{ visited_profile.user_name }}{% endblock %}
+
+{% block content %}
 <section class="profile-page">
-<!--       <div class="container">
-   <div class="collapse navbar-collapse">
-       Keeps the icon bar in place
-       <div class="dropdown-menu dropdown-with-icons">
-       </div>
-   </div>
-   </div> -->
 <div class="p-content">
    <div class="container profile">
       <div class="row">
