@@ -15,7 +15,7 @@
                <!--Profile picture-->
                <div class="avatar">
                    {% if visited_profile.profile_picture %}
-                      <img src="{{ visited_profile.profile_picture }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                      <img src="{{ url_for('static', filename=visited_profile.profile_picture) }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                       {% else %}
                     <img src="{{ url_for('static', filename='/assets/img/dog.jpg') }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                       {% endif %}                  
