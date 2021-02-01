@@ -78,9 +78,10 @@ def profile_page_update():
         update = {}
 
         if settings_form.profile_picture_input.data:
-            file_name = settings_form.user_name.data.strip().replace(' ', '_')
+            file_name = current_user.user_name.strip().replace(' ', '_')
+            print()
             settings_form.profile_picture_input.data.save(os.path.join(Config.UPLOAD_FOLDER, f'{file_name}.jpg'))
-            update["profile_picture"] = "../static/assets/img/profile_pictures/" + file_name + ".jpg"
+            update["profile_picture"] = "/assets/img/profile_pictures/" + file_name + ".jpg"
 
         if settings_form.email.data:
             if uc.get_user(email=settings_form.email.data):
