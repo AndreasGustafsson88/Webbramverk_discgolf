@@ -8,19 +8,19 @@
         <div class="col-search-form">
             <form class="form-inline active-cyan-3 active-cyan-4 center-content" autocomplete="off" style="width: 100%; max-width: 500px">
                 <div class=autocomplete aria-hidden="true" style="width: 100%">
-                    <input class="form-control form-control-m w-100" id="course_search" type="text" placeholder="Search course" aria-label="Search" style="margin-bottom: 10px;">
+                    <input class="form-control form-control-m w-100" style="background-color: white; margin-bottom: 10px" id="course_search" type="text" placeholder="Search course" aria-label="Search">
                 </div>
             </form>
 
             <div class="container-fluid autocomplete" style="padding: 0; display: flex; justify-content: center; max-width: 500px; width: 100%;">
-                <input class="form-control form-control-m w-100" autocomplete="off" type="text" placeholder="Search player" id="player_search" aria-label="Search">
-                <a class="btn btn-primary btn-m w-30 button-text" onclick="get_player()" style="margin-left: 10px" role="button">Add player</a>
+                <input class="form-control form-control-m w-100" style="background-color: white" autocomplete="off" type="text" placeholder="Search player" id="player_search" aria-label="Search">
+                <a class="btn btn-darkmint btn-m w-30 button-text" onclick="get_player()" style="margin-left: 10px" role="button">Add player</a>
             </div>
         </div>
     </div>
 
     <!--Show course & friends-->
-    <div class="container h60 w100 center-content" style="background-color: #eeeeee">
+    <div class="container h60 w100 center-content">
         <!--Course-->
         <div class="container-text" style="height: 15vh; justify-content: center">
             <div class="small-text font-weight-bold" id="Course">No course selected</div>
@@ -32,9 +32,9 @@
     </div>
 
     <!--Create Scorecard-->
-    <div class="container h20 w100 center-content-h" style="background-color: #eeeeee">
+    <div class="container h20 w100 center-content-h">
         <div class="container w-50">
-            <a class="btn btn-primary btn-lg w-100 button-text" name="form" onclick="create_scorecard()" style="margin-top: 30px" role="button">Let's play!</a>
+            <a class="btn btn-darkmint btn-lg w-100 button-text" name="form" onclick="create_scorecard()" style="margin-top: 30px" role="button">Let's play!</a>
         </div>
     </div>
 </section>
