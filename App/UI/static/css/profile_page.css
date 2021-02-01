@@ -11,7 +11,8 @@
 }
 
 .container {
-    background-color: #eeeeee;
+
+    background-color: #EDEAE5;
     width: 80%;
     border-collapse: collapse;
     border-radius: 20px;
@@ -20,6 +21,19 @@
     display: inline-block;
     vertical-align: bottom;
 
+}
+.nav-link{
+    background-color: transparent;
+}
+
+a {
+    color: #026670;
+    text-decoration: none;
+    background-color: transparent;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fef9c7;
+    background-color: #026670;
 }
 
 .profile {
@@ -41,7 +55,29 @@
 .rounded-circle {
     border: #434242 2px solid;
 }
+.rounds {
+    color: #026670;
+    background-color: #fef9c7;
+}
 
+.highcharts-background{
+    fill: #edeae5;
+}
+
+.highcharts-plot-background{
+    fill: #fef9c7;
+}
+
+.highcharts-button-box{
+    fill: #026670;
+}
+.highcharts-button-symbol{
+    stroke: #edeae5;
+}
+
+.highcharts-credits{
+    display: none;
+}
 .row_names {
     padding-top: 10px;
     padding-right: 20%;
@@ -81,22 +117,31 @@
 }
 
 #favorite-courses-list {
+    background-color: #fef9c7;
+    border-radius: 5px;
+    width: 99%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
 
-  background-color: #23c2ff;
-  border-radius: 10px ;
-  border: #161515 2px solid;
-  margin-bottom: 10px;
+}
+#favorite_courses {
+    margin-top: 10px;
 }
 
 .panel-body {
   background-color: #23c2ff;
 }
-
+.settings-panel{
+    margin-top: 10px;
+}
 #settings-profile-picture {
-  position: relative;
-  display: flex;
-  align-items: center;
-  background-color: #f87019;
+    justify-content: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #edeae5;
 }
 
 #profile_picture_input {
@@ -105,12 +150,13 @@
 
 #settings-profile-picture-button {
   display: inline-block;
-  padding: 12px 18px;
+  padding: 10px 10px;
   border-radius: 5px;
-  background-color: #8ebf42;
+  background-color: #026670;
   font-size: 16px;
   font-weight: bold;
-  color: #000000;
+  color: #edeae5;
+  color: #edeae5;
 }
 
 #settings-profile-picture-button:hover {
@@ -118,7 +164,7 @@
 }
 
 #settings-profile-picture-button:active {
-  background-color: #709834;
+  background-color: #9fedd7;
 }
 
 #settings-profile-picture-filename {
@@ -128,24 +174,126 @@
 }
 
 #settings-user-name {
-  background-color: red;
-  width: 30%;
+    background-color: #edeae5;
+    width: 80%;
+    justify-content: center;
+    display: flex;
+    margin:0 auto 5px;
+    border-radius: 5px;
+}
+input#user_name {
+    background-color: #fef9c7;
 }
 
 #settings-email {
-  background-color: yellow;
-
+  background-color: #edeae5;
+    width: 80%;
+    justify-content: center;
+    display: flex;
+    margin:0 auto 5px;
+    border-radius: 5px;
+}
+input#email{
+    background-color: #fef9c7;
 }
 
 #settings-password {
-  background-color: green;
+  background-color: #edeae5;
+    width: 100%;
+    justify-content: space-evenly;
+    display: inline-flex;
+    margin:0 auto 5px;
+    border-radius: 5px;
 }
 
+input#password, input#confirm_password {
+    background-color: #fef9c7;
+    width: 45%;
+    display: flex;
+    justify-content: space-between;
+    column-gap: 20px;
+
+}
+#current-password{
+    background-color: #edeae5;
+    width: 80%;
+    justify-content: center;
+    display: flex;
+    margin:0 auto 5px;
+    border-radius: 5px;
+}
+input#current_password{
+    background-color: #fef9c7;
+}
 #settings-submit {
-  background-color: brown;
+  background-color: #edeae5;
+    width: 30%;
+    justify-content: center;
+    display: flex;
+    margin:0 auto 5px;
+    border-radius: 5px;
+}
+#settings-submit input#submit {
+    background-color: #026670;
+    color: #fef9c7;
+    border-radius: 5px;
+}
+#friends_id{
+    background-color: #fef9c7;
+    border-radius: 5px;
+    width: 99%;
+    justify-content: center;
+    display: flex;
+    margin: auto;
 }
 
-.settings-panel {
-  background-color: blueviolet;
+#friends_id .remove {
+    padding: 5px;
+    background-color: #fef9c7;
+    width: 40px;
 
+}
+
+.add_friend#img1 {
+    background-color: transparent;
+}
+
+.friend_column {
+    background-color: transparent;
+    margin-top: 5px;
+    width: 100%;
+    justify-content: space-evenly;
+    display: inline-flex;
+}
+#friend_link_id {
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+    font-size: 15px;
+    color: #026670;
+}
+#friend_name_id {
+    display: flex;
+    justify-content: center;
+    padding-top: 15px;
+    font-size: 15px;
+    color: black;
+    font-weight: bold;
+}
+
+#complete_s_id{
+    margin-top: 15px;
+    background-color: #9fedd7;
+    color: black;
+    border: 0;
+    display: flex;
+    font-size: 3vw;
+}
+#incomplete_s_id{
+    margin-top: 15px;
+    background-color: #fce181;
+    color: black;
+    border: 0;
+    display: flex;
+    font-size: 3vw;
 }

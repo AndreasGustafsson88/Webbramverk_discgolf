@@ -89,7 +89,7 @@
             <div class="container-fluid">
                <!-- Example row of columns -->
                <div class="row">
-                  <figure class="highcharts-figure" style="width: 100vw;">
+                  <figure class="highcharts-figure" style="width: 100vw;" >
                      <div id="container">
                      </div>
                   </figure>
@@ -133,10 +133,10 @@
          {% endif %}
          <!--Put content when pressed friends-->
          <div class="tab-pane text-center gallery" id="friends" >
-            <div class="col-search-form">
+            <div class="col-search-form" style="display: flex; justify-content: center; width: 100%;">
                <form class="form-inline active-cyan-3 active-cyan-4 center-content" autocomplete="off" style="width: 100%; max-width: 500px">
                   <div class=autocomplete aria-hidden="true" style="width: 100%">
-                     <input class="form-control form-control-m w-100" id="user_search" type="text" placeholder="Search Players" aria-label="Search" style="margin-bottom: 10px;">
+                     <input class="form-control form-control-m w-100" id="user_search" type="text" placeholder="Search Players" aria-label="Search" style="margin-bottom: 10px; margin-top: 10px; display: flex; justify-content: center; background-color: #fef9c7">
                   </div>
                </form>
 
@@ -158,7 +158,7 @@
             <div class="incomplete_scorecards">
                <form role="form" method="POST">
                   {% for scorecard in current_user.incomplete_scorecards %}
-                  <button class="btn btn-primary btn-m w-100 button-text score_buttons" type="submit" style="margin-top: 15px; background-color: #FF9999; color: black; border: 0;" name="button" value="{{ scorecard._id }}">{{ scorecard.course }}</button>
+                  <button class="btn btn-primary btn-m w-100 button-text score_buttons" id='incomplete_s_id' type="submit"  name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Incomplete round)</button>
                   {% endfor %}
                </form>
             </div>
@@ -166,7 +166,7 @@
             <div class="complete_scorecards">
                 <form role="form" method="POST">
                 {% for scorecard in visited_profile.complete_scorecards %}
-                    <button class="btn btn-primary btn-m w-100 button-text score_buttons" type="submit" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" name="button" value="{{ scorecard._id }}">{{ scorecard.course }}</button>
+                    <button class="btn btn-primary btn-m w-100 button-text score_buttons" id="complete_s_id" type="submit" name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Completed round)</button>
                 {% endfor %}
                 </form>
             </div>
@@ -202,6 +202,7 @@
                 block_to_insert.className= "col-container w100 center-content-h"
                 block_to_insert.style.height = '50px'
                 block_to_insert.innerHTML = request_list[username];
+
 
                 let friend_link = document.createElement("a");
                 friend_link.setAttribute("href","/profile_page/" + username);
