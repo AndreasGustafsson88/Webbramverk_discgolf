@@ -398,8 +398,8 @@ hr {
 .btn-darkmint {
 
 background-color: #026670;
-color: #EDEAE5;
-border-color: #9FEDD7;
+color: white;
+border-color: #055962;
 
 }
 
@@ -407,7 +407,7 @@ border-color: #9FEDD7;
 
 background-color: #014f56;
 color:#EDEAE5;
-border-color: #9FEDD7;
+border-color: #014f56;
 
 }
 
@@ -437,7 +437,7 @@ border-color: #014f56;
 
 .btn-mint:hover, .btn-mint:focus, .btn-mint:active, .btn-mint.active, .open .dropdown-toggle.btn-mint {
 
-background-color: #014f56;
+background-color: #98e3cf;
 color: #014f56;
 border-color: #9FEDD7;
 
