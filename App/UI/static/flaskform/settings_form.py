@@ -3,6 +3,7 @@ from flask_wtf.file import FileField, FileAllowed
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, EqualTo
 
+
 class SettingsForm(FlaskForm):
     IMAGES = list('jpg jpe jpeg png gif svg bmp'.split())
     profile_picture_input = FileField("images", validators=[

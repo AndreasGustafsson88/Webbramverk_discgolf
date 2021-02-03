@@ -33,7 +33,7 @@
             <a class="nav-link" href="{{ url_for("profile.profile_page", user_name=current_user.user_name)}}">Profile <span class="sr-only">(current)</span></a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for("scorecards.scorecard") }}">Scorecard</a>
+            <a class="nav-link" id="scorecard_link" href="{{ url_for("scorecards.scorecard") }}">Scorecard</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for("courses_bp.courses")}}">Courses</a>

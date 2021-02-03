@@ -15,7 +15,7 @@
                <!--Profile picture-->
                <div class="avatar">
                    {% if visited_profile.profile_picture %}
-                      <img src="{{ visited_profile.profile_picture }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                      <img src="data:image/jpg;base64,{{ visited_profile.profile_picture }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                       {% else %}
                     <img src="{{ url_for('static', filename='/assets/img/dog.jpg') }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                       {% endif %}                  
@@ -33,12 +33,12 @@
          </div>
       </div>
       <!--Descprition player-->
-      <div class="description text-center">
+      <div class="description text-center" id="rating_text">
          <p> {% if visited_profile.rating %}
             Rating:
-            {{ visited_profile.rating }}
+            {{ visited_profile.rating|int }}
             {% else  %}
-            NO Rating Calculated
+            No Rating Calculated
             {% endif %}
          </p>
       </div>
@@ -180,8 +180,6 @@
 {%block javascript %}<!--High CHART LIVE  -->
 
     <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/highcharts-more.js"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js"></script>
     <script src="{{ url_for('static', filename='/js/profile_page.js') }}"></script>
     <script>
     console.log({{ favorite_courses|safe }})
