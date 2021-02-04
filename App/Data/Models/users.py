@@ -1,14 +1,13 @@
 from flask_login import UserMixin
-from App.Data import Document, db
+from App.Data import Document
 from bson import ObjectId
 from statistics import mean
 from ast import literal_eval
-
 from App.Data.Models.scorecards import Scorecard
 
 
 class User(Document, UserMixin):
-    collection = db.users
+    collection = Document.db.users
 
     @property
     def incomplete_scorecards(self):

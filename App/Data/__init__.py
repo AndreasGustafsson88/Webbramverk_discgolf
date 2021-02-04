@@ -3,8 +3,18 @@ from pymongo import MongoClient
 from abc import ABC
 
 
-client = MongoClient(f'mongodb://{USER}:{PASSWORD}@localhost:{LOCALHOST}')
-db = client.discgolf
+class MongoConnection:
+    client = None
+    db = None
+    collection = None
+
+    @classmethod
+    def init_app(cls, app):
+        if 'MONGODB_URI' in app.config:
+            cls.client = MongoClient(app.config['MONGODB_URI'])
+            cls.db = cls.client.discgolf
+        else:
+            return 'No valid MongoDB configuration'
 
 
 class ResultList(list):
@@ -16,7 +26,8 @@ class ResultList(list):
         return self[-1] if len(self) > 0 else None
 
 
-class Document(dict, ABC):
+class Document(dict, MongoConnection, ABC):
+
     collection = None
 
     def __init__(self, data):
@@ -33,7 +44,7 @@ class Document(dict, ABC):
 
     def save(self):
         if not self._id:
-            del(self.__dict__['_id'])
+            del (self.__dict__['_id'])
             return self.collection.insert_one(self.__dict__)
         else:
             return self.collection.update({'_id': self._id}, self.__dict__)
@@ -85,9 +96,3 @@ class Document(dict, ABC):
     @classmethod
     def delete_one(cls, **kwargs):
         return cls.collection.delete_one(kwargs)
-
-
-
-
-
-

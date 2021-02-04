@@ -1,4 +1,4 @@
-from App.UI.routes.jinja2_filters import json_decode
+from App.Data import MongoConnection
 from config import Config
 import os
 from flask import Flask
@@ -10,9 +10,10 @@ from flask_login import LoginManager
 
 # Globally accessible libraries
 login = LoginManager()
+db = MongoConnection()
 
 
-def create_app():
+def create_app(config_class=Config):
     templates_folder = os.path.abspath(os.path.dirname(__file__)) + '/templates'
     app = Flask(
         __name__,
@@ -20,10 +21,11 @@ def create_app():
         template_folder=templates_folder,
         static_url_path='',
         static_folder=os.path.abspath(os.path.dirname(__file__)) + '/static')
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
 
     # Initialize Plugins
     login.init_app(app)
+    db.init_app(app)
 
     with app.app_context():
         # Imports
@@ -33,6 +35,7 @@ def create_app():
         from App.UI.routes import courses_bp as courses_bp_blueprint
         from App.UI.routes import scorecards as scorecard_blueprint
         from App.UI.routes import profile as profile_blueprint
+        from App.UI.routes.jinja2_filters import json_decode
 
         login.login_view = "logged_out.index"
 

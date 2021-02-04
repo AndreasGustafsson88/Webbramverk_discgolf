@@ -1,4 +1,4 @@
-from App.Data import Document, db
+from App.Data import Document
 import numpy as np
 from selenium import webdriver
 from selenium.webdriver.chrome.options import Options
@@ -7,7 +7,8 @@ from App.Data.DB_SETTINGS import DRIVER_PATH
 
 
 class Course(Document):
-    collection = db.courses
+
+    collection = Document.db.courses
 
     @property
     def course_par(self):
@@ -46,9 +47,10 @@ class Course(Document):
     def average_per_hole(self, throw_per_hole):
         for i in range(1, len(self.holes)):
             if self.logged_rounds - 1:
-                average = ((self.holes[i]['average'] * (self.logged_rounds - 1)) + throw_per_hole[i-1])/self.logged_rounds
+                average = ((self.holes[i]['average'] * (self.logged_rounds - 1)) + throw_per_hole[
+                    i - 1]) / self.logged_rounds
             else:
-                average = throw_per_hole[i-1]
+                average = throw_per_hole[i - 1]
 
             self.holes[i]['average'] = average
         self.save()
