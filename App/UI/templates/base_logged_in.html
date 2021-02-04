@@ -39,7 +39,7 @@
             <a class="nav-link" href="{{ url_for("courses_bp.courses")}}">Courses</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for("logged_in.log_out") }}">Logout</a>
+            <a class="nav-link " href="{{ url_for("logged_in.log_out") }}" id="logout_button">Logout</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for("profile.profile_page", user_name=current_user.user_name)}}" tabindex="-1" aria-disabled="true">{{ current_user.user_name }}</a>

@@ -68,8 +68,8 @@
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
-                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_favorite_black_24dp.png') }}"></i>
+                     <a class="nav-link"  data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
+                     <i class="material-icons" id="favorite_courses_button"><img src="{{ url_for('static', filename='/assets/img/baseline_favorite_black_24dp.png') }}"></i>
                      Favorite Courses
                      </a>
                   </li>
@@ -147,9 +147,9 @@
          <!--Put content when pressed favorite course-->
          <div class="tab-pane text-center gallery" id="favorite_courses">
             <p>Gå till courses för att lägga till bana</p>
-            <div id="favorite-courses-list" >
+            <div id="favorite-courses-tag" >
                {% for course in favorite_courses %}
-               <h3>{{ course }}</h3>
+               <h3 id="id_courses">{{ course }}</h3>
                {% endfor %}
             </div>
          </div>
