@@ -2,6 +2,7 @@
 <html lang="en">
 <head>
     <!-- Required meta tags -->
+    <link rel="stylesheet" type="text/css" href="../static/css/layout.css"/>
     <meta charset="utf-8">
     <meta name="viewport" content="width=device-width, initial-scale=1, shrink-to-fit=no">
 
@@ -20,46 +21,42 @@
 <body>
     <!-- NAVBAR -->
     <!-- TODO replace icon in navbar and footer -->
-    <nav class="navbar navbar-expand-lg navbar-dark bg-dark">
+    <nav class="navbar navbar-expand-lg" style="background-color: #031b4d">
         <a class="navbar-brand" href="{{ url_for("logged_out.index") }}">
-            <img src={{ url_for('static', filename='/assets/img/UDisc_Logo_Full_White.svg') }} alt="" height="30rem">
+            <img src={{ url_for('static', filename='/assets/img/disclogoWhite.png') }} alt="" height="120%"; width="100%">
         </a>
-        <button class="navbar-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
+        <button class="navbar-toggler ml-auto custom-toggler" type="button" data-toggle="collapse" data-target="#navbarSupportedContent" aria-controls="navbarSupportedContent" aria-expanded="false" aria-label="Toggle navigation">
             <span class="navbar-toggler-icon"></span>
         </button>
         <div class="collapse navbar-collapse" id="navbarSupportedContent">
             {% if current_user.is_authenticated %}
             <ul class="navbar-nav ml-auto">
-                <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for("profile.profile_page", user_name=current_user.user_name)}}">Profile <span class="sr-only">(current)</span></a>
+
+                <li class="nav-item">
+                    <a class="nav-link" style="color: white" href="{{ url_for("scorecards.scorecard") }}">Scorecard</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for("scorecards.scorecard") }}">Scorecard</a>
+                    <a class="nav-link" style="color: white" href="{{ url_for("courses_bp.courses")}}">Courses</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for("courses_bp.courses")}}">Courses</a>
+                    <a class="nav-link" style="color: white" href="{{ url_for("logged_in.log_out") }}">Logout</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for("logged_in.log_out") }}">Logout</a>
-                </li>
-                <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for("profile.profile_page", user_name=current_user.user_name)}}" tabindex="-1" aria-disabled="true">{{ current_user.user_name }}</a>
+                    <a class="nav-link" style="color: white" href="{{ url_for("profile.profile_page", user_name=current_user.user_name)}}" tabindex="-1" aria-disabled="true">{{ current_user.user_name }}</a>
                 </li>
             </ul>
             {% else %}
             <ul class="navbar-nav ml-auto">
                 <li class="nav-item active">
-                    <a class="nav-link" href="{{ url_for("logged_out.index") }}">Login</a>
+                    <a class="nav-link" style="color: white" href="{{ url_for("logged_out.index") }}">Login</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for("logged_out.signup") }}">Sign-up</a>
+                    <a class="nav-link" style="color: white" href="{{ url_for("logged_out.signup") }}">Sign-up</a>
                 </li>
                 <li class="nav-item">
-                    <a class="nav-link" href="{{ url_for("courses_bp.courses") }}">Courses</a>
+                    <a class="nav-link" style="color: white" href="{{ url_for("courses_bp.courses") }}">Courses</a>
                 </li>
-                <li class="nav-item">
-                    <a class="nav-link disabled" href="#" tabindex="-1" aria-disabled="true">get rich now</a>
-                </li>
+
             </ul>
             {% endif %}
         </div>
@@ -76,9 +73,9 @@
         </a>
     </nav>
     -->
-    <div class="navbar navbar-dark bg-dark" style="float: bottom">
+    <div class="navbar" style="float: bottom">
         <a class="footer">
-            <img src={{ url_for('static', filename='/assets/img/UDisc_Logo_Full_White.svg') }} alt="" height="30rem">
+            <img src={{ url_for('static', filename='/assets/img/disclogoWhite.png') }} alt="" height="120%"; width="100%">
         </a>
     </div>
 {% block javascript %}{% endblock %}
