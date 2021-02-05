@@ -195,4 +195,23 @@ Att göra till nästkommande möte:
 
 Övriga kommentarer:
 
+2021-02-05
+    Närvarande: William Åslund, Andreas Gustafsson, Måns Ewards Öberg, Christoffer Jakonen
+
+Protokollförare: William Åslund
+
+Gjort sen senaste mötet:
+        Alla har jobbat individuellt med att få klart stylingen på sina sidor, samt även testerna.
+        Andreas har fått klart config-filerna så att dom fungerar.
+
+Att göra till nästkommande möte:
+    Vi skall nu ändra så att bara spelare med över 800 i rating kan ändra banornas svårighetsgrad, detta gör vi för att "sämre spelare" inta ska kunna förstöra en banas svårighetsgrad.
+    vi skall även bli helt klara med stylingen på alla sidor.
+
+
+
+
+
+Övriga kommentarer:
+
 
