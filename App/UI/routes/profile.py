@@ -1,5 +1,5 @@
 import json
-import os
+import base64
 from bson import ObjectId
 from flask import Blueprint, request, redirect, url_for, Response, render_template, flash
 from flask_login import login_required, current_user
@@ -9,7 +9,6 @@ from App.Controller import courses_controller as cc
 from App.Controller import scorecards_controller as sc
 from App.Controller import users_controller as uc
 from App.UI.static.flaskform.settings_form import SettingsForm
-from config import Config
 
 profile = Blueprint('profile', __name__)
 
@@ -73,26 +72,25 @@ def profile_page_update():
     if settings_form.validate_on_submit():
         if not check_password_hash(current_user.password, settings_form.current_password.data):
             flash("Wrong password")
-            return redirect(url_for('profile_page', user_name=current_user.user_name))
+            return redirect(url_for('profile.profile_page', user_name=current_user.user_name))
 
         update = {}
 
         if settings_form.profile_picture_input.data:
-            file_name = current_user.user_name.strip().replace(' ', '_')
-            print()
-            settings_form.profile_picture_input.data.save(os.path.join(Config.UPLOAD_FOLDER, f'{file_name}.jpg'))
-            update["profile_picture"] = "/assets/img/profile_pictures/" + file_name + ".jpg"
+            file = request.files['profile_picture_input']
+            base64_string = base64.b64encode(file.read()).decode('utf-8')
+            update["profile_picture"] = base64_string
 
         if settings_form.email.data:
             if uc.get_user(email=settings_form.email.data):
                 flash("Email already exists")
-                return redirect(url_for('profile_page', user_name=current_user.user_name))
+                return redirect(url_for('profile.profile_page', user_name=current_user.user_name))
             update["email"] = settings_form.email.data
 
         if settings_form.user_name.data:
             if uc.get_user(user_name=settings_form.user_name.data):
                 flash("Username already exists")
-                return redirect(url_for('profile_page', user_name=current_user.user_name))
+                return redirect(url_for('profile.profile_page', user_name=current_user.user_name))
             update["user_name"] = settings_form.user_name.data
 
         if settings_form.password.data:
@@ -100,7 +98,7 @@ def profile_page_update():
 
         uc.update_profile(current_user, update)
 
-        return redirect(url_for('logged_out.index'))
+        return redirect(url_for('profile.profile_page', user_name=current_user.user_name))
 
     visited_profile = uc.get_user_by_username(current_user.user_name)
     visited_profile.history = json.dumps(visited_profile.history, cls=MyEncoder)

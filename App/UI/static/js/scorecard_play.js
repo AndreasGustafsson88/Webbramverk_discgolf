@@ -50,12 +50,16 @@ function set_info_bg_color(info, par_diff, value) {
 function update_result() {
     let par_diff, points;
     let user_name, hole, par, strokes;
-    [user_name, hole, par, strokes] = this.getAttribute("id").split("_");
+    [user_name, hole, par, strokes] = this.getAttribute("id").split("|");
     let info = document.getElementById(user_name + hole);
-    info.innerHTML = this.value;
+    info.innerHTML = $(this).val();
     par_diff = this.value - par;
     set_info_bg_color(info, par_diff, this.value)
     points = parseInt(par) + parseInt(strokes) - this.value + 2;
+
+    if (points < 0) {
+        points = 0;
+    }
 
     for (let player of player_summary['players']) {
         if (player['user_name'] === user_name) {
@@ -154,7 +158,7 @@ function load_summary(element) {
     // Revisit this function
     let par_diff, points;
     let user_name, hole, par, strokes;
-    [user_name, hole, par, strokes] = element.getAttribute("id").split("_");
+    [user_name, hole, par, strokes] = element.getAttribute("id").split("|");
     let info = document.getElementById(user_name + hole);
 
     if (element.value !== "") {
@@ -164,6 +168,10 @@ function load_summary(element) {
         set_info_bg_color(info, par_diff)
 
         points = parseInt(par) + parseInt(strokes) - element.value + 2;
+
+        if (points < 0) {
+            points = 0;
+        }
 
         for (let player of player_summary['players']) {
 
