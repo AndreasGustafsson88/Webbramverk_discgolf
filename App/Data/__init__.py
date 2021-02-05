@@ -1,3 +1,5 @@
+from pymongo.database import Database
+
 from App.Data.DB_SETTINGS import LOCALHOST, USER, PASSWORD
 from pymongo import MongoClient
 from abc import ABC
@@ -12,7 +14,7 @@ class MongoConnection:
     def init_app(cls, app):
         if 'MONGODB_URI' in app.config:
             cls.client = MongoClient(app.config['MONGODB_URI'])
-            cls.db = cls.client.discgolf
+            cls.db = Database(cls.client, app.config['MONGODB_NAME'])
         else:
             return 'No valid MongoDB configuration'
 
@@ -27,7 +29,6 @@ class ResultList(list):
 
 
 class Document(dict, MongoConnection, ABC):
-    collection = None
 
     def __init__(self, data=None):
         super().__init__()
