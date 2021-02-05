@@ -55,12 +55,12 @@
                                             </div>
                                         </div>
                                         <div class="col-4 center-content no-padding">
-                                            <div class="small-text center-content">
+                                            <div class="small-text center-content" id="et">
                                                 {{ round_summary['course_holes'][i + 1 - j]['Par']|int + player.hcp[i - j]["strokes"] }}
                                             </div>
                                         </div>
                                         <div class="col-4 center-content no-padding">
-                                            <input class="form-control form-control-sm throws-input" {% if not round_summary.active %} disabled="disabled" {% endif %} value="{{ player.stats['hole' ~ (i + 1 - j) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center; max-width: 50px " id="{{ player.user_name }}_{{ i + 1 }}_{{ round_summary.course_holes[i + 1 - j]['Par']}}_{{player.hcp[i - j]['strokes'] }}">
+                                            <input class="form-control form-control-sm throws-input" {% if not round_summary.active %} disabled="disabled" {% endif %} value="{{ player.stats['hole' ~ (i + 1 - j) ~ '_throws'] }}" type="number" placeholder="" style="text-align: center; max-width: 50px " id="{{ player.user_name }}|{{ i + 1 }}|{{ round_summary.course_holes[i + 1 - j]['Par']}}|{{player.hcp[i - j]['strokes'] }}">
                                         </div>
                                     </div>
                                 {% endfor %}

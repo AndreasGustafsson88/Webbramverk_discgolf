@@ -4,7 +4,7 @@ from App.Data.Models.users import User
 from App.UI import create_app
 
 
-class MyTestCase(flask_unittest.ClientTestCase):
+class TestRegistration(flask_unittest.ClientTestCase):
     app = create_app()
     app.config['WTF_CSRF_ENABLED'] = False
 
