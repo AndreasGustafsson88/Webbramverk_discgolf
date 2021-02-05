@@ -72,6 +72,7 @@ function getAllCourses(arr) {
 
         {% if not current_user.is_anonymous %}
         icon = document.createElement("img");
+        icon.setAttribute("id", "star");
         if (favorites.includes(arr[i][0])){
             icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_filled.svg') }}")}
         else {
@@ -90,6 +91,7 @@ function getAllCourses(arr) {
 
 
         courseName = document.createElement("h6");
+        courseName.setAttribute("id", "courseobject");
         courseName.innerHTML = arr[i][0];
         /*insert a input field that will hold the current array item's value:*/
         courseName.innerHTML += "<input type='hidden' value='" + arr[i][0] + "'>";
@@ -140,6 +142,7 @@ function autocomplete(inp, arr) {
                 list.appendChild(course);
                 {% if not current_user.is_anonymous %}
                 icon = document.createElement("img");
+                icon.setAttribute("id", "star");
                 if (favorites.includes(arr[i][0])){
                     icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_filled.svg') }}");}
                 else {
@@ -156,6 +159,7 @@ function autocomplete(inp, arr) {
                 course.appendChild(courseText);
 
                 courseName = document.createElement("h6");
+                courseName.setAttribute("id", "courseobject");
 
                 courseName.innerHTML = arr[i][0];
                 /*insert a input field that will hold the current array item's value:*/
