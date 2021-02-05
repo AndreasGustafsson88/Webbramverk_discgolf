@@ -2,6 +2,22 @@ from flask_wtf import FlaskForm
 from wtforms import StringField, PasswordField, SubmitField
 from wtforms.validators import DataRequired, InputRequired
 
+
+def forbidden_characters(c=None):
+    if c is None:
+        c = []
+
+    message = f"Can't contain any of the following characters: {','.join(c)}"
+
+    def _forbidden_characters(Flaskform, field):
+        pattern = field.data
+        for p in pattern:
+            if p in c:
+                raise ValueError(message)
+
+    return _forbidden_characters
+
+
 class SignUpForm(FlaskForm):
     full_name = StringField(
         "full_name",
@@ -11,7 +27,7 @@ class SignUpForm(FlaskForm):
         })
     user_name = StringField(
         "user_name",
-        [DataRequired()],
+        [DataRequired(), forbidden_characters(["|"])],
         render_kw={
             "placeholder": "Username"
         })
