@@ -27,14 +27,14 @@ class ResultList(list):
 
 
 class Document(dict, MongoConnection, ABC):
-
     collection = None
 
-    def __init__(self, data):
+    def __init__(self, data=None):
         super().__init__()
-        if '_id' not in data:
-            self._id = None
-        self.__dict__.update(data)
+        if data:
+            if '_id' not in data:
+                self._id = None
+            self.__dict__.update(data)
 
     def __len__(self):
         return len(self.__dict__)

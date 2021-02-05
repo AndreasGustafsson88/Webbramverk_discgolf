@@ -1,4 +1,7 @@
 from App.Data import MongoConnection
+from App.Data.Models.courses import Course
+from App.Data.Models.scorecards import Scorecard
+from App.Data.Models.users import User
 from config import Config
 import os
 from flask import Flask
@@ -6,6 +9,7 @@ from App.UI.static.flaskform.settings_form import SettingsForm
 from App.UI.static.flaskform.sign_in_form import SignInForm
 from App.UI.static.flaskform.sign_up_form import SignUpForm
 from flask_login import LoginManager
+from App.UI.routes.jinja2_filters import json_decode
 
 
 # Globally accessible libraries
@@ -28,6 +32,12 @@ def create_app(config_class=Config):
     db.init_app(app)
 
     with app.app_context():
+
+        # Init models
+        Course().set_class_attr()
+        Scorecard().set_class_attr()
+        User().set_class_attr()
+
         # Imports
         from App.UI.routes import logged_out as logged_out_blueprint
         from App.UI.routes import logged_in as logged_in_blueprint
@@ -35,7 +45,6 @@ def create_app(config_class=Config):
         from App.UI.routes import courses_bp as courses_bp_blueprint
         from App.UI.routes import scorecards as scorecard_blueprint
         from App.UI.routes import profile as profile_blueprint
-        from App.UI.routes.jinja2_filters import json_decode
 
         login.login_view = "logged_out.index"
 

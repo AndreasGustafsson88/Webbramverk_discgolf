@@ -8,7 +8,8 @@ from App.Data.DB_SETTINGS import DRIVER_PATH
 
 class Course(Document):
 
-    collection = Document.db.courses
+    def set_class_attr(self):
+        self.__class__.collection = Document.db.courses
 
     @property
     def course_par(self):

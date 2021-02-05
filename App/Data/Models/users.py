@@ -7,7 +7,9 @@ from App.Data.Models.scorecards import Scorecard
 
 
 class User(Document, UserMixin):
-    collection = Document.db.users
+
+    def set_class_attr(self):
+        self.__class__.collection = Document.db.users
 
     @property
     def incomplete_scorecards(self):

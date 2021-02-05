@@ -2,11 +2,11 @@ from App.UI import create_app
 from config import TestConfig
 import unittest
 import flask_unittest
+from App.Data.Models.users import User
 
 
 class TestRegistration(flask_unittest.ClientTestCase):
     app = create_app(config_class=TestConfig)
-    from App.Data.Models.users import User
 
     def setUp(self, client) -> None:
         pass
@@ -35,7 +35,7 @@ class TestRegistration(flask_unittest.ClientTestCase):
         response = client.post('/signup', data=user)
         self.assertStatus(response, 302)
         self.assertLocationHeader(response, 'http://localhost/')
-        self.assertEqual(user['user_name'], self.User.find(user_name=user['user_name']).first_or_none().user_name)
+        self.assertEqual(user['user_name'], User.find(user_name=user['user_name']).first_or_none().user_name)
 
     def test_signup_not_same_password(self, client):
         user = self.create_user()
@@ -57,7 +57,7 @@ class TestRegistration(flask_unittest.ClientTestCase):
 
     def tearDown(self, client) -> None:
         user = self.create_user()
-        self.User.delete_one(user_name=user['user_name'])
+        User.delete_one(user_name=user['user_name'])
 
 
 if __name__ == '__main__':
