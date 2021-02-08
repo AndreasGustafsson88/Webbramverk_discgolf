@@ -118,6 +118,8 @@ def add_complete_scorecard(user, id):
 
 def add_incomplete_scorecard(user, scorecard):
     user.i_score_Oid.append(scorecard._id)
+    if len(user.i_score_Oid) > 5:
+        user.i_score_Oid = user.i_score_Oid[-5:]
     user.save()
 
 

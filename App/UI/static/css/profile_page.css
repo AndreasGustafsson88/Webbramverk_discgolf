@@ -6,18 +6,29 @@
     height: 100%;
     width: 100%;
     overflow: auto;
-    margin: auto;
+    margin: auto auto auto 0%;
 
+}
+.p-content{
+    display: flex;
+    justify-content: center;
+    width: 100%;
+    height: 100%;
+    margin: 3% auto 0%;
 }
 
 .container {
 
-    background-color: #EDEAE5;
-    width: 80%;
+    background-color: #d8d5d0;
+    width: 100%;
+    height: 100%;
     border-collapse: collapse;
-    border-radius: 20px;
+    border-top-left-radius: 20px;
+    border-top-right-radius: 20px;
     border: #434242 1px solid;
-    margin: auto;
+    margin-left: auto;
+    margin-right: auto;
+    margin-bottom: auto;
     display: inline-block;
     vertical-align: bottom;
 
@@ -27,13 +38,13 @@
 }
 
 a {
-    color: #026670;
+    color: #031b4d;
     text-decoration: none;
     background-color: transparent;
 }
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #fef9c7;
-    background-color: #026670;
+    background-color: #031b4d;
 }
 
 .profile {
@@ -56,7 +67,7 @@ a {
     border: #434242 2px solid;
 }
 .rounds {
-    color: #026670;
+    color: #031b4d;
     background-color: #fef9c7;
 }
 
@@ -69,7 +80,7 @@ a {
 }
 
 .highcharts-button-box{
-    fill: #026670;
+    fill: #031b4d;
 }
 .highcharts-button-symbol{
     stroke: #edeae5;
@@ -129,6 +140,9 @@ a {
 #favorite_courses {
     margin-top: 10px;
 }
+#id_courses{
+    margin-bottom: 10px;
+}
 
 .panel-body {
   background-color: #23c2ff;
@@ -141,7 +155,7 @@ a {
     position: relative;
     display: flex;
     align-items: center;
-    background-color: #edeae5;
+    background-color: #d8d5d0;
 }
 
 #profile_picture_input {
@@ -152,11 +166,11 @@ a {
   display: inline-block;
   padding: 10px 10px;
   border-radius: 5px;
-  background-color: #026670;
+  background-color: #031b4d;
   font-size: 16px;
   font-weight: bold;
   color: #edeae5;
-  color: #edeae5;
+
 }
 
 #settings-profile-picture-button:hover {
@@ -175,10 +189,10 @@ a {
 
 #settings-user-name {
     background-color: #edeae5;
-    width: 80%;
+    width: 40%;
     justify-content: center;
     display: flex;
-    margin:0 auto 5px;
+    margin: 0 auto 5px;
     border-radius: 5px;
 }
 input#user_name {
@@ -186,11 +200,11 @@ input#user_name {
 }
 
 #settings-email {
-  background-color: #edeae5;
-    width: 80%;
+    background-color: #edeae5;
+    width: 50%;
     justify-content: center;
     display: flex;
-    margin:0 auto 5px;
+    margin: 0 auto 5px;
     border-radius: 5px;
 }
 input#email{
@@ -198,35 +212,34 @@ input#email{
 }
 
 #settings-password {
-  background-color: #edeae5;
-    width: 100%;
-    justify-content: space-evenly;
-    display: inline-flex;
-    margin:0 auto 5px;
+    background-color: #d8d5d0;
+    width: 80%;
+    justify-content: space-between;
+    display: flex;
+    margin: 0 auto 5px;
     border-radius: 5px;
 }
 
 input#password, input#confirm_password {
     background-color: #fef9c7;
-    width: 45%;
+    width: 48%;
     display: flex;
     justify-content: space-between;
-    column-gap: 20px;
+    column-gap: 10px;
 
 }
 #current-password{
-    background-color: #edeae5;
-    width: 80%;
+    background-color: #d8d5d0;
     justify-content: center;
     display: flex;
-    margin:0 auto 5px;
+    margin: 0 auto 5px;
     border-radius: 5px;
 }
 input#current_password{
     background-color: #fef9c7;
 }
 #settings-submit {
-  background-color: #edeae5;
+  background-color: #d8d5d0;
     width: 30%;
     justify-content: center;
     display: flex;
@@ -234,7 +247,7 @@ input#current_password{
     border-radius: 5px;
 }
 #settings-submit input#submit {
-    background-color: #026670;
+    background-color: #031b4d;
     color: #fef9c7;
     border-radius: 5px;
 }
@@ -270,7 +283,7 @@ input#current_password{
     justify-content: center;
     padding-top: 15px;
     font-size: 15px;
-    color: #026670;
+    color: #031b4d;
 }
 #friend_name_id {
     display: flex;
@@ -282,18 +295,35 @@ input#current_password{
 }
 
 #complete_s_id{
-    margin-top: 15px;
-    background-color: #9fedd7;
-    color: black;
+    width: 70%;
+    height: 70%;
+    margin: 10px auto;
+    background-color: #031b4d;
+    color: white;
     border: 0;
     display: flex;
-    font-size: 3vw;
+    justify-content: center;
+    font-size: 2vw;
+    align-items: center;
 }
+.complete_scorecards{
+    margin: auto;
+    justify-content: center;
+}
+
 #incomplete_s_id{
-    margin-top: 15px;
-    background-color: #fce181;
-    color: black;
+    width: 70%;
+    height: 70%;
+    margin: 10px auto;
+    background-color: #f84444;
+    color: white;
     border: 0;
     display: flex;
-    font-size: 3vw;
+    justify-content: center;
+    font-size: 2vw;
+    align-items: center;
+}
+.incomplete_scorecards{
+    margin: auto;
+    justify-content: center;
 }

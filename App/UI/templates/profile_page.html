@@ -146,7 +146,7 @@
          </div>
          <!--Put content when pressed favorite course-->
          <div class="tab-pane text-center gallery" id="favorite_courses">
-            <p>Gå till courses för att lägga till bana</p>
+            <p style="margin-top: 10px;">Gå till courses för att lägga till bana</p>
             <div id="favorite-courses-tag" >
                {% for course in favorite_courses %}
                <h3 id="id_courses">{{ course }}</h3>
@@ -158,7 +158,7 @@
             <div class="incomplete_scorecards">
                <form role="form" method="POST">
                   {% for scorecard in current_user.incomplete_scorecards %}
-                  <button class="btn btn-primary btn-m w-100 button-text score_buttons" id='incomplete_s_id' type="submit"  name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Incomplete round)</button>
+                  <button class="btn btn-primary btn-m button-text score_buttons" id='incomplete_s_id' type="submit"  name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Incomplete round)</button>
                   {% endfor %}
                </form>
             </div>
@@ -166,7 +166,7 @@
             <div class="complete_scorecards">
                 <form role="form" method="POST">
                 {% for scorecard in visited_profile.complete_scorecards %}
-                    <button class="btn btn-primary btn-m w-100 button-text score_buttons" id="complete_s_id" type="submit" name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Completed round)</button>
+                    <button class="btn btn-primary btn-m button-text score_buttons" id="complete_s_id" type="submit" name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Completed round)</button>
                 {% endfor %}
                 </form>
             </div>
