@@ -4,7 +4,7 @@
 {% endblock %}
 
 {% block content %}
-<button class="hide-on-large" id="map-button" type="button" onclick="toggleMap()" ">
+<button class="hide-on-large" id="map-button" type="button" onclick="toggleMap()">
 <h6 id="toggle-map-text">Toggle Map
 <img src="{{ url_for('static', filename='/assets/img/04_maps.png') }}" style="margin: auto" width="40px" height="30px">
 </h6>
@@ -134,7 +134,7 @@ function getAllCourses(arr) {
 function autocomplete(inp, arr) {
     /*execute a function when someone writes in the text field:*/
     inp.addEventListener("input", function() {
-        var course, icon, courseText, courseName, i, regex = new RegExp("^"+this.value.toUpperCase());
+        var course, icon, courseText, courseName, i, regex = new RegExp("^"+this.value.toUpperCase()), loggedRounds, loggedRoundsDiv;
         var list = document.getElementById("courses-list")
         /*close any already open lists of autocompleted values*/
         emptyCourseList();
