@@ -1,10 +1,22 @@
+from pymongo.database import Database
+
 from App.Data.DB_SETTINGS import LOCALHOST, USER, PASSWORD
 from pymongo import MongoClient
 from abc import ABC
 
 
-client = MongoClient(f'mongodb://{USER}:{PASSWORD}@localhost:{LOCALHOST}')
-db = client.discgolf
+class MongoConnection:
+    client = None
+    db = None
+    collection = None
+
+    @classmethod
+    def init_app(cls, app):
+        if 'MONGODB_URI' in app.config:
+            cls.client = MongoClient(app.config['MONGODB_URI'])
+            cls.db = Database(cls.client, app.config['MONGODB_NAME'])
+        else:
+            return 'No valid MongoDB configuration'
 
 
 class ResultList(list):
@@ -16,14 +28,14 @@ class ResultList(list):
         return self[-1] if len(self) > 0 else None
 
 
-class Document(dict, ABC):
-    collection = None
+class Document(dict, MongoConnection, ABC):
 
-    def __init__(self, data):
+    def __init__(self, data=None):
         super().__init__()
-        if '_id' not in data:
-            self._id = None
-        self.__dict__.update(data)
+        if data:
+            if '_id' not in data:
+                self._id = None
+            self.__dict__.update(data)
 
     def __len__(self):
         return len(self.__dict__)
@@ -33,7 +45,7 @@ class Document(dict, ABC):
 
     def save(self):
         if not self._id:
-            del(self.__dict__['_id'])
+            del (self.__dict__['_id'])
             return self.collection.insert_one(self.__dict__)
         else:
             return self.collection.update({'_id': self._id}, self.__dict__)
@@ -85,9 +97,3 @@ class Document(dict, ABC):
     @classmethod
     def delete_one(cls, **kwargs):
         return cls.collection.delete_one(kwargs)
-
-
-
-
-
-
