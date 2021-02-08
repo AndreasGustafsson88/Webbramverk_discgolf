@@ -522,3 +522,21 @@ color: white;
     background-image: url(
 "data:image/svg+xml;charset=utf8,%3Csvg viewBox='0 0 32 32' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath stroke='rgba(255,255,255, 0.9)' stroke-width='2' stroke-linecap='round' stroke-miterlimit='10' d='M4 8h24M4 16h24M4 24h24'/%3E%3C/svg%3E");
 }
+
+.coll-button {
+    border: 5px solid #f1f1f1;
+    background-color: #00d7d2;
+    color: black !important;
+}
+
+.settings-icon img {
+    width: 30px;
+    height: 25px;
+}
+
+.profile-avatar {
+    position: absolute;
+    top: 0;
+    left: 50%;
+    right: 50%
+}
