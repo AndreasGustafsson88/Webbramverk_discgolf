@@ -55,13 +55,14 @@ a {
 .rounded-circle {
     border: #434242 2px solid;
 }
-.rounds {
-    color: #026670;
-    background-color: #fef9c7;
+
+.rounds:active, .rounds:focus, .rounds:hover, .rounds.active, .open .dropdown-toggle.rounds{
+    color: black;
+    background-color: #00d7d2;
 }
 
 .highcharts-background{
-    fill: #edeae5;
+    fill: #eeeeee;
 }
 
 .highcharts-plot-background{
@@ -291,7 +292,8 @@ input#current_password{
 }
 #incomplete_s_id{
     margin-top: 15px;
-    background-color: #fce181;
+    background-color: #ff5757;
+    /*background-color: #fce181;*/
     color: black;
     border: 0;
     display: flex;
