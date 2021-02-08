@@ -14,7 +14,7 @@
 
             <div class="container-fluid autocomplete" style="padding: 0; display: flex; justify-content: center; max-width: 500px; width: 100%;">
                 <input class="form-control form-control-m w-100" style="background-color: white" autocomplete="off" type="text" placeholder="Search player" id="player_search" aria-label="Search">
-                <a class="btn btn-darkmint btn-m w-30 button-text" onclick="get_player()" style="margin-left: 10px" role="button">Add player</a>
+                <a class="btn btn-blue btn-m w-30 button-text score_buttons" onclick="get_player()" style="margin-left: 10px" role="button">Add player</a>
             </div>
         </div>
     </div>
@@ -34,7 +34,7 @@
     <!--Create Scorecard-->
     <div class="container h20 w100 center-content-h">
         <div class="container w-50">
-            <a class="btn btn-darkmint btn-lg w-100 button-text" name="form" onclick="create_scorecard()" style="margin-top: 30px" role="button">Let's play!</a>
+            <a class="btn btn-blue btn-lg w-100 button-text score_buttons font-weight-bold" id="create_scorecard_button" name="form" onclick="create_scorecard()" style="margin-top: 30px" role="button">Let's play!</a>
         </div>
     </div>
 </section>

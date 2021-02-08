@@ -1,4 +1,4 @@
-{% extends "base_logged_in.html" %}
+{% extends "layout.html" %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/profile_page.css') }}"/>
 {% endblock %}
@@ -15,7 +15,7 @@
                <!--Profile picture-->
                <div class="avatar">
                    {% if visited_profile.profile_picture %}
-                      <img src="{{ url_for('static', filename=visited_profile.profile_picture) }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
+                      <img src="data:image/jpg;base64,{{ visited_profile.profile_picture }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                       {% else %}
                     <img src="{{ url_for('static', filename='/assets/img/dog.jpg') }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
                       {% endif %}                  
@@ -33,12 +33,12 @@
          </div>
       </div>
       <!--Descprition player-->
-      <div class="description text-center">
+      <div class="description text-center" id="rating_text">
          <p> {% if visited_profile.rating %}
             Rating:
-            {{ visited_profile.rating }}
+            {{ visited_profile.rating|int }}
             {% else  %}
-            NO Rating Calculated
+            No Rating Calculated
             {% endif %}
          </p>
       </div>
@@ -68,8 +68,8 @@
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
-                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_favorite_black_24dp.png') }}"></i>
+                     <a class="nav-link"  data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
+                     <i class="material-icons" id="favorite_courses_button"><img src="{{ url_for('static', filename='/assets/img/baseline_favorite_black_24dp.png') }}"></i>
                      Favorite Courses
                      </a>
                   </li>
@@ -147,9 +147,9 @@
          <!--Put content when pressed favorite course-->
          <div class="tab-pane text-center gallery" id="favorite_courses">
             <p>Gå till courses för att lägga till bana</p>
-            <div id="favorite-courses-list" >
+            <div id="favorite-courses-tag" >
                {% for course in favorite_courses %}
-               <h3>{{ course }}</h3>
+               <h3 id="id_courses">{{ course }}</h3>
                {% endfor %}
             </div>
          </div>
@@ -179,9 +179,7 @@
 {% endblock %}
 {%block javascript %}<!--High CHART LIVE  -->
 
-    <script src="http://code.highcharts.com/highcharts.js"></script>
-    <script src="http://code.highcharts.com/highcharts-more.js"></script>
-    <script src="http://code.highcharts.com/modules/exporting.js"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="{{ url_for('static', filename='/js/profile_page.js') }}"></script>
     <script>
     console.log({{ favorite_courses|safe }})
@@ -200,6 +198,7 @@
 
                 let block_to_insert = document.createElement('div')
                 block_to_insert.className= "col-container w100 center-content-h"
+                block_to_insert.id= 'friend_request_id'
                 block_to_insert.style.height = '50px'
                 block_to_insert.innerHTML = request_list[username];
 

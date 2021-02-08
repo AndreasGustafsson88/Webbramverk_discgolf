@@ -179,7 +179,6 @@ def calculate_extra_strokes(player, course):
         return sorted(hole_average, key=lambda x: x['hole'])
 
     total_throws = find_extra_strokes(player, course)
-
     add_strokes(total_throws, hole_average, course)
 
     return sorted(hole_average, key=lambda x: x["hole"])

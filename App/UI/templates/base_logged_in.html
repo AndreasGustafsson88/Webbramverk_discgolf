@@ -28,18 +28,14 @@
       </button>
       <div class="collapse navbar-collapse" id="navbarSupportedContent">
         <ul class="navbar-nav ml-auto">
-          <li class="nav-item active">
-
-            <a class="nav-link" href="{{ url_for("profile.profile_page", user_name=current_user.user_name)}}">Profile <span class="sr-only">(current)</span></a>
-          </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for("scorecards.scorecard") }}">Scorecard</a>
+            <a class="nav-link" id="scorecard_link" href="{{ url_for("scorecards.scorecard") }}">Scorecard</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for("courses_bp.courses")}}">Courses</a>
           </li>
           <li class="nav-item">
-            <a class="nav-link" href="{{ url_for("logged_in.log_out") }}">Logout</a>
+            <a class="nav-link " href="{{ url_for("logged_in.log_out") }}" id="logout_button">Logout</a>
           </li>
           <li class="nav-item">
             <a class="nav-link" href="{{ url_for("profile.profile_page", user_name=current_user.user_name)}}" tabindex="-1" aria-disabled="true">{{ current_user.user_name }}</a>

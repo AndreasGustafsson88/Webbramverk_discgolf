@@ -88,7 +88,7 @@ function get_player() {
             block_to_insert.innerHTML = "Player " + (divIds.length + 1) + ": " + player_name;
 
             let delete_button = document.createElement("button");
-            delete_button.setAttribute("class", "btn btn-lively btn-sm");
+            delete_button.setAttribute("class", "btn btn-mint btn-sm");
             delete_button.setAttribute("type", "button");
             delete_button.setAttribute("style", "float: right");
             delete_button.setAttribute("id", player_name + "button");
@@ -146,6 +146,8 @@ function autocomplete(inp, arr, course = false, all_user = false) {
                     if (course) {
                         let textfield = document.getElementById("Course");
                         textfield.innerHTML = inp.value;
+                        button = document.getElementById('create_scorecard_button')
+                        button.setAttribute('class', 'btn btn-mint btn-lg w-100 button-text score_buttons font-weight-bold')
                     }
                     /*close the list of autocompleted values,
                     (or any other open lists of autocompleted values:*/
