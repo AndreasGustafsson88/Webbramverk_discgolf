@@ -173,6 +173,45 @@ Att göra till nästkommande möte:
 Övriga kommentarer:
 
 
+2021-02-04
+    Närvarande: William Åslund, Andreas Gustafsson, Måns Ewards Öberg, Christoffer Jakonen
 
+Protokollförare: William Åslund
+
+Gjort sen senaste mötet:
+        vi har gjort klart sidan så att den fungerar korrekt samt kört den live på en server, vi har även varit ute och testat att använda den när vi spelat en runda discgolf,
+        vi fick några buggar med scorecard sidan då, men dom löste vi på plats så att sidan fungerar att spela med.
+        vi har även stylat sidan för att få den mera användarvänligt.
+        vi har gjort unittester som även dom fungerar.
+        Andreas och Måns har även skapat ett scorecard collection så att man kan påbörja ett scorecard och sedan avbryta en runda för att sedan kunna hämta det igen om man vill fortsätta sin runda en annan dag.
+
+Att göra till nästkommande möte:
+    Vi skall nu ändra så att bara spelare med över 800 i rating kan ändra banornas svårighetsgrad, detta gör vi förr att "sämre spelare" inta ska kunna förstöra en banas svårighetsgrad.
+    vi skall även försöka få till config filer till databasen så att vi lätt skall kunna switcha mellan "riktig data" och test data ifall vi i framtiden vill kunna göra tester på nya funktioner.
+
+
+
+
+
+Övriga kommentarer:
+
+2021-02-05
+    Närvarande: William Åslund, Andreas Gustafsson, Måns Ewards Öberg, Christoffer Jakonen
+
+Protokollförare: William Åslund
+
+Gjort sen senaste mötet:
+        Alla har jobbat individuellt med att få klart stylingen på sina sidor, samt även testerna.
+        Andreas har fått klart config-filerna så att dom fungerar.
+
+Att göra till nästkommande möte:
+    Vi skall nu ändra så att bara spelare med över 800 i rating kan ändra banornas svårighetsgrad, detta gör vi för att "sämre spelare" inta ska kunna förstöra en banas svårighetsgrad.
+    vi skall även bli helt klara med stylingen på alla sidor.
+
+
+
+
+
+Övriga kommentarer:
 
 
