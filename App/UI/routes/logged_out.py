@@ -44,7 +44,7 @@ def signup():
         confirmed_password = form.confirm_password.data
 
         if password != confirmed_password:
-            flash("password are not the same")
+            flash("Password are not the same")
             return redirect(url_for("logged_out.signup"))
 
         if uc.get_user(email=form.email.data):
