@@ -1,4 +1,4 @@
-{% extends "base_logged_in.html" %}
+{% extends "layout.html" %}
 {% block css %}
 <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/profile_page.css') }}"/>
 {% endblock %}
@@ -68,8 +68,8 @@
                      </a>
                   </li>
                   <li class="nav-item">
-                     <a class="nav-link" data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
-                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_favorite_black_24dp.png') }}"></i>
+                     <a class="nav-link"  data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
+                     <i class="material-icons" id="favorite_courses_button"><img src="{{ url_for('static', filename='/assets/img/baseline_favorite_black_24dp.png') }}"></i>
                      Favorite Courses
                      </a>
                   </li>
@@ -146,10 +146,10 @@
          </div>
          <!--Put content when pressed favorite course-->
          <div class="tab-pane text-center gallery" id="favorite_courses">
-            <p>Gå till courses för att lägga till bana</p>
-            <div id="favorite-courses-list" >
+            <p style="margin-top: 10px;">Gå till courses för att lägga till bana</p>
+            <div id="favorite-courses-tag" >
                {% for course in favorite_courses %}
-               <h3>{{ course }}</h3>
+               <h3 id="id_courses">{{ course }}</h3>
                {% endfor %}
             </div>
          </div>
@@ -158,7 +158,7 @@
             <div class="incomplete_scorecards">
                <form role="form" method="POST">
                   {% for scorecard in current_user.incomplete_scorecards %}
-                  <button class="btn btn-primary btn-m w-100 button-text score_buttons" id='incomplete_s_id' type="submit"  name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Incomplete round)</button>
+                  <button class="btn btn-primary btn-m button-text score_buttons" id='incomplete_s_id' type="submit"  name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Incomplete round)</button>
                   {% endfor %}
                </form>
             </div>
@@ -166,7 +166,7 @@
             <div class="complete_scorecards">
                 <form role="form" method="POST">
                 {% for scorecard in visited_profile.complete_scorecards %}
-                    <button class="btn btn-primary btn-m w-100 button-text score_buttons" id="complete_s_id" type="submit" name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Completed round)</button>
+                    <button class="btn btn-primary btn-m button-text score_buttons" id="complete_s_id" type="submit" name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Completed round)</button>
                 {% endfor %}
                 </form>
             </div>
@@ -198,6 +198,7 @@
 
                 let block_to_insert = document.createElement('div')
                 block_to_insert.className= "col-container w100 center-content-h"
+                block_to_insert.id= 'friend_request_id'
                 block_to_insert.style.height = '50px'
                 block_to_insert.innerHTML = request_list[username];
 

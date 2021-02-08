@@ -4,7 +4,11 @@
 {% endblock %}
 
 {% block content %}
-<button class="hide-on-large" type="button" onclick="toggleMap()" style="width: 100%; height: 50px; background-color: #FEF9C7; border: #161515 2px solid">Toggle-map</button>
+<button class="hide-on-large" id="map-button" type="button" onclick="toggleMap()">
+<h6 id="toggle-map-text">Toggle Map
+<img src="{{ url_for('static', filename='/assets/img/04_maps.png') }}" style="margin: auto" width="40px" height="30px">
+</h6>
+</button>
 
 <div id="courses-page">
     <!-- Search form -->
@@ -12,7 +16,8 @@
         <div id="courses-search">
             <input id="courses-search-input" type="text" placeholder="Search">
             <div id="help-text">
-                <span>*You can't get a rating on a course that has less than 50 logged rounds. Click on a pin on the map to get information about the course.</span>
+                <span style="color: white">*You can't get a rating on a course that has less than 50 logged rounds. Click on a pin on the map to get information about the course.</span>
+
             </div>
         </div>
         <div id="courses-list">
@@ -31,190 +36,16 @@
 var all_courses = {{ all_courses|safe }}
 all_courses.sort((a, b) => {a[0].toUpperCase();b[0].toUpperCase();return a[0] > b[0] ? 1 : a[0] < b[0] ? -1 : 0;});
 var favorites;
-
-function getFavorites(){
-    return $.post(
-        "/courses",
-        {loading: true},
-        (response) => {console.log(response["favorites"]);},
-        "json");
-}
-
-function setFavorite(course){
-    return $.post(
-        "/courses",
-        {course: course},
-        (response) => {console.log(response)},
-        "json");
-}
-{% if not current_user.is_anonymous %}
-getFavorites().done((r) => {
-    favorites = r["favorites"];
-    autocomplete(document.getElementById("courses-search-input"), all_courses);
-    getAllCourses(all_courses);
-});
+/* lazy solution for not being able to use jinja2 in the js file */
+var anon;
+var bookmark_filled = "{{ url_for('static', filename='/assets/img/star_filled.svg') }}"
+var bookmark_empty = "{{ url_for('static', filename='/assets/img/star_empty.svg') }}"
+var checkmark = "{{ url_for('static', filename='/assets/img/checkmark.svg') }}"
+{% if current_user.is_anonymous %}
+    anon = true;
 {% else %}
-autocomplete(document.getElementById("courses-search-input"), all_courses);
-getAllCourses(all_courses);
+    anon = false;
 {% endif %}
-function getAllCourses(arr) {
-    var course, icon, courseText, courseName, i, loggedRounds, loggedRoundsDiv;
-    var list = document.getElementById("courses-list")
-    /*close any already open lists of autocompleted values*/
-    emptyCourseList();
-
-    /*for each item in the array...*/
-    for (i = 0; i < arr.length; i++) {
-        /*create a DIV element for each matching element:*/
-        course = document.createElement("DIV");
-        course.setAttribute("class", "course");
-        list.appendChild(course);
-
-        {% if not current_user.is_anonymous %}
-        icon = document.createElement("img");
-        if (favorites.includes(arr[i][0])){
-            icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_filled.svg') }}")}
-        else {
-            icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_empty.svg') }}")}
-        icon.setAttribute("alt", "fav");
-        icon.setAttribute("width", "30px");
-        icon.setAttribute("height", "30px");
-        icon.setAttribute("style", "margin: 10px");
-        icon.addEventListener("click", updateFavorite)
-        course.appendChild(icon);
-        {% endif %}
-
-        courseText = document.createElement("DIV");
-        courseText.setAttribute("class", "course-text");
-        course.appendChild(courseText);
-
-
-        courseName = document.createElement("h6");
-        courseName.innerHTML = arr[i][0];
-        /*insert a input field that will hold the current array item's value:*/
-        courseName.innerHTML += "<input type='hidden' value='" + arr[i][0] + "'>";
-        /*execute a function when someone clicks on the item value (DIV element):*/
-        courseName.addEventListener("click", function (e) {
-            inp.value = this.getElementsByTagName("input")[0].value;
-        });
-        courseText.appendChild(courseName);
-
-        loggedRoundsDiv = document.createElement("DIV");
-        loggedRoundsDiv.setAttribute("class", "logged-rounds-div");
-        course.appendChild(loggedRoundsDiv);
-
-        if(arr[i][1] >= 50){
-            loggedRounds = document.createElement("img");
-            loggedRounds.setAttribute("src", "{{ url_for('static', filename='/assets/img/checkmark.svg') }}");
-            loggedRounds.setAttribute("alt", "active");
-            loggedRounds.setAttribute("width", "30px");
-            loggedRounds.setAttribute("height", "30px");
-            loggedRounds.setAttribute("style", "margin: 10px");
-        }
-        else{
-            loggedRounds = document.createElement("span");
-            loggedRounds.innerHTML = arr[i][1] + " / 50";
-            loggedRounds.setAttribute("style", "white-space: nowrap;");
-        }
-        loggedRoundsDiv.appendChild(loggedRounds);
-    }
-}
-
-function autocomplete(inp, arr) {
-    /*execute a function when someone writes in the text field:*/
-    inp.addEventListener("input", function() {
-        var course, icon, courseText, courseName, i, regex = new RegExp("^"+this.value.toUpperCase());
-        var list = document.getElementById("courses-list")
-        /*close any already open lists of autocompleted values*/
-        emptyCourseList();
-        if (!this.value) {
-            getAllCourses(arr);
-        }
-        /*for each item in the array...*/
-        for (i = 0; i < arr.length; i++) {
-            /*check if the item starts with the same letters as the text field value:*/
-            if (arr[i][0].toUpperCase().match(regex)){
-                /*create a DIV element for each matching element:*/
-                course = document.createElement("div");
-                course.setAttribute("class", "course");
-                list.appendChild(course);
-                {% if not current_user.is_anonymous %}
-                icon = document.createElement("img");
-                if (favorites.includes(arr[i][0])){
-                    icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_filled.svg') }}");}
-                else {
-                    icon.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_empty.svg') }}");}
-                icon.setAttribute("alt", "fav");
-                icon.setAttribute("width", "30px");
-                icon.setAttribute("height", "30px");
-                icon.setAttribute("style", "margin: 10px");
-                icon.addEventListener("click", updateFavorite);
-                course.appendChild(icon);
-                {% endif %}
-                courseText = document.createElement("DIV");
-                courseText.setAttribute("class", "course-text");
-                course.appendChild(courseText);
-
-                courseName = document.createElement("h6");
-
-                courseName.innerHTML = arr[i][0];
-                /*insert a input field that will hold the current array item's value:*/
-                courseName.innerHTML += "<input type='hidden' value='" + arr[i][0] + "'>";
-                /*execute a function when someone clicks on the item value (DIV element):*/
-                courseName.addEventListener("click", function (e) {
-                    inp.value = this.getElementsByTagName("input")[0].value;
-                });
-                courseText.appendChild(courseName);
-                loggedRoundsDiv = document.createElement("DIV");
-                loggedRoundsDiv.setAttribute("class", "logged-rounds-div");
-                course.appendChild(loggedRoundsDiv);
-
-                if(arr[i][1] >= 50){
-                    loggedRounds = document.createElement("img");
-                    loggedRounds.setAttribute("src", "{{ url_for('static', filename='/assets/img/checkmark.svg') }}");
-                    loggedRounds.setAttribute("alt", "active");
-                    loggedRounds.setAttribute("width", "30px");
-                    loggedRounds.setAttribute("height", "30px");
-                    loggedRounds.setAttribute("style", "margin: 10px");
-                }
-                else{
-                    loggedRounds = document.createElement("span");
-                    loggedRounds.innerHTML = arr[i][1] + " / 50";
-                    loggedRounds.setAttribute("style", "white-space: nowrap;");
-
-                }
-                loggedRoundsDiv.appendChild(loggedRounds);
-            }
-        }
-    });
-}
-
-function emptyCourseList() {
-        const x = document.getElementById("courses-list");
-        x.innerHTML = "";
-        return true
-}
-{% if not current_user.is_anonymous %}
-function updateFavorite(){
-    let course = this.parentNode.getElementsByClassName("course-text")[0].getElementsByTagName("input")[0].value;
-    setFavorite(course).done((r1) => {
-        getFavorites().done((r2) => {
-            favorites = r2["favorites"];
-            if (favorites.includes(course)){this.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_filled.svg') }}");}
-            else{this.setAttribute("src", "{{ url_for('static', filename='/assets/img/star_empty.svg') }}");}
-        });
-    });
-}
-{% endif %}
-function toggleMap(){
-    if($("#map-container").hasClass("hide-on-small")){
-        $("#courses-container").addClass("hide-on-small");
-        $("#map-container").removeClass("hide-on-small");
-    }
-    else {
-        $("#map-container").addClass("hide-on-small");
-        $("#courses-container").removeClass("hide-on-small");
-    }
-}
 </script>
+<script src="{{ url_for('static', filename='/js/courses.js') }}"></script>
 {% endblock %}

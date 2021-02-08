@@ -10,7 +10,7 @@ Welcome page
             <div class="row justify-content-center">
                 <div class="col-8" align="center" style="padding-top: 200px">
                     <div id="box" class="menu-box">
-                        <a class="btn btn-primary btn-lg" style="margin: 10px" href="#" id="button" role="button">Login</a>
+                        <a class="btn btn-blue btn-lg score_buttons" style="margin: 10px" href="#" id="button" role="button">Login</a>
                             <div class="show-login" id="show-login" style="visibility: hidden; max-height: 1px">
                                 <form action="" method="POST" id="form">
                                     {{ form.csrf_token }}
@@ -19,7 +19,7 @@ Welcome page
                                     {{ form.submit }}
                                 </form>
                             </div>
-                        <a class="btn btn-primary btn-lg" style="margin: 10px" href="{{ url_for("logged_out.signup") }}" role="button">Sign-up</a>
+                        <a class="btn btn-blue btn-lg score_buttons" style="margin: 10px" href="{{ url_for("logged_out.signup") }}" role="button">Sign-up</a>
                     </div>
                 </div>
             </div>
@@ -29,9 +29,13 @@ Welcome page
 <div class="jumbotron jumbotron-fluid">
     <div class="container">
         <div class="row justify-content-center">
-            <h1 class="display-4">About</h1>
-            <p class="lead">Lägg in text om hemsidan här
-            </p>
+            <h1 class="display-4" style="text-align: center">Welcome to the Discgolf Rating system</h1>
+            <div id="about-text" style="color: #6e6e6e; text-align: center">
+                <h4>This is a site for you who want to play Disc Golf with a rating
+                    sign up add a friend and start playing
+                </h4>
+            </div>
+
         </div>
     </div>
 </div>
@@ -43,16 +47,19 @@ Welcome page
         function show_login() {
 
             let login = document.getElementById("show-login")
+            let button = document.getElementById('button')
 
             if (login.style.visibility === "hidden") {
                 login.style.visibility = "visible"
                 login.style.maxHeight = "500px"
                 login.style.opacity = "1"
+                button.innerText = 'Close'
             }
             else {
                 login.style.visibility = "hidden"
                 login.style.maxHeight = "1px"
                 login.style.opacity = "0"
+                button.innerText = 'Login'
             }
 
         }

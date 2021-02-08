@@ -25,6 +25,7 @@ class SignInForm(FlaskForm):
         "submit",
         render_kw={
             "value": "Login",
-            "style": "height: 100%; width: 100%"
+            "style": "height: 100%; width: 100%; background-color: #00d7d2",
+            "class": "coll-button"
         }
     )

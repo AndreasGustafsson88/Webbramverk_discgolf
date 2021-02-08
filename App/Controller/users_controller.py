@@ -107,7 +107,7 @@ def add_round(player_summary):
                               player_summary['players'][i]['stats'].keys() if 'throws' in key]
             total_throws = sum(throw_per_hole)
             rating = course.rating[str(total_throws)]
-            # TODO CHECK VALIDITY OF ROUND, difference not more than 150?!?
+
             if len(course.history) > 50:
                 if str(total_throws) in course.rating:
                     u_round = []
