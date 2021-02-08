@@ -3,7 +3,6 @@ import unittest
 import flask_unittest
 from bson import ObjectId
 from selenium.webdriver.common.keys import Keys
-
 from App.Data.Models.courses import Course
 from App.Data.Models.scorecards import Scorecard
 from App.Data.Models.users import User
