@@ -316,18 +316,11 @@ input#current_password{
 }
 
 #incomplete_s_id{
-<<<<<<< HEAD
-    margin-top: 15px;
-    background-color: #ff5757;
-    /*background-color: #fce181;*/
-    color: black;
-=======
     width: 70%;
     height: 70%;
     margin: 10px auto;
     background-color: #f84444;
     color: white;
->>>>>>> 9796347328aed365510f2fcefea8f91293cd82bf
     border: 0;
     display: flex;
     justify-content: center;
