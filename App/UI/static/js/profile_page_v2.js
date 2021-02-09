@@ -1,7 +1,67 @@
+function change_menu_icons(active_menu) {
+    let menu_elements = document.getElementsByClassName('menu-bar');
+
+    for (let element of menu_elements) {
+        if (!element.id.includes(active_menu)) {
+            element.style.backgroundColor = '#0069ff';
+        }
+        else {
+            element.style.backgroundColor = '#00d7d2';
+        }
+    }
+
+    let menu_icons = document.getElementsByClassName('invert-effect');
+
+    for (let element of menu_icons) {
+        if (!element.id.includes(active_menu)) {
+            element.style.filter = '';
+        }
+        else {
+            element.style.filter = 'invert(100%)';
+        }
+    }
+}
+
+
+function add_post_requests() {
+    $('.post').click(function (){
+        $.ajax({
+            method: 'post',
+            url: "/profile_page/accept",
+            data: {
+                id: id,
+                action: this.className,
+                request_username: this.id
+            },
+            success: (data) => {
+                if (this.id !== 'img1') {
+                    alert( this.id + ' ' + data)
+
+                    friends[this.id] = "New pal"
+                    delete request_list[this.id]
+
+                    show_friends()
+
+                    if (jQuery.isEmptyObject(request_list)) {
+                        $('#friend_logo_image')[0].src = menu_friends_picture
+                    }
+                }
+                else {
+                    alert(visited_profile_username + ' ' + data)
+                }
+            },
+        })
+        $(this).parent().remove()
+    });
+}
+
+
 function show_friends(visited_profile, current_user){
 
     var show_friends = document.getElementById("active_content");
     show_friends.innerHTML = ''
+
+    change_menu_icons('friend')
 
     var col_search_form = document.createElement("div")
     col_search_form.className = 'col-search-form'
@@ -13,7 +73,7 @@ function show_friends(visited_profile, current_user){
     var form_class = document.createElement("form")
     form_class.className = 'form-inline active-cyan-3 active-cyan-4 center-content'
     form_class.autocomplete = 'off'
-    form_class.style.width = '100%'
+    form_class.style.width = '80%'
     form_class.style.maxWidth = '500px'
 
     var autocompletes = document.createElement("div")
@@ -29,7 +89,7 @@ function show_friends(visited_profile, current_user){
     input_class.style.marginTop = '10px'
     input_class.style.display = 'flex'
     input_class.style.justifyContent = 'center'
-    input_class.style.backgroundColor = '#fef9c7'
+    input_class.style.backgroundColor = 'white'
 
     autocompletes.appendChild(input_class)
     form_class.appendChild(autocompletes)
@@ -37,44 +97,114 @@ function show_friends(visited_profile, current_user){
 
     show_friends.appendChild(col_search_form)
 
+    // Check if there are any friend request
+    if (!jQuery.isEmptyObject(request_list)) {
+        for (let username in request_list) {
+
+            let block_to_insert = document.createElement('div')
+            block_to_insert.className= "col-container center-content-h friend_column"
+            block_to_insert.style.height = '30px'
+            block_to_insert.style.width="100%"
+
+            let friend_name = document.createElement('p');
+            friend_name.setAttribute('id', 'friend_name_id')
+            friend_name.innerHTML = request_list[username];
+
+            let friend_link = document.createElement("a");
+            friend_link.setAttribute("href","/profile_page/" + username);
+            friend_link.setAttribute('id', 'friend_link_id');
+            friend_link.innerHTML = username;
+
+            let accept_request = document.createElement("img");
+            accept_request.setAttribute("type", "image");
+            accept_request.setAttribute("id", username);
+            accept_request.setAttribute("class", "post accept_request");
+            accept_request.setAttribute("src", green_checkmark);
+            accept_request.style.height = "25px";
+            accept_request.style.width = "30px";
+            accept_request.style.marginRight = "10%";
+
+            let decline_request = document.createElement("img");
+            decline_request.setAttribute("type", "image");
+            decline_request.setAttribute("id", username);
+            decline_request.setAttribute("class", "action decline_request");
+            decline_request.setAttribute("src", red_cross);
+            decline_request.style.height = "25px";
+            decline_request.style.width = "30px";
+
+            $('<hr>').appendTo(show_friends)
+            block_to_insert.appendChild(friend_name)
+            block_to_insert.appendChild(friend_link);
+            block_to_insert.appendChild(decline_request);
+            block_to_insert.appendChild(accept_request);
+
+            show_friends.appendChild(block_to_insert);
+        }
+    }
 
     for(let key in friends){
         var block_to_insert = document.createElement("div");
         block_to_insert.setAttribute("id", key+'1');
-        var remove_button = document.createElement("input");
+        var remove_button = document.createElement("img");
         remove_button.setAttribute("type", "image");
         remove_button.setAttribute("id", key);
         remove_button.setAttribute("class", "action remove");
         remove_button.setAttribute("src", "/assets/img/baseline_delete_black_24dp.png");
-        remove_button.style.height="100%"
-        block_to_insert.setAttribute("class", "col-container w100 center-content-h friend_column");
-        block_to_insert.style.height="50px"
-        var friend_name = document.createElement('p');
+        remove_button.style.height="25px"
+        remove_button.style.width="25px"
+        remove_button.style.marginRight="10%"
+        block_to_insert.setAttribute("class", "col-container center-content-h friend_column");
+        block_to_insert.style.height="30px"
+        block_to_insert.style.width="100%"
+        let friend_name = document.createElement('p');
         friend_name.setAttribute('id', 'friend_name_id')
         friend_name.innerHTML = friends[key];
         var friend_link = document.createElement("a");
         friend_link.setAttribute("href","/profile_page/" + key);
         friend_link.setAttribute('id', 'friend_link_id')
         friend_link.innerHTML = key;
+
+        $('<hr>').appendTo(show_friends)
         block_to_insert.appendChild(friend_name)
         block_to_insert.appendChild(friend_link);
         if (visited_profile === current_user) {
             block_to_insert.appendChild(remove_button);
         }
+
         show_friends.appendChild(block_to_insert);
     }
-    autocomplete(document.getElementById("user_search"), all_users, course=false, all_users=true );
+
+    $(".action").click(function (){
+        $.ajax({
+            method: 'delete',
+            url: "/profile_page/",
+            data: {
+                username: this.id,
+                action: this.className
+            },
+            success: (data) => {
+                alert(this.id + ' ' + data)
+
+                delete request_list[this.id]
+
+                if (jQuery.isEmptyObject(request_list)) {
+                        $('#friend_logo_image')[0].src = menu_friends_picture
+                    }
+                },
+            })
+        $(this).parent().remove();
+    })
+
+    add_post_requests()
+    autocomplete(document.getElementById("user_search"), users, course=false, all_users=true );
+
 }
 
 function show_stats() {
     let active_container = document.getElementById('active_content')
     active_container.innerHTML = ''
 
-    let active_menu = document.getElementById('stats_menu')
-    active_menu.style.backgroundColor = '#2981fd'
-
-    let active_image = document.getElementById('stats_picture')
-    active_image.style.filter = 'invert(100%)'
+    change_menu_icons('stats')
 
     let outer_cont = document.createElement("div")
     outer_cont.className = 'container-fluid'
@@ -96,7 +226,7 @@ function show_stats() {
 
     let outer_button_cont = document.createElement("div")
     outer_button_cont.className = 'cont w100 center-content-h'
-    outer_button_cont.style.marginBottom = '15px'
+    outer_button_cont.style.marginTop = '-20px'
 
     let inner_button_cont1 = document.createElement("div")
     inner_button_cont1.className = 'cont center-content'
@@ -153,30 +283,16 @@ function show_favourites(favorite_courses) {
     let active_contents = $('#active_content')
     active_contents.empty()
 
-    let htmls = '<div class="tab-pane text-center gallery" id="favorite_courses">' +
-        '<p>Gå till courses för att lägga till bana</p>' +
+    change_menu_icons('favourite')
+
+    let htmls = '<div class="tab-pane text-center gallery" id="favorite_courses" style="width: 100%; margin: 0 auto">' +
+        '<p>Gå till courses för att lägga till bana</p><hr>' +
         '<div id="favorite-courses-tag" >'
 
     for (course of favorite_courses) {
-        htmls += `<h3 id="id_courses">${course}</h3>`
+        htmls += `<h5 id="id_courses">${course}</h5><hr>`
     }
     htmls += '</div></div>'
 
     $(htmls).appendTo(active_contents)
-}
-
-$('#profile_picture_input').change(() => {
-  var file = $('#profile_picture_input').val().split('/').pop().split('\\').pop();
-  if (file) {
-    $('#settings-profile-picture-filename').text(truncate(file, 10));}
-  else {
-    $('#settings-profile-picture-filename').text("No file choosen");}
-});
-
-function truncate(string, maxChars) {
-  if (string.length <= maxChars) {
-    return string}
-  else {
-    var regex = new RegExp("^(.{" + Math.floor((maxChars / 3) * 2).toString() + "}).*(.{" + Math.floor(maxChars / 3).toString() + "}\\..*)$", 'm')
-    return string.replace(regex, "$1 ... $2")}
 }

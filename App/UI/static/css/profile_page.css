@@ -52,10 +52,6 @@ a {
     text-align: center;
 }
 
-.rounded-circle {
-    border: #434242 2px solid;
-}
-
 .rounds:active, .rounds:focus, .rounds:hover, .rounds.active, .open .dropdown-toggle.rounds{
     color: black;
     background-color: #00d7d2;
@@ -135,14 +131,16 @@ a {
   background-color: #23c2ff;
 }
 .settings-panel{
-    margin-top: 10px;
+    width: 80%;
+    margin: 0 auto;
 }
 #settings-profile-picture {
     justify-content: center;
     position: relative;
     display: flex;
     align-items: center;
-    background-color: #edeae5;
+    background-color: #eeeeee;
+    margin-bottom: 15px;
 }
 
 #profile_picture_input {
@@ -153,11 +151,13 @@ a {
   display: inline-block;
   padding: 10px 10px;
   border-radius: 5px;
-  background-color: #026670;
+  background-color: #0069ff;
   font-size: 16px;
   font-weight: bold;
-  color: #edeae5;
-  color: #edeae5;
+  color: white;
+  height: 40px;
+  width: 50%;
+  box-shadow: 2px 2px 3px #515151;
 }
 
 #settings-profile-picture-button:hover {
@@ -165,7 +165,7 @@ a {
 }
 
 #settings-profile-picture-button:active {
-  background-color: #9fedd7;
+  background-color: #015de0;
 }
 
 #settings-profile-picture-filename {
@@ -175,69 +175,87 @@ a {
 }
 
 #settings-user-name {
-    background-color: #edeae5;
-    width: 80%;
+    background-color: #eeeeee;
+    width: 100%;
     justify-content: center;
     display: flex;
-    margin:0 auto 5px;
+    margin:0 auto 10px;
     border-radius: 5px;
+
+}
+
+#settings-user-name:active {
+  border-color: #0069ff;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #0069ff;
 }
 input#user_name {
-    background-color: #fef9c7;
+    background-color: white;
 }
 
 #settings-email {
-  background-color: #edeae5;
-    width: 80%;
+  background-color: #eeeeee;
+    width: 100%;
     justify-content: center;
     display: flex;
-    margin:0 auto 5px;
+    margin:0 auto 10px;
     border-radius: 5px;
 }
 input#email{
-    background-color: #fef9c7;
+    background-color: white;
 }
 
 #settings-password {
-  background-color: #edeae5;
+  background-color: #eeeeee;
     width: 100%;
     justify-content: space-evenly;
     display: inline-flex;
-    margin:0 auto 5px;
+    margin:0 auto 10px;
     border-radius: 5px;
 }
 
 input#password, input#confirm_password {
-    background-color: #fef9c7;
-    width: 45%;
+    background-color: white;
+    width: 49%;
     display: flex;
     justify-content: space-between;
-    column-gap: 20px;
-
+    height: 40px;
 }
+
+input#password {
+    font-size: x-small;
+}
+
+input#confirm_password {
+    font-size: small;
+}
+
 #current-password{
-    background-color: #edeae5;
-    width: 80%;
+    background-color: #eeeeee;
+    width: 100%;
     justify-content: center;
     display: flex;
-    margin:0 auto 5px;
+    margin:0 auto 10px;
     border-radius: 5px;
 }
 input#current_password{
-    background-color: #fef9c7;
+    background-color: white;
+    width: 100%;
 }
 #settings-submit {
-  background-color: #edeae5;
-    width: 30%;
+  background-color: #eeeeee;
+    width: 100%;
     justify-content: center;
     display: flex;
-    margin:0 auto 5px;
+    margin-top: 25px;
     border-radius: 5px;
 }
 #settings-submit input#submit {
-    background-color: #026670;
-    color: #fef9c7;
+    background-color: #00d7d2;
+    color: white;
     border-radius: 5px;
+    font-weight: bold;
+    width: 50%;
+    box-shadow: 2px 2px 3px #515151;
 }
 #friends_id{
     background-color: #fef9c7;
@@ -261,25 +279,30 @@ input#current_password{
 
 .friend_column {
     background-color: transparent;
-    margin-top: 5px;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: left;
     display: inline-flex;
 }
 #friend_link_id {
     display: flex;
-    justify-content: center;
-    padding-top: 15px;
+    align-items: center;
+    justify-content: right;
     font-size: 15px;
-    color: #026670;
+    position: relative;
+    margin: 0 auto;
+    width: 33%;
+    text-align: right;
+    color: #007bff;
 }
 #friend_name_id {
     display: flex;
-    justify-content: center;
-    padding-top: 15px;
+    align-items: center;
     font-size: 15px;
     color: black;
     font-weight: bold;
+    margin-left: 10%;
+    margin-bottom: 0;
+    width: 33%;
 }
 
 #complete_s_id{
@@ -288,7 +311,7 @@ input#current_password{
     color: black;
     border: 0;
     display: flex;
-    font-size: 3vw;
+    font-size: 12px;
 }
 #incomplete_s_id{
     margin-top: 15px;
@@ -297,5 +320,5 @@ input#current_password{
     color: black;
     border: 0;
     display: flex;
-    font-size: 3vw;
+    font-size: 12px;
 }
