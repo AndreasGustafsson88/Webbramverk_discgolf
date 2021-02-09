@@ -1,12 +1,12 @@
+from App.UI import create_app
+from config import TestConfig
 import unittest
 import flask_unittest
 from App.Data.Models.users import User
-from App.UI import create_app
 
 
 class TestRegistration(flask_unittest.ClientTestCase):
-    app = create_app()
-    app.config['WTF_CSRF_ENABLED'] = False
+    app = create_app(config_class=TestConfig)
 
     def setUp(self, client) -> None:
         pass

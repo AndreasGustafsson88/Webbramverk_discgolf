@@ -13,7 +13,6 @@ function create_scorecard() {
                 if (x === true) {
                     holes_multi = 2;
                     rated = true;
-                    console.log(rated);
                     alert("Du svarade ja")
                 } else {
                     alert("Du svarade nej")
@@ -40,7 +39,6 @@ function create_scorecard() {
             new_url += "&players=" + j_players;
             new_url += "&rated=" + JSON.stringify(rated);
             new_url += "&multi=" + JSON.stringify(holes_multi);
-            console.log(new_url)
 
 
             window.location.href = new_url;
