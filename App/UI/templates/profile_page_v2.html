@@ -124,7 +124,7 @@
             friends["{{friend.user_name}}"] = "{{friend.full_name}}"
         {% endfor %}
 
-        $(document).ready(render_chart(player_history))
+        $(document).ready(render_chart(player_history.slice(Math.max(player_history.length - 20, 0))))
 
         {# TODO ONCLICK INSTEAD, BEHÖVER INTE HA DUBBEL#}
 
