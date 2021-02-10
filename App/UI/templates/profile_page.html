@@ -1,335 +1,214 @@
-{% extends "base_logged_in.html" %}
+{% extends "layout.html" %}
 {% block css %}
-<link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/profile_page.css') }}"/>
+<style type="text/css">
+
+</style>
+    <link rel="stylesheet" type="text/css" href="{{ url_for('static', filename='/css/profile_page.css') }}"/>
 {% endblock %}
+
+{% block title %}{{ visited_profile.user_name }}{% endblock %}
+
 {% block content %}
-
-
-
-
-
-<section class="profile-page">
-<!--       <div class="container">
-   <div class="collapse navbar-collapse">
-       Keeps the icon bar in place
-       <div class="dropdown-menu dropdown-with-icons">
-       </div>
-   </div>
-   </div> -->
-<div class="p-content">
-   <div class="container profile">
-      <div class="row">
-         <div class="col-md-6 ml-auto mr-auto">
-            <div class="profile">
-               <!--Profile picture-->
-               <div class="avatar">
-                   {% if visited_profile.profile_picture %}
-                      <img src="{{ visited_profile.profile_picture }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
-                      {% else %}
-                    <img src="{{ url_for('static', filename='/assets/img/dog.jpg') }}" alt="Circle Image" class="img-raised rounded-circle img-fluid">
-                      {% endif %}                  
-               </div>
-               <!--Name on player-->
-               <div class="name center-content-h" style="height: 35px;" >
-                  {% if visited_profile._id|string not in current_user.friends|string and visited_profile.user_name != current_user.user_name %}
-                  <div style="width: 35px">
-                     <input type="image" class="post add_friend" id="img1" src="{{ url_for('static', filename='/assets/img/add_friend.png') }}" style="height: 100%; padding: 0; "/>
-                  </div>
-                  {% endif %}
-                  <h3 class="title">{{ visited_profile.user_name }}</h3>
-               </div>
+    <section class="profile_page_test">
+        <div class="container-fluid" style="min-height: 90vh; background-color:#eeeeee; padding: 0;">
+            <div class="menu-header" style="height: 50px; background-color: #eeeeee; display: flex; justify-content: center;">
+                <!-- Menu selection -->
+                <div class="menu-bar center-content" id="stats_menu" style="background-color: #00d7d2">
+                    <div class="settings-icon center-content invert-effect" id="stats_picture" style="width: 100%; height: 100%;" onclick='show_stats()'>
+                        <img src="{{ url_for('static', filename='/assets/img/baseline_insights_black_24dp.png') }}">
+                    </div>
+                </div>
+                <div class="menu-bar center-content" id="scorecard_menu">
+                    <div class="settings-icon center-content invert-effect" id="scorecard_picture" style="width: 100%; height: 100%;" onclick="show_scorecards()">
+                        <img src="{{ url_for('static', filename='/assets/img/scorecard_img.png') }}">
+                    </div>
+                </div>
+                <div class="menu-bar" id="friends_menu" >
+                    <div class="settings-icon center-content invert-effect" id="friends_picture" style="width: 100%; height: 100%;">
+                        <a class="nav-link" data-target="#settings" role="tab" data-toggle="tab" onclick="show_friends('{{ visited_profile.user_name }}', '{{ current_user.user_name }}', request_list)" >
+                            <img src="{{ url_for('static', filename='/assets/img/baseline_people_alt_black_24dp.png') }}" id="friend_logo_image">
+                        </a>
+                    </div>
+                </div>
+                <div class="menu-bar" id="favourite_courses_menu">
+                    <div class="settings-icon center-content invert-effect" id="favourite_courses_picture" style="width: 100%; height: 100%;" onclick="show_favourites({{ favorite_courses|safe }})">
+                        <img src="{{ url_for('static', filename='/assets/img/baseline_favorite_black_24dp.png') }}">
+                    </div>
+                </div>
+                <div class="menu-bar" id="settings_menu">
+                    <div class="settings-icon center-content invert-effect" id="settings_picture" style="width: 100%; height: 100%;" role="tab" data-toggle="tab" onclick="show_settings()">
+                        <img src="{{ url_for('static', filename='/assets/img/baseline_settings_black_24dp.png') }}">
+                    </div>
+                </div>
             </div>
-         </div>
-      </div>
-      <!--Descprition player-->
-      <div class="description text-center">
-         <p> {% if visited_profile.rating %}
-            Rating:
-            {{ visited_profile.rating }}
-            {% else  %}
-            NO Rating Calculated
-            {% endif %}
-         </p>
-      </div>
-      <!--Row for tablink (settings, friends, fav course)-->
-      <div class="row" style="display: -ms-flexbox;">
-         <div class="col-sm-12 ml-auto mr-auto">
-            <div class="profile-tabs">
-               <ul class="nav nav-pills nav-pills-icons justify-content-center" role="tablist" >
-                  <li class="nav-item">
-                     <a class="nav-link active" data-target="#my_stats" role="tab" data-toggle="tab" onclick="show_tab('my_stats')" >
-                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_insights_black_24dp.png') }}" ></i>
-                     My Stats
-                     </a>
-                  </li>
-                  {% if visited_profile.user_name == current_user.user_name %}
-                  <li class="nav-item">
-                     <a class="nav-link" data-target="#settings" role="tab" data-toggle="tab" onclick="show_tab('settings')" >
-                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_settings_black_24dp.png') }}"> </i>
-                     Settings
-                     </a>
-                  </li>
-                  {% endif %}
-                  <li class="nav-item">
-                     <a class="nav-link" data-target="#friends" role="tab" data-toggle="tab" onclick="show_tab('friends')" >
-                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_people_alt_black_24dp.png') }}" id="friend_logo_image" style="height: 48px;"></i>
-                     Friends
-                     </a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" data-target="#favorite_coruses" role="tab" data-toggle="tab" onclick="show_tab('favorite_courses')" >
-                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/baseline_favorite_black_24dp.png') }}"></i>
-                     Favorite Courses
-                     </a>
-                  </li>
-                  <li class="nav-item">
-                     <a class="nav-link" data-target="#scorecards" role="tab" data-toggle="tab" onclick="show_tab('scorecards')" >
-                     <i class="material-icons"><img src="{{ url_for('static', filename='/assets/img/scorecard_img.png') }}" id="scorecard_logo_image" style="height: 48px;"></i>
-                     Scorecards
-                     </a>
-                  </li>
-               </ul>
-            </div>
-         </div>
-      </div>
-      <div class="tab-content tab-space" id="profile_content">
-         <!--Put content when pressed my_stats-->
-         <div class="tab-pane active text-center gallery" id="my_stats" style="padding-top: 20px;">
-            <div class="container-fluid">
-               <!-- Example row of columns -->
-               <div class="row">
-                  <figure class="highcharts-figure" style="width: 100vw;">
-                     <div id="container">
-                     </div>
-                  </figure>
-               </div>
-            </div>
-
-            <div class="cont w100 center-content-h" style="margin-bottom: 2.5rem">
-               <div class="cont" style="width: 33%">
-                  <button class="rounds" value="5">5</button>
-               </div>
-               <div class="cont" style="width: 33%">
-                  <button class="rounds" value="20">20</button>
-               </div>
-               <div class="cont" style="width: 33%">
-                  <button class="rounds" value="50">50</button>
-               </div>
-            </div>
-         </div>
-         <!--Put content when pressed settings-->
-         {% if visited_profile.user_name == current_user.user_name %}
-         <div class="tab-pane text-center gallery" id="settings"style="display: none" >
-            <div class="panel-body">
-               <form action="{{ url_for('profile.profile_page_update') }}" role="form" method="POST" enctype="multipart/form-data">
-                  {{ form.csrf_token }}
-                  <div class="row">
-                     <div class="col-xs-6 col-sm-6 col-md-6">
-                        {{ form.profile_picture }}
-                     </div>
-                     <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                           {{ form.user_name }}
+            <!-- Profile information -->
+            <div class="profile_header" style="height: 150px; background: linear-gradient(270deg, rgba(0,61,189,1) 0%, rgba(0,91,255,1) 35%, rgba(57,138,255,1) 100%); border-bottom-left-radius: 100%; border-top: 3px solid #031b4d; border-left: 5px solid #031b4d; position: relative; box-shadow: 2px 2px 3px #515151;">
+                <div class="profile-avatar" style="margin-top: 10px; z-index: 1; margin-left: 15px">
+                    {% if visited_profile.profile_picture %}
+                        <img src="data:image/jpg;base64,{{ visited_profile.profile_picture }}">
+                    {% else %}
+                        <img src="{{ url_for('static', filename='/assets/img/dog.jpg') }}" alt="Circle Image">
+                    {% endif %}
+                <div class="text-cont" style="float: right; margin-right: 10px">
+                    <div class="name" style="height: 35px">
+                        <h3 class="title font-weight-bold" style="color: white">{{ visited_profile.user_name }}</h3>
+                    </div>
+                    <div class="description font-weight-bold" id="rating_text" style="color: white; text-align: right">
+                        <p>
+                            {% if visited_profile.rating %}
+                            Rating:
+                            {{ visited_profile.rating|int }}
+                            {% else  %}
+                            No Rating Calculated
+                            {% endif %}
+                        </p>
+                    </div>
+                    {% if visited_profile._id|string not in current_user.friends|string and visited_profile.user_name != current_user.user_name %}
+                        <div id="image_container">
+                            <input type="image" class="post add_friend" id="img1" src="{{ url_for('static', filename='/assets/img/add_friend.png') }}"/>
+                            <div class="tiny-text" id="add_friend_text">Add friend</div>
                         </div>
-                     </div>
-                  </div>
-                  <div class="form-group">
-                     {{ form.email }}
-                  </div>
-                  <div class="row">
-                     <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                           {{ form.password }}
+                    {% endif %}
+                </div>
+                </div>
 
+            </div>
+            <!-- CONTENT -->
+            <hr>
+            <div class="profile-page-content" id="profile_content" style="height: 450px; background-color: #eeeeee">
+                <div id="active_content" style="height: 100%; overflow: scroll">
+                    <div class="container-fluid">
+                        <div class="row">
+                            <figure class="highcharts-figure" style="width: 100vw;" >
+                                <div id="container"></div>
+                            </figure>
                         </div>
-                     </div>
-                     <div class="col-xs-6 col-sm-6 col-md-6">
-                        <div class="form-group">
-                           {{ form.confirm_password }}
+                    </div>
+
+                    <div class="cont w100 center-content-h" style="margin-top: -20px">
+                        <div class="cont center-content" style="width: 33%">
+                            <button class="rounds btn btn-blue btn-s w-50 button-text score_buttons font-weight-bold center-content" style="height: 60%;" value="5">5</button>
                         </div>
-                     </div>
-                  </div>
-                  {{ form.submit }}
-               </form>
+                        <div class="cont center-content" style="width: 33%">
+                            <button class="rounds btn btn-blue btn-s w-50 button-text score_buttons font-weight-bold center-content" style="height: 60%;" value="20">20</button>
+                        </div>
+                        <div class="cont center-content" style="width: 33%">
+                            <button class="rounds btn btn-blue btn-s w-50 button-text score_buttons font-weight-bold center-content" style="height: 60%;" value="50">50</button>
+                        </div>
+                    </div>
+                </div>
             </div>
-         </div>
-         {% endif %}
-         <!--Put content when pressed friends-->
-         <div class="tab-pane text-center gallery" id="friends" >
-            <div class="col-search-form">
-               <form class="form-inline active-cyan-3 active-cyan-4 center-content" autocomplete="off" style="width: 100%; max-width: 500px">
-                  <div class=autocomplete aria-hidden="true" style="width: 100%">
-                     <input class="form-control form-control-m w-100" id="user_search" type="text" placeholder="Search Players" aria-label="Search" style="margin-bottom: 10px;">
-                  </div>
-               </form>
-
-            </div>
-            <div class="row" id="friends_id">
-            </div>
-         </div>
-         <!--Put content when pressed favorite course-->
-         <div class="tab-pane text-center gallery" id="favorite_courses">
-            <p>Gå till courses för att lägga till bana</p>
-            <div id="favorite-courses-list" >
-               {% for course in favorite_courses %}
-               <h3>{{ course }}</h3>
-               {% endfor %}
-            </div>
-         </div>
-         <div class="tab-pane text-center gallery" id="scorecards" >
-         {% if visited_profile.user_name == current_user.user_name %}
-            <div class="incomplete_scorecards">
-               <form role="form" method="POST">
-                  {% for scorecard in current_user.incomplete_scorecards %}
-                  <button class="btn btn-primary btn-m w-100 button-text score_buttons" type="submit" style="margin-top: 15px; background-color: #FF9999; color: black; border: 0;" name="button" value="{{ scorecard._id }}">{{ scorecard.course }}</button>
-                  {% endfor %}
-               </form>
-            </div>
-         {% endif %}
-            <div class="complete_scorecards">
-                <form role="form" method="POST">
-                {% for scorecard in visited_profile.complete_scorecards %}
-                    <button class="btn btn-primary btn-m w-100 button-text score_buttons" type="submit" style="margin-top: 15px; background-color: #CCFF99; color: black; border: 0;" name="button" value="{{ scorecard._id }}">{{ scorecard.course }}</button>
-                {% endfor %}
-                </form>
-            </div>
-         </div>
-      </div>
-   </div>
-</div>
-
-</section>
+        </div>
+    </section>
 {% endblock %}
-{%block javascript %}<!--High CHART LIVE  -->
 
-    <script src="https://code.highcharts.com/highcharts.js"></script>
-    <script src="{{ url_for('static', filename='/js/profile_page.js') }}"></script>
+{%block javascript %}
+    <script src="{{ url_for('static', filename='/js/mystats_chart.js') }}"></script>
     <script>
-    console.log({{ favorite_courses|safe }})
-        let request_list = {}
+
+        let menu_friends_picture = "{{ url_for('static', filename='/assets/img/baseline_people_alt_black_24dp.png') }}";
+        let green_checkmark = "{{ url_for('static', filename='/assets/img/check_mark.png') }}";
+        let red_cross = "{{ url_for('static', filename='/assets/img/red_cross.jpg') }}";
+        let users = {{all_users|tojson|safe}};
+        let friends = {};
+        let player_history = {{ visited_profile.history|safe }};
+        let request_list = {};
+        let id = '{{ visited_profile._id }}';
+        let visited_profile_username = '{{ visited_profile.user_name }}';
 
         {% for req in current_user.friend_requests %}
             request_list["{{req.user_name}}"] = "{{req.full_name}}"
         {% endfor %}
 
-
-        if (!jQuery.isEmptyObject(request_list)) {
-            $('#friend_logo_image')[0].src = "{{ url_for('static', filename='/assets/img/friend_request.png') }}"
-            for (let username in request_list) {
-
-                let parent = document.getElementById('friends_id')
-
-                let block_to_insert = document.createElement('div')
-                block_to_insert.className= "col-container w100 center-content-h"
-                block_to_insert.style.height = '50px'
-                block_to_insert.innerHTML = request_list[username];
-
-                let friend_link = document.createElement("a");
-                friend_link.setAttribute("href","/profile_page/" + username);
-                friend_link.innerHTML = username;
-
-                let accept_request = document.createElement("input");
-                accept_request.setAttribute("type", "image");
-                accept_request.setAttribute("id", username);
-                accept_request.setAttribute("class", "post accept_request");
-                accept_request.setAttribute("src", "{{ url_for('static', filename='/assets/img/check_mark.png') }}");
-                accept_request.style.height="100%"
-
-                let decline_request = document.createElement("input");
-                decline_request.setAttribute("type", "image");
-                decline_request.setAttribute("id", username);
-                decline_request.setAttribute("class", "action decline_request");
-                decline_request.setAttribute("src", "{{ url_for('static', filename='/assets/img/red_cross.jpg') }}");
-                decline_request.style.height="100%"
-
-                block_to_insert.appendChild(friend_link)
-                block_to_insert.appendChild(accept_request)
-                block_to_insert.appendChild(decline_request)
-
-                parent.appendChild(block_to_insert)
-            }
-        }
-
-        $('.rounds').click(function () {
-            player_history = {{ visited_profile.history|safe }}
-            player_history = player_history.slice(Math.max(player_history.length - this.value, 0));
-            render_chart(player_history);
-        });
-
-        let all_users = {{all_users|tojson|safe}};
-        let friends = {}
-
         {% for friend in visited_profile.friends_list %}
             friends["{{friend.user_name}}"] = "{{friend.full_name}}"
         {% endfor %}
-         {% if visited_profile.user_name == current_user.user_name %}
-            show_friends()
-        {% endif %}
-        $(".action").click(function (){
-            $.ajax({
-                method: 'delete',
-                url: "/profile_page/{{ visited_profile.user_name }}",
-                data: {
-                    username: this.id,
-                    action: this.className
-                },
-                success: (data) => {
-                    alert(this.id + ' ' + data)
 
-                    delete request_list[this.id]
+        $(document).ready(render_chart(player_history.slice(Math.max(player_history.length - 20, 0))))
 
-                    if (jQuery.isEmptyObject(request_list)) {
-                            $('#friend_logo_image')[0].src = "{{ url_for('static', filename='/assets/img/baseline_people_alt_black_24dp.png') }}"
-                        }
-                },
-            })
-            $(this).parent().remove();
-        })
+        {# TODO ONCLICK INSTEAD, BEHÖVER INTE HA DUBBEL#}
 
+        $('.rounds').click(function () {
+            let p_history = player_history.slice(Math.max(player_history.length - this.value, 0));
+            render_chart(p_history);
+        });
+
+        if (!jQuery.isEmptyObject(request_list)) {
+            $('#friend_logo_image')[0].src = "{{ url_for('static', filename='/assets/img/friend_request.png') }}"
+        }
 
 
     </script>
-    <script src="{{ url_for('static', filename='/js/mystats_chart.js') }}"></script>
     <script src="{{ url_for('static', filename='/js/create_scorecard.js') }}"></script>
-
+    <script src="{{ url_for('static', filename='/js/profile_page.js') }}"></script>
+    <script src="https://code.highcharts.com/highcharts.js"></script>
     <script>
-        autocomplete(document.getElementById("user_search"), all_users, course=false, all_users=true );
+        add_post_requests()
 
-        let player_history = {{ visited_profile.history|safe }}
-        player_history = player_history.slice(Math.max(player_history.length - 20, 0));
-        render_chart(player_history);
+    {% if visited_profile.user_name == current_user.user_name %}
 
-        $('.post').click(function (){
-            $.ajax({
-                method: 'post',
-                url: "/profile_page/{{ visited_profile.user_name }}",
-                data: {
-                    id: "{{ visited_profile._id }}",
-                    action: this.className,
-                    request_username: this.id
-                },
-                success: (data) => {
-                    if (this.id !== 'img1') {
-                        alert( this.id + ' ' + data)
+        function show_settings() {
 
-                        friends[this.id] = "New pal"
-                        delete request_list[this.id]
+            change_menu_icons('setting')
 
-                        show_friends()
+            let active = document.getElementById('active_content');
+            active.innerHTML = ""
 
-                        if (jQuery.isEmptyObject(request_list)) {
-                            $('#friend_logo_image')[0].src = "{{ url_for('static', filename='/assets/img/baseline_people_alt_black_24dp.png') }}"
-                        }
-                    }
+            $('<div class="tab-pane text-center gallery" id="settings">' +
+                '<div class="settings-panel">' {% if form.profile_picture_input.errors %} + '<ul class="errors">' {% for error in form.profile_picture_input.errors %} + '<li>{{ error }}</li>' {% endfor %} + '</ul>' {% endif %} +
+                '<form action="' + '{{ url_for("profile.profile_page_update") }}' + '"' + 'role="form" method="POST" enctype="multipart/form-data">' +
+                '{{ form.csrf_token }}' + '<div id="settings-profile-picture">' + '<label id="settings-profile-picture-button" for="profile_picture_input">Upload File</label>' + '<div id="settings-profile-picture-filename">No file choosen</div>' +
+                '{{ form.profile_picture_input }}' + '</div>' +
+                '<div id="settings-user-name">{{ form.user_name(class_='form-control') }}</div>' +
+                '<div id="settings-email"> {{ form.email(class_='form-control') }} </div>' +
+                '<div id="settings-password">{{ form.password(class_='form-control') }}{{ form.confirm_password(class_='form-control') }}</div>' +
+                '<div id="current-password">{{ form.current_password(class_='form-control') }}</div>' +
+                '<div id="settings-submit">{{ form.submit }}</div>' + '</form></div></div>').appendTo('#active_content');
+
+            $('#profile_picture_input').change(() => {
+
+                var file = $('#profile_picture_input').val().split('/').pop().split('\\').pop();
+                if (file) {
+                    $('#settings-profile-picture-filename').text(truncate(file, 10));}
+                else {
+                    $('#settings-profile-picture-filename').text("No file choosen");}
+                });
+
+                function truncate(string, maxChars) {
+                    if (string.length <= maxChars) {
+                        return string}
                     else {
-                        alert('{{ visited_profile.user_name }}' + ' ' + data)
-                    }
-                },
-            })
-            $(this).parent().remove()
-        });
+                        var regex = new RegExp("^(.{" + Math.floor((maxChars / 3) * 2).toString() + "}).*(.{" + Math.floor(maxChars / 3).toString() + "}\\..*)$", 'm')
+                    return string.replace(regex, "$1 ... $2")}
+                }
+        }
+    {% endif %}
 
+    function show_scorecards() {
 
+        let active_content = $('#active_content')
+        active_content.empty()
+
+        change_menu_icons('scorecard')
+
+        let html = ''
+
+        {% if visited_profile.user_name == current_user.user_name %}
+            html += '<div class="incomplete_scorecards center-content-h" style="overflow: hidden; max-height: 45%">' +
+                '<form style="width: 80%; padding-bottom: 10px" role="form" method="POST">'
+                {% for scorecard in current_user.incomplete_scorecards[:3] %}
+                    html += `<button class="btn w-100 btn-primary btn-m button-text score_buttons" id="incomplete_s_id" type="submit"  name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Incomplete round)</button>`
+                {% endfor %}
+                html += '</form></div><hr>'
+        {% endif %}
+
+        html += '<div class="complete_scorecards center-content-h" style="overflow: hidden; min-height: 55%">' +
+            '<form style="width: 80%; margin-top: -10px" role="form" method="POST">'
+            {% for scorecard in visited_profile.complete_scorecards[:5] %}
+                html += `<button class="btn w-100 btn-primary btn-m button-text score_buttons" id="complete_s_id" type="submit" name="button" value="{{ scorecard._id }}">{{ scorecard.course }} (Completed round)</button>`
+            {% endfor %}
+        $(html).appendTo(active_content)
+    }
 
     </script>
     {% endblock %}

@@ -1,95 +1,324 @@
-
-.profile-page{
-  background-image: url("../assets/img/bgdg.png");
-  background-repeat: no-repeat;
-  background-attachment: fixed;
-  background-size: 100% 100%;
-  height: 100%;
-  width: 100%;
-  overflow: auto;
-  margin: auto;
-
+.profile-page {
+    background-image: url("../assets/img/bgdg.png");
+    background-repeat: no-repeat;
+    background-attachment: fixed;
+    background-size: 100% 100%;
+    height: 100%;
+    width: 100%;
+    overflow: auto;
+    margin: auto;
 
 }
 
 .container {
-  background-color: #eeeeee;
-  width: 80%;
-  border-collapse: collapse;
-  border-radius: 20px;
-  border: #434242 1px solid;
-  margin: auto;
-  display: inline-block;
-  vertical-align: bottom;
 
+    background-color: #EDEAE5;
+    width: 80%;
+    border-collapse: collapse;
+    border-radius: 20px;
+    border: #434242 1px solid;
+    margin: auto;
+    display: inline-block;
+    vertical-align: bottom;
+
+}
+.nav-link{
+    background-color: transparent;
+}
+
+a {
+    color: #026670;
+    text-decoration: none;
+    background-color: transparent;
+}
+.nav-pills .nav-link.active, .nav-pills .show>.nav-link {
+    color: #fef9c7;
+    background-color: #026670;
 }
 
 .profile {
-  padding-top: 2%;
+    padding-top: 2%;
 }
 
 .avatar {
-  height: 50%;
-  width: 50%;
-  margin-left: auto;
-  margin-right: auto;
-
-
-
-
-
+    height: 50%;
+    width: 50%;
+    margin-left: auto;
+    margin-right: auto;
 
 }
 
 .name {
-  text-align: center;
+    text-align: center;
 }
 
-.rounded-circle {
-  border: #434242 2px solid;
+.rounds:active, .rounds:focus, .rounds:hover, .rounds.active, .open .dropdown-toggle.rounds{
+    color: black;
+    background-color: #00d7d2;
 }
 
+.highcharts-background{
+    fill: #eeeeee;
+}
+
+.highcharts-plot-background{
+    fill: white;
+}
+
+.highcharts-button-box{
+    fill: #026670;
+}
+.highcharts-button-symbol{
+    stroke: #edeae5;
+}
+
+.highcharts-credits{
+    display: none;
+}
 .row_names {
-  padding-top: 10px;
-  padding-right: 20%;
-  padding-left: 20%;
+    padding-top: 10px;
+    padding-right: 20%;
+    padding-left: 20%;
 
 }
 
 .mail_bar {
-  padding-right: 20%;
-  padding-left: 20%;
+    padding-right: 20%;
+    padding-left: 20%;
 
 }
 
 .row_password {
-  padding-right: 20%;
-  padding-left: 20%;
+    padding-right: 20%;
+    padding-left: 20%;
 
 }
 
 .btn-info {
-  padding-right: 20%;
-  padding-left: 20%;
+    padding-right: 20%;
+    padding-left: 20%;
 }
 
 .btn {
-  padding: 6px 12px;
+    padding: 6px 12px;
 }
 
 .card {
-  width: 50%;
-  height: 100%;
-  display: flex;
-  justify-content: center;
-  margin: auto;
-  border-radius: 20px;
-  border: #161515 2px solid;
+    width: 50%;
+    height: 100%;
+    display: flex;
+    justify-content: center;
+    margin: auto;
+    border-radius: 20px;
+    border: #161515 2px solid;
 }
 
 #favorite-courses-list {
+    background-color: #fef9c7;
+    border-radius: 5px;
+    width: 99%;
+    justify-content: center;
+    display: flex;
+    flex-direction: column;
+    margin: auto;
+
+}
+#favorite_courses {
+    margin-top: 10px;
+}
+
+.panel-body {
   background-color: #23c2ff;
-  border-radius: 10px ;
-  border: #161515 2px solid;
-  margin-bottom: 10px;
+}
+.settings-panel{
+    width: 80%;
+    margin: 0 auto;
+}
+#settings-profile-picture {
+    justify-content: center;
+    position: relative;
+    display: flex;
+    align-items: center;
+    background-color: #eeeeee;
+    margin-bottom: 15px;
+}
+
+#profile_picture_input {
+  display: none;
+}
+
+#settings-profile-picture-button {
+  display: inline-block;
+  padding: 10px 10px;
+  border-radius: 5px;
+  background-color: #0069ff;
+  font-size: 16px;
+  font-weight: bold;
+  color: white;
+  height: 40px;
+  width: 50%;
+  box-shadow: 2px 2px 3px #515151;
+}
+
+#settings-profile-picture-button:hover {
+  cursor: pointer;
+}
+
+#settings-profile-picture-button:active {
+  background-color: #015de0;
+}
+
+#settings-profile-picture-filename {
+  height: 100%;
+  padding: 5px 5px;
+  overflow: hidden;
+}
+
+#settings-user-name {
+    background-color: #eeeeee;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    margin:0 auto 10px;
+    border-radius: 5px;
+
+}
+
+#settings-user-name:active {
+  border-color: #0069ff;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #0069ff;
+}
+input#user_name {
+    background-color: white;
+}
+
+#settings-email {
+  background-color: #eeeeee;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    margin:0 auto 10px;
+    border-radius: 5px;
+}
+input#email{
+    background-color: white;
+}
+
+#settings-password {
+  background-color: #eeeeee;
+    width: 100%;
+    justify-content: space-evenly;
+    display: inline-flex;
+    margin:0 auto 10px;
+    border-radius: 5px;
+}
+
+input#password, input#confirm_password {
+    background-color: white;
+    width: 49%;
+    display: flex;
+    justify-content: space-between;
+    height: 40px;
+}
+
+input#password {
+    font-size: x-small;
+}
+
+input#confirm_password {
+    font-size: small;
+}
+
+#current-password{
+    background-color: #eeeeee;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    margin:0 auto 10px;
+    border-radius: 5px;
+}
+input#current_password{
+    background-color: white;
+    width: 100%;
+}
+#settings-submit {
+  background-color: #eeeeee;
+    width: 100%;
+    justify-content: center;
+    display: flex;
+    margin-top: 25px;
+    border-radius: 5px;
+}
+#settings-submit input#submit {
+    background-color: #00d7d2;
+    color: white;
+    border-radius: 5px;
+    font-weight: bold;
+    width: 50%;
+    box-shadow: 2px 2px 3px #515151;
+}
+#friends_id{
+    background-color: #fef9c7;
+    border-radius: 5px;
+    width: 99%;
+    justify-content: center;
+    display: flex;
+    margin: auto;
+}
+
+#friends_id .remove {
+    padding: 5px;
+    background-color: #fef9c7;
+    width: 40px;
+
+}
+
+.add_friend#img1 {
+    background-color: transparent;
+}
+
+.friend_column {
+    background-color: transparent;
+    width: 100%;
+    justify-content: left;
+    display: inline-flex;
+}
+#friend_link_id {
+    display: flex;
+    align-items: center;
+    justify-content: right;
+    font-size: 15px;
+    position: relative;
+    margin: 0 auto;
+    width: 33%;
+    text-align: right;
+    color: #007bff;
+}
+#friend_name_id {
+    display: flex;
+    align-items: center;
+    font-size: 15px;
+    color: black;
+    font-weight: bold;
+    margin-left: 10%;
+    margin-bottom: 0;
+    width: 33%;
+}
+
+#complete_s_id{
+    margin-top: 15px;
+    background-color: #9fedd7;
+    color: black;
+    border: 0;
+    display: flex;
+    font-size: 12px;
+}
+#incomplete_s_id{
+    margin-top: 15px;
+    background-color: #ff5757;
+    /*background-color: #fce181;*/
+    color: black;
+    border: 0;
+    display: flex;
+    font-size: 12px;
 }

@@ -86,8 +86,8 @@ def add_friend_request(current_user, visited_user):
         return ur.add_friend_request(current_user, visited_user)
 
 
-def update_profile(current_user, profile_picture, user_name, email, password):
-    return ur.update_profile(current_user, profile_picture, user_name, email, password)
+def update_profile(current_user, update):
+    return ur.update_profile(current_user, update)
 
 
 def add_round(player_summary):
@@ -107,7 +107,7 @@ def add_round(player_summary):
                               player_summary['players'][i]['stats'].keys() if 'throws' in key]
             total_throws = sum(throw_per_hole)
             rating = course.rating[str(total_throws)]
-            # TODO CHECK VALIDITY OF ROUND, difference not more than 150?!?
+
             if len(course.history) > 50:
                 if str(total_throws) in course.rating:
                     u_round = []
@@ -156,6 +156,7 @@ def add_strokes(total_throws, hole_average, course):
 
 def find_extra_strokes(player, course):
     total_throws = 0
+
     d = {int(k): v for k, v in course.rating.items()}
     for k, v in sorted(d.items()):
         if v <= player.rating:
@@ -175,7 +176,6 @@ def calculate_extra_strokes(player, course):
         return sorted(hole_average, key=lambda x: x['hole'])
 
     total_throws = find_extra_strokes(player, course)
-
     add_strokes(total_throws, hole_average, course)
 
     return sorted(hole_average, key=lambda x: x["hole"])

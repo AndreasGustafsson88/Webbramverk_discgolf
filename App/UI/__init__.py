@@ -1,15 +1,23 @@
+from App.Data import MongoConnection
+from App.Data.Models.courses import Course
+from App.Data.Models.scorecards import Scorecard
+from App.Data.Models.users import User
+from config import Config, LiveConfig
+import os
 from flask import Flask
+from App.UI.static.flaskform.settings_form import SettingsForm
+from App.UI.static.flaskform.sign_in_form import SignInForm
+from App.UI.static.flaskform.sign_up_form import SignUpForm
 from flask_login import LoginManager
 from App.UI.routes.jinja2_filters import json_decode
-from config import Config
-import os
 
 
 # Globally accessible libraries
 login = LoginManager()
+db = MongoConnection()
 
 
-def create_app():
+def create_app(config_class=LiveConfig):
     templates_folder = os.path.abspath(os.path.dirname(__file__)) + '/templates'
     app = Flask(
         __name__,
@@ -17,12 +25,19 @@ def create_app():
         template_folder=templates_folder,
         static_url_path='',
         static_folder=os.path.abspath(os.path.dirname(__file__)) + '/static')
-    app.config.from_object(Config)
+    app.config.from_object(config_class)
 
     # Initialize Plugins
     login.init_app(app)
+    db.init_app(app)
 
     with app.app_context():
+
+        # Init models
+        Course().set_class_attr()
+        Scorecard().set_class_attr()
+        User().set_class_attr()
+
         # Imports
         from App.UI.routes import logged_out as logged_out_blueprint
         from App.UI.routes import logged_in as logged_in_blueprint

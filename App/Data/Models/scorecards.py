@@ -1,8 +1,10 @@
-from App.Data import Document, db
+from App.Data import Document
 
 
 class Scorecard(Document):
-    collection = db.scorecards
+
+    def set_class_attr(self):
+        self.__class__.collection = Document.db.scorecards
 
     @classmethod
     def get_scorecard_for_player(cls, username):
