@@ -22,6 +22,7 @@ function render_chart(player_history) {
 
             yAxis: {
                 title: {
+                    enabled: false,
                     text: 'Rating'
                 }
             },
