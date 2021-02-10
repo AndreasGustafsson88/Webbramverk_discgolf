@@ -388,10 +388,6 @@ hr {
     transition: filter 0s;
 }
 
-#content {
-    flex-grow: 100;
-}
-
 .signup-body {
     background-image: url("../assets/img/bgdg.png");
 }
