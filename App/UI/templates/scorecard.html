@@ -98,13 +98,13 @@
                                     </tbody>
                                 </table>
                             {% endfor %}
-                            {% if round_summary.multi == 2 and round_summary.course_holes[0] > 9%}
+                            {% if round_summary.multi == 2 and round_summary.course_holes[0] > 9 or round_summary.course_holes[0] > 18%}
                                 <table class="table table-striped table-sm">
                                     <thead>
                                         <tr>
-                                            <th scope="col">Player</th>
+                                            <th class="table-heading" scope="col">Player</th>
                                             {% for i in range(holes_amount%9) %}
-                                                <th scope="col">{{ (i + 1 + 9 * (holes_amount // 9 )) }}</th>
+                                                <th class="table-heading" scope="col">{{ (i + 1 + 9 * (holes_amount // 9 )) }}</th>
                                             {% endfor %}
                                         </tr>
                                     </thead>
