@@ -500,19 +500,11 @@ color: white;
     transition: 1s ease;
 }
 
-.navbar-brand {
-    width: 70px;
-    height: 45px;
-}
-
 .navbar {
     background-color: #031b4d;
 }
 
-.footer {
-    width: 70px;
-    height: 45px;
-}
+
 
 .custom-toggler {
     border-color: white;
