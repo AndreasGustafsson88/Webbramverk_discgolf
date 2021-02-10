@@ -28,6 +28,7 @@ class CourseTest(unittest.TestCase):
         self.driver.get('http://127.0.0.1:5000/')
         login_bar = self.driver.find_element_by_id("button")
         login_bar.click()
+        time.sleep(2)
         username_field = self.driver.find_element_by_id("username")
         username_field.send_keys("johan2")
         password_field = self.driver.find_element_by_id("password")
@@ -48,7 +49,8 @@ class CourseTest(unittest.TestCase):
         self.driver.get("http://127.0.0.1:5000/profile_page/johan2")
 
         time.sleep(2)
-        favorite_coureses_button = self.driver.find_element_by_id("favorite_courses_button")
+        favorite_coureses_button = self.driver.find_element_by_id("favourite_courses_picture")
+        print(favorite_coureses_button)
         favorite_coureses_button.click()
         results_courses = WebDriverWait(self.driver, 5).until(
             EC.presence_of_all_elements_located((By.ID, "favorite-courses-tag")))
@@ -83,7 +85,7 @@ class CourseTest(unittest.TestCase):
         self.driver.get("http://127.0.0.1:5000/profile_page/johan2")
 
         time.sleep(2)
-        favorite_coureses_button2 = self.driver.find_element_by_id("favorite_courses_button")
+        favorite_coureses_button2 = self.driver.find_element_by_id("favourite_courses_picture")
         favorite_coureses_button2.click()
         results_courses2 = WebDriverWait(self.driver, 5).until(
             EC.presence_of_all_elements_located((By.ID, "favorite-courses-tag")))
