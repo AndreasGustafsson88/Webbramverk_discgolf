@@ -6,29 +6,18 @@
     height: 100%;
     width: 100%;
     overflow: auto;
-    margin: auto auto auto 0%;
+    margin: auto;
 
-}
-.p-content{
-    display: flex;
-    justify-content: center;
-    width: 100%;
-    height: 100%;
-    margin: 3% auto 0%;
 }
 
 .container {
 
-    background-color: #d8d5d0;
-    width: 100%;
-    height: 100%;
+    background-color: #EDEAE5;
+    width: 80%;
     border-collapse: collapse;
-    border-top-left-radius: 20px;
-    border-top-right-radius: 20px;
+    border-radius: 20px;
     border: #434242 1px solid;
-    margin-left: auto;
-    margin-right: auto;
-    margin-bottom: auto;
+    margin: auto;
     display: inline-block;
     vertical-align: bottom;
 
@@ -38,13 +27,13 @@
 }
 
 a {
-    color: #031b4d;
+    color: #026670;
     text-decoration: none;
     background-color: transparent;
 }
 .nav-pills .nav-link.active, .nav-pills .show>.nav-link {
     color: #fef9c7;
-    background-color: #031b4d;
+    background-color: #026670;
 }
 
 .profile {
@@ -63,24 +52,21 @@ a {
     text-align: center;
 }
 
-.rounded-circle {
-    border: #434242 2px solid;
-}
-.rounds {
-    color: #031b4d;
-    background-color: #fef9c7;
+.rounds:active, .rounds:focus, .rounds:hover, .rounds.active, .open .dropdown-toggle.rounds{
+    color: black;
+    background-color: #00d7d2;
 }
 
 .highcharts-background{
-    fill: #edeae5;
+    fill: #eeeeee;
 }
 
 .highcharts-plot-background{
-    fill: #fef9c7;
+    fill: white;
 }
 
 .highcharts-button-box{
-    fill: #031b4d;
+    fill: #026670;
 }
 .highcharts-button-symbol{
     stroke: #edeae5;
@@ -140,22 +126,21 @@ a {
 #favorite_courses {
     margin-top: 10px;
 }
-#id_courses{
-    margin-bottom: 10px;
-}
 
 .panel-body {
   background-color: #23c2ff;
 }
 .settings-panel{
-    margin-top: 10px;
+    width: 80%;
+    margin: 0 auto;
 }
 #settings-profile-picture {
     justify-content: center;
     position: relative;
     display: flex;
     align-items: center;
-    background-color: #d8d5d0;
+    background-color: #eeeeee;
+    margin-bottom: 15px;
 }
 
 #profile_picture_input {
@@ -166,11 +151,13 @@ a {
   display: inline-block;
   padding: 10px 10px;
   border-radius: 5px;
-  background-color: #031b4d;
+  background-color: #0069ff;
   font-size: 16px;
   font-weight: bold;
-  color: #edeae5;
-
+  color: white;
+  height: 40px;
+  width: 50%;
+  box-shadow: 2px 2px 3px #515151;
 }
 
 #settings-profile-picture-button:hover {
@@ -178,7 +165,7 @@ a {
 }
 
 #settings-profile-picture-button:active {
-  background-color: #9fedd7;
+  background-color: #015de0;
 }
 
 #settings-profile-picture-filename {
@@ -188,68 +175,87 @@ a {
 }
 
 #settings-user-name {
-    background-color: #edeae5;
-    width: 40%;
+    background-color: #eeeeee;
+    width: 100%;
     justify-content: center;
     display: flex;
-    margin: 0 auto 5px;
+    margin:0 auto 10px;
     border-radius: 5px;
+
+}
+
+#settings-user-name:active {
+  border-color: #0069ff;
+  box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #0069ff;
 }
 input#user_name {
-    background-color: #fef9c7;
+    background-color: white;
 }
 
 #settings-email {
-    background-color: #edeae5;
-    width: 50%;
+  background-color: #eeeeee;
+    width: 100%;
     justify-content: center;
     display: flex;
-    margin: 0 auto 5px;
+    margin:0 auto 10px;
     border-radius: 5px;
 }
 input#email{
-    background-color: #fef9c7;
+    background-color: white;
 }
 
 #settings-password {
-    background-color: #d8d5d0;
-    width: 80%;
-    justify-content: space-between;
-    display: flex;
-    margin: 0 auto 5px;
+  background-color: #eeeeee;
+    width: 100%;
+    justify-content: space-evenly;
+    display: inline-flex;
+    margin:0 auto 10px;
     border-radius: 5px;
 }
 
 input#password, input#confirm_password {
-    background-color: #fef9c7;
-    width: 48%;
+    background-color: white;
+    width: 49%;
     display: flex;
     justify-content: space-between;
-    column-gap: 10px;
-
+    height: 40px;
 }
+
+input#password {
+    font-size: x-small;
+}
+
+input#confirm_password {
+    font-size: small;
+}
+
 #current-password{
-    background-color: #d8d5d0;
+    background-color: #eeeeee;
+    width: 100%;
     justify-content: center;
     display: flex;
-    margin: 0 auto 5px;
+    margin:0 auto 10px;
     border-radius: 5px;
 }
 input#current_password{
-    background-color: #fef9c7;
+    background-color: white;
+    width: 100%;
 }
 #settings-submit {
-  background-color: #d8d5d0;
-    width: 30%;
+  background-color: #eeeeee;
+    width: 100%;
     justify-content: center;
     display: flex;
-    margin:0 auto 5px;
+    margin-top: 25px;
     border-radius: 5px;
 }
 #settings-submit input#submit {
-    background-color: #031b4d;
-    color: #fef9c7;
+    background-color: #00d7d2;
+    color: white;
     border-radius: 5px;
+    font-weight: bold;
+    width: 50%;
+    box-shadow: 2px 2px 3px #515151;
 }
 #friends_id{
     background-color: #fef9c7;
@@ -273,57 +279,46 @@ input#current_password{
 
 .friend_column {
     background-color: transparent;
-    margin-top: 5px;
     width: 100%;
-    justify-content: space-evenly;
+    justify-content: left;
     display: inline-flex;
 }
 #friend_link_id {
     display: flex;
-    justify-content: center;
-    padding-top: 15px;
+    align-items: center;
+    justify-content: right;
     font-size: 15px;
-    color: #031b4d;
+    position: relative;
+    margin: 0 auto;
+    width: 33%;
+    text-align: right;
+    color: #007bff;
 }
 #friend_name_id {
     display: flex;
-    justify-content: center;
-    padding-top: 15px;
+    align-items: center;
     font-size: 15px;
     color: black;
     font-weight: bold;
+    margin-left: 10%;
+    margin-bottom: 0;
+    width: 33%;
 }
 
 #complete_s_id{
-    width: 70%;
-    height: 70%;
-    margin: 10px auto;
-    background-color: #031b4d;
-    color: white;
+    margin-top: 15px;
+    background-color: #9fedd7;
+    color: black;
     border: 0;
     display: flex;
-    justify-content: center;
-    font-size: 2vw;
-    align-items: center;
+    font-size: 12px;
 }
-.complete_scorecards{
-    margin: auto;
-    justify-content: center;
-}
-
 #incomplete_s_id{
-    width: 70%;
-    height: 70%;
-    margin: 10px auto;
-    background-color: #f84444;
-    color: white;
+    margin-top: 15px;
+    background-color: #ff5757;
+    /*background-color: #fce181;*/
+    color: black;
     border: 0;
     display: flex;
-    justify-content: center;
-    font-size: 2vw;
-    align-items: center;
-}
-.incomplete_scorecards{
-    margin: auto;
-    justify-content: center;
+    font-size: 12px;
 }

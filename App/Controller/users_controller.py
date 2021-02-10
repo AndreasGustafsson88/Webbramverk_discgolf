@@ -157,13 +157,10 @@ def add_strokes(total_throws, hole_average, course):
 def find_extra_strokes(player, course):
     total_throws = 0
 
-    for k, v in course.rating.items():
-        if v == player.rating:
+    d = {int(k): v for k, v in course.rating.items()}
+    for k, v in sorted(d.items()):
+        if v <= player.rating:
             total_throws += int(k)
-            return total_throws
-
-        elif v >= player.rating:
-            total_throws += int(k) + 1
             return total_throws
 
 

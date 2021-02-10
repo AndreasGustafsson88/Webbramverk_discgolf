@@ -44,13 +44,13 @@ def profile_page(user_name):
     all_users = uc.get_all_users()
     favorite_courses = [cc.get_course_by_id(course_id).name for course_id in visited_profile.favourite_courses]
 
-    return render_template('profile_page.html', visited_profile=visited_profile, all_users=all_users,
+    return render_template('profile_page_v2.html', visited_profile=visited_profile, all_users=all_users,
                            form=settings_form, favorite_courses=favorite_courses)
 
 
-@profile.route('/profile_page/<user_name>', methods=["DELETE"])
+@profile.route('/profile_page/', methods=["DELETE"])
 @login_required
-def profile_page_delete(user_name):
+def profile_page_delete():
     if request.method == "DELETE":
         friend = uc.get_user(user_name=request.form['username'])
 
