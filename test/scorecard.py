@@ -79,7 +79,7 @@ class TestScorecardSelenium(unittest.TestCase):
         self.std_wait.until(EC.presence_of_element_located((By.CLASS_NAME, 'display-4')))
         welcome = self.driver.find_element_by_class_name('display-4')
 
-        self.assertEqual(welcome.text, 'About')
+        self.assertEqual(welcome.text, 'Welcome to the Discgolf Rating system')
 
     def log_in_user(self):
 
