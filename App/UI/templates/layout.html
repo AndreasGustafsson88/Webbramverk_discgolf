@@ -17,7 +17,7 @@
 </head>
 <body>
     <!-- NAVBAR -->
-    <nav class="navbar navbar-expand-lg" style="background-color: #031b4d; ">
+    <nav class="navbar navbar-expand-lg navbar-dark bg-dark" style="background-color: #031b4d; ">
         <a class="navbar-brand" {% if current_user.is_authenticated %} href="{{ url_for("profile.profile_page", user_name=current_user.user_name)}}" {% else %} href="{{ url_for("logged_out.index")}}"{% endif %}>
             <img src="{{ url_for('static', filename='/assets/img/disclogoWhite.png') }}" alt="logo_image" style="height: 45px" >
         </a>
