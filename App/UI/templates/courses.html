@@ -37,10 +37,10 @@ var all_courses = {{ all_courses|safe }}
 all_courses.sort((a, b) => {a[0].toUpperCase();b[0].toUpperCase();return a[0] > b[0] ? 1 : a[0] < b[0] ? -1 : 0;});
 var favorites;
 /* lazy solution for not being able to use jinja2 in the js file */
-var anon;
 var bookmark_filled = "{{ url_for('static', filename='/assets/img/star_filled.svg') }}"
 var bookmark_empty = "{{ url_for('static', filename='/assets/img/star_empty.svg') }}"
 var checkmark = "{{ url_for('static', filename='/assets/img/checkmark.svg') }}"
+var anon;
 {% if current_user.is_anonymous %}
     anon = true;
 {% else %}

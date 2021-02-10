@@ -182,7 +182,6 @@
     <script src="https://code.highcharts.com/highcharts.js"></script>
     <script src="{{ url_for('static', filename='/js/profile_page.js') }}"></script>
     <script>
-    console.log({{ favorite_courses|safe }})
         let request_list = {}
 
         {% for req in current_user.friend_requests %}
