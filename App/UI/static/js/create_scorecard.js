@@ -40,6 +40,7 @@ function create_scorecard() {
             new_url += "&rated=" + JSON.stringify(rated);
             new_url += "&multi=" + JSON.stringify(holes_multi);
 
+
             window.location.href = new_url;
         })
 

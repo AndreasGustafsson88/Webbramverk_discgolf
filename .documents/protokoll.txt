@@ -214,4 +214,23 @@ Att göra till nästkommande möte:
 
 Övriga kommentarer:
 
+2021-02-08
+    Närvarande: William Åslund, Andreas Gustafsson, Måns Ewards Öberg, Christoffer Jakonen
+
+Protokollförare: William Åslund
+
+Gjort sen senaste mötet:
+        stylingen på alla sidor är nu klara och mergade.
+        vi har även strukturerat om, så att profilbilderna sparas som en sträng i mongodb istället för att sparas i en mapp i själva projektet. Detta gör vi för att profilbilden skall kunna uppdateras direkt när man gör ändringen på själva hemsidan.
+
+Att göra till nästkommande möte:
+        vi ska gå igenom och rensa upp i koden(ta bort kod som inte används och snygga till viss kod)
+        vi ska även gå igenom vår demo så att den fungerar.
+
+
+
+
+
+
+Övriga kommentarer:
 
