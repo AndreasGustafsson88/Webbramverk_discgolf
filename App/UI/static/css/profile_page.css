@@ -313,10 +313,10 @@ input#current_password{
     display: flex;
     font-size: 12px;
 }
+
 #incomplete_s_id{
     margin-top: 15px;
     background-color: #ff5757;
-    /*background-color: #fce181;*/
     color: black;
     border: 0;
     display: flex;
