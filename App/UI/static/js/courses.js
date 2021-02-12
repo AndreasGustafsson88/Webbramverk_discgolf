@@ -3,7 +3,7 @@ function getFavorites(){
     return $.post(
         "/courses",
         {loading: true},
-        (response) => {console.log(response["favorites"]);},
+        (response) => {},
         "json");
 }
 
@@ -11,7 +11,7 @@ function setFavorite(course){
     return $.post(
         "/courses",
         {course: course},
-        (response) => {console.log(response)},
+        (response) => {},
         "json");
 }
 if(anon!==true) {

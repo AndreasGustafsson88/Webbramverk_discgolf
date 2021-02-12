@@ -48,9 +48,9 @@ def profile_page(user_name):
                            form=settings_form, favorite_courses=favorite_courses)
 
 
-@profile.route('/profile_page/<user_name>', methods=["DELETE"])
+@profile.route('/profile_page/', methods=["DELETE"])
 @login_required
-def profile_page_delete(user_name):
+def profile_page_delete():
     if request.method == "DELETE":
         friend = uc.get_user(user_name=request.form['username'])
 

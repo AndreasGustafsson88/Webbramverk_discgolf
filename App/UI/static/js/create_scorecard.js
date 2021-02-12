@@ -55,9 +55,7 @@ function get_course_length(course) {
         "/scorecard", {
             course: course
         },
-        (response) => {
-            console.log(response)
-        },
+        (response) => {},
         "json");
 }
 
