@@ -2,7 +2,7 @@ from App.Data import MongoConnection
 from App.Data.Models.courses import Course
 from App.Data.Models.scorecards import Scorecard
 from App.Data.Models.users import User
-from config import Config
+from config import Config, LiveConfig
 import os
 from flask import Flask
 from App.UI.static.flaskform.settings_form import SettingsForm
@@ -17,7 +17,7 @@ login = LoginManager()
 db = MongoConnection()
 
 
-def create_app(config_class=Config):
+def create_app(config_class=LiveConfig):
     templates_folder = os.path.abspath(os.path.dirname(__file__)) + '/templates'
     app = Flask(
         __name__,

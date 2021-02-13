@@ -26,6 +26,9 @@ var swiper = new Swiper('.swiper-container', {
     },
 });
 
+$(window).resize(() => {
+    swiper.update()
+})
 
 function set_info_bg_color(info, par_diff, value) {
     if (par_diff === -1) {

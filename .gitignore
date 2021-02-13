@@ -1,7 +1,7 @@
 venv/
 .idea/
 __pycache__/
-App/Data/DB_SETTINGS/__init__.py
 docker-compose.yml
 dump/
 .documents/div/
+*pyc
