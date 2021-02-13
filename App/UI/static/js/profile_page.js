@@ -3,23 +3,13 @@ function change_menu_icons(active_menu) {
 
     for (let element of menu_elements) {
         if (!element.id.includes(active_menu)) {
-            element.style.backgroundColor = '#0069ff';
+            element.style.backgroundColor = '#eee';
         }
         else {
-            element.style.backgroundColor = '#00d7d2';
+            element.style.backgroundColor = '#fff';
         }
     }
 
-    let menu_icons = document.getElementsByClassName('invert-effect');
-
-    for (let element of menu_icons) {
-        if (!element.id.includes(active_menu)) {
-            element.style.filter = '';
-        }
-        else {
-            element.style.filter = 'invert(100%)';
-        }
-    }
 }
 
 
@@ -34,7 +24,7 @@ function add_post_requests() {
                 request_username: this.id
             },
             success: (data) => {
-                if (this.id !== 'img1') {
+                if (this.id !== 'image_container') {
                     alert( this.id + ' ' + data)
 
                     friends[this.id] = "New pal"
@@ -51,7 +41,7 @@ function add_post_requests() {
                 }
             },
         })
-        $(this).parent().remove()
+        $(this).remove()
     });
 }
 
@@ -87,9 +77,11 @@ function show_friends(visited_profile, current_user){
     input_class.placeholder = 'Search Players'
     input_class.style.marginBottom = '10px'
     input_class.style.marginTop = '10px'
+    input_class.style.border = "0"
+    input_class.style.borderRadius = "0"
     input_class.style.display = 'flex'
     input_class.style.justifyContent = 'center'
-    input_class.style.backgroundColor = 'white'
+    input_class.style.backgroundColor = '#eee'
 
     autocompletes.appendChild(input_class)
     form_class.appendChild(autocompletes)

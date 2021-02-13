@@ -48,21 +48,17 @@ a {
 
 }
 
-.name {
-    text-align: center;
-}
-
 .rounds:active, .rounds:focus, .rounds:hover, .rounds.active, .open .dropdown-toggle.rounds{
     color: black;
     background-color: #00d7d2;
 }
 
 .highcharts-background{
-    fill: #eeeeee;
+    fill: #fff;
 }
 
 .highcharts-plot-background{
-    fill: white;
+    fill: #fff;
 }
 
 .highcharts-button-box{
@@ -139,7 +135,7 @@ a {
     position: relative;
     display: flex;
     align-items: center;
-    background-color: #eeeeee;
+    background-color: #fff;
     margin-bottom: 15px;
 }
 
@@ -189,7 +185,9 @@ a {
   box-shadow: inset 0 1px 1px rgba(0, 0, 0, 0.075), 0 0 8px #0069ff;
 }
 input#user_name {
-    background-color: white;
+    background-color: #eeeeee;
+    border: 0;
+    border-radius: 0;
 }
 
 #settings-email {
@@ -201,7 +199,9 @@ input#user_name {
     border-radius: 5px;
 }
 input#email{
-    background-color: white;
+    background-color: #eeeeee;
+    border: 0;
+    border-radius: 0;
 }
 
 #settings-password {
@@ -214,7 +214,9 @@ input#email{
 }
 
 input#password, input#confirm_password {
-    background-color: white;
+    background-color: #eeeeee;
+    border: 0;
+    border-radius: 0;
     width: 49%;
     display: flex;
     justify-content: space-between;
@@ -238,11 +240,13 @@ input#confirm_password {
     border-radius: 5px;
 }
 input#current_password{
-    background-color: white;
+    background-color: #eeeeee;
+    border: 0;
+    border-radius: 0;
     width: 100%;
 }
 #settings-submit {
-  background-color: #eeeeee;
+  background-color: #fff;
     width: 100%;
     justify-content: center;
     display: flex;
@@ -321,4 +325,95 @@ input#current_password{
     border: 0;
     display: flex;
     font-size: 12px;
+}
+
+.settings-icon {
+    width: 100%;
+    height: 100%;
+}
+
+.profile_header {
+    height: 175px;
+    background-image: url("../assets/img/IMG-9006.jpg");
+    background-repeat: no-repeat;
+    background-size: cover;
+    background-position: center;
+    border-top: 3px solid #031b4d;
+    position: relative;
+    box-shadow: 2px 2px 3px #515151;
+}
+
+.profile-avatar {
+    top: 0;
+    position: relative;
+    margin-top: 10px;
+    z-index: 1;
+    margin-left: 15px
+}
+
+.profile-avatar img {
+    height: 100px;
+    width: 100px;
+    border-radius: 50%;
+}
+
+.menu-header {
+    margin-top: 60px;
+    height: 50px;
+    background-color: #eeeeee;
+    display: flex;
+    justify-content: center;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+.menu-bar {
+    width: 20%;
+    background-color: #eeeeee;
+}
+
+.profile-picture {
+    position: absolute;
+    top: 115px;
+    margin: auto;
+    left: 0;
+    right: 0;
+    text-align: center;
+}
+
+#active_content {
+    height: 100%;
+    overflow: scroll;
+    background-color: white;
+    padding-bottom: 15px;
+    min-height: 300px;
+}
+
+#filler {
+    height: 25px;
+    background-color: white;
+    margin-left: 5px;
+    margin-right: 5px;
+}
+
+#image_container {
+    width: 70px;
+    height: 30px;
+    position: absolute;
+    top: 180px;
+    left: 10px;
+    z-index: 2;
+    display: flex;
+}
+
+#img1 {
+    height: 100%;
+    padding: 0;
+}
+#add_friend_text {
+    font-weight: bold;
+}
+
+.invert-gray {
+    filter: invert(48%) sepia(0%) saturate(1642%) hue-rotate(159deg) brightness(106%) contrast(67%);
 }
