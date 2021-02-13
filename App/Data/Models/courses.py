@@ -48,8 +48,7 @@ class Course(Document):
     def average_per_hole(self, throw_per_hole):
         for i in range(1, len(self.holes)):
             if self.logged_rounds - 1:
-                average = ((self.holes[i]['average'] * (self.logged_rounds - 1)) + throw_per_hole[
-                    i - 1]) / self.logged_rounds
+                average = ((self.holes[i]['average'] * (self.logged_rounds - 1)) + throw_per_hole[i - 1]) / self.logged_rounds
             else:
                 average = throw_per_hole[i - 1]
 
